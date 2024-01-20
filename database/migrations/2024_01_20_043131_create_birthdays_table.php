@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('journal_photos', function (Blueprint $table) {
+        Schema::create('birthdays', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('journal_id');
-            $table->string('url');
-            $table->strng('description')->nullable();
+            $table->foreignId('user_id')->comment('使用者ID');
+            $table->date('date')->comment('日期');
+            $table->string('name')->comment('壽星');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('journal_photos');
+        Schema::dropIfExists('birthdays');
     }
 };

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('styles', function (Blueprint $table) {
             $table->id();
-            $table->int('month')->unique();
+            $table->foreignId('user_id')->comment('使用者ID');
+            $table->integer('month');
             $table->string('main_img');
-            $table->string('head_img');
-            $table->string('footer_img');
+            $table->string('header_img')->nullable();
+            $table->string('footer_img')->nullable();
             $table->string('footer_color');
             $table->string('bg_color');
             $table->timestamps();

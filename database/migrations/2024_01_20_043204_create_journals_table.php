@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('birthdays', function (Blueprint $table) {
+        Schema::create('journals', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('date');
+            $table->foreignId('user_id')->comment('使用者ID');
+            $table->date('date')->comment('日期');
+            $table->string('title')->comment('標題');
+            $table->text('content')->comment('內容');
+            $table->string('photo_link')->nullable()->comment('照片集連結');
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('birthdays');
+        Schema::dropIfExists('journals');
     }
 };
