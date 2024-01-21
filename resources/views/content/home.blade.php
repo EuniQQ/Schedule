@@ -31,12 +31,12 @@
 
                 <div class="date d-flex">
                     <div class="dleft d-flex flex-column">
-                        <p class="year">2023</p>
-                        <p class="month">10&nbsp;/</p>
+                        <p class="year">{{ $y }}</p>
+                        <p class="month">{{ $m }}&nbsp;/</p>
                     </div>
                     <div class="dright d-flex">
-                        <p class="day">30</p>
-                        <p class="week">二</p>
+                        <p class="day">{{ $d }}</p>
+                        <p class="week">{{ $w }}</p>
                     </div>
                 </div>
             </div>
