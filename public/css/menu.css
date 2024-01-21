@@ -1,0 +1,22 @@
+.menu {
+
+    padding: 0;
+    margin: 0;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.type {
+    background-color: rgb(243, 232, 177);
+    color: blue;
+    font-weight: bolder;
+    padding:3%;
+}
+
+.logout {
+    background-color: rgb(255, 218, 8);
+    font-weight: bolder;
+    padding: 3%;
+}
