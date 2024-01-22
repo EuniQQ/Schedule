@@ -19,14 +19,15 @@
 
 <body>
     <div class="container">
+        <!-- icon 區-->
         @include('layouts.menu')
-        <!-- menu icon 區-->
         <div class="menuIcon">
             <button class="btn" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBackdrop" aria-controls="offcanvasWithBackdrop" style="text-align:left">
                 <i class="fa-solid fa-bars fa-lg" style="color: #616161;"></i>
             </button>
-            @yield('headerIcons')
+            @yield('elseIcons')
         </div>
+        <!-- icon 區 end -->
 
         <div class="row d-flex content">
             @yield('content')

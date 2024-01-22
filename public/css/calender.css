@@ -1,0 +1,134 @@
+/* layout主內容 */
+.main {
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    background-color: rgb(247, 247, 247);
+}
+
+/* layout header */
+.menuIcon {
+    text-align: left;
+}
+
+.search{
+    float:right;
+    margin:5px 20px;
+}
+
+.search>input::placeholder{
+    font-size: smaller;
+}
+
+
+/* content start */
+.sideBar {
+    width: 12%;
+    background-color: rgb(255, 255, 255);
+    text-align: center;
+    /* border: 1px solid rgb(87, 190, 250); */
+}
+
+.sideBar,
+.right {
+    /* 扣掉footer 7% */
+    height: calc(100%-7%);
+}
+
+.sideBar img {
+    width: 95%;
+}
+
+.year {
+    font-size: 1.8rem;
+    line-height: 1.5rem;
+    color: rgba(173, 203, 199, 1);
+}
+
+/* 財報 */
+.finance {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    margin: 0 auto;
+    position: relative;
+    top: 120px;
+}
+
+.finance p {
+    font-size: 12px;
+    align-self: first baseline;
+    margin-bottom: 0;
+}
+
+.finance div {
+    width: 100%;
+    background-color: rgba(245, 243, 243, 1);
+    border-radius: 10%;
+    height: 1.5rem;
+    align-self: center;
+    padding: 0;
+    margin-bottom: 10px;
+
+}
+
+/* 右半部 */
+.right {
+    padding: 0;
+    width: 88%;
+    height: 90%;
+}
+
+.top {
+    width: 100%;
+    height: 15%;
+    background-color: rgb(255, 255, 255);
+}
+
+.top p{
+    font-size:3.5rem;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-style: italic;
+    color:rgba(120, 60, 60, 1);
+    padding-left:3rem;
+}
+
+.top img{
+    width: 80px;
+    height: 80px;
+}
+
+.calender {
+    width: 100%;
+    height: calc(100%-15%);
+    /* 扣除top 15% */
+    background-color: rgb(252, 204, 230);
+}
+
+/* footer  */
+.footer {
+    height: 7%;
+    margin: 0;
+    padding-top: 1rem;
+    background-color: rgba(190, 61, 61, 1);
+    text-align: center;
+}
+
+.footer span {
+    margin: 0 1rem 0 0;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bolder;
+    font-size: 1.2rem;
+    color: aliceblue;
+}
+
+.footerImg {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 30px;
+    left: 50px;
+}

@@ -6,7 +6,7 @@
 
 @section('title','首頁')
 
-@section('headerIcons')
+@section('elseIcons')
 <!-- 設定 icon -->
 <i class="fa-solid fa-gear fa-lg mt-2" style="color: 
 #616161;"></i>

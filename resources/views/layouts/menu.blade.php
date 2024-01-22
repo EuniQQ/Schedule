@@ -7,7 +7,7 @@
         <div class="row menu ">
             <p><a href="{{ route('home') }}">HOME</a></p>
             <p class="type">日&nbsp;&nbsp;誌</p>
-            <p>·&nbsp;當月月曆</p>
+            <p><a href="{{ route('calender') }}">·&nbsp;當月月曆</a></p>
             <p>·&nbsp;每月事紀</p>
             <p>·&nbsp;每日記事</p>
             <p class="type">記&nbsp;&nbsp;帳</p>
