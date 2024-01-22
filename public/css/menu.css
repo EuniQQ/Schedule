@@ -1,5 +1,9 @@
-.menu {
+.offcanvas-body {
+    padding: 0;
+    margin: 0;
+}
 
+.menu {
     padding: 0;
     margin: 0;
     background-color: rgb(255, 255, 255);
@@ -12,7 +16,7 @@
     background-color: rgb(243, 232, 177);
     color: blue;
     font-weight: bolder;
-    padding:3%;
+    padding: 3%;
 }
 
 .logout {

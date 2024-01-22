@@ -1,11 +1,10 @@
 <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasWithBackdrop" aria-labelledby="offcanvasWithBackdropLabel">
     <div class="offcanvas-header">
         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+        </button>
     </div>
     <div class="offcanvas-body">
         <div class="row menu ">
-            </button>
-
             <p><a href="{{ route('home') }}">HOME</a></p>
             <p class="type">日&nbsp;&nbsp;誌</p>
             <p>·&nbsp;當月月曆</p>
