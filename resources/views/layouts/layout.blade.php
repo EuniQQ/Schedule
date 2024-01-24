@@ -29,9 +29,7 @@
         </div>
         <!-- icon 區 end -->
 
-        <div class="row d-flex content">
-            @yield('content')
-        </div>
+        @yield('content')
 
 
         @yield('endJs')

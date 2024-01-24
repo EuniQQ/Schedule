@@ -4,37 +4,28 @@
     padding: 0;
 }
 
-.content {
-    background-color: rgb(247, 247, 247);
-}
-
 /* layout header */
 .menuIcon {
     text-align: left;
 }
 
-.search{
-    float:right;
-    margin:5px 20px;
+.search {
+    float: right;
+    margin: 5px 20px;
 }
 
-.search>input::placeholder{
+.search>input::placeholder {
     font-size: smaller;
 }
-
 
 /* content start */
 .sideBar {
     width: 12%;
+    /* 扣掉footer 3rem */
+    height: calc(100% - 3rem);
     background-color: rgb(255, 255, 255);
     text-align: center;
-    /* border: 1px solid rgb(87, 190, 250); */
-}
 
-.sideBar,
-.right {
-    /* 扣掉footer 7% */
-    height: calc(100%-7%);
 }
 
 .sideBar img {
@@ -76,40 +67,98 @@
 
 /* 右半部 */
 .right {
-    padding: 0;
+    padding: 0.5rem;;
     width: 88%;
-    height: 90%;
+    /* 扣掉footer 3rem */
+    height: calc(100% - 3rem);
 }
 
-.top {
+.month {
     width: 100%;
-    height: 15%;
+    height: 5rem;
     background-color: rgb(255, 255, 255);
 }
 
-.top p{
-    font-size:3.5rem;
-    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+.month p {
+    font-size: 3.5rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-style: italic;
-    color:rgba(120, 60, 60, 1);
-    padding-left:3rem;
+    color: rgba(120, 60, 60, 1);
+    padding-left: 3rem;
 }
 
-.top img{
+.month img {
     width: 80px;
     height: 80px;
 }
 
+.weekDays {
+    display: flex;
+    justify-content: space-around;
+    height: 1.5rem;
+}
+
+.weekDays p {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* calender */
 .calender {
     width: 100%;
-    height: calc(100%-15%);
-    /* 扣除top 15% */
-    background-color: rgb(252, 204, 230);
+    /* 扣除 month 5rem 、 weekdays 1.5rem*/
+    height: calc(100% - 6.5rem);
+
+}
+
+.singleDay {
+    width: calc(100% / 7);
+    height: calc(100% / 5);
+    border: 1px solid rgb(151, 151, 151);
+}
+
+.day {
+    margin: 0 1rem 0 1rem;
+}
+
+.firstLayer {
+    height: 30%;
+    padding: 0.2rem 0.5rem;
+}
+
+.firstLayer>span>span {
+    font-size: smaller;
+}
+
+.middleLayer {
+    height: 40%;
+    text-align: center;
+}
+
+.middleLayer li {
+    font-size: 12px;
+    margin: 0;
+    color: rgb(115, 185, 250);
+}
+
+.endLayer {
+    display: flex;
+    justify-content: center;
+    background-color: rgb(218, 240, 184);
+    height: 30%;
+    padding-top: 3px;
+    font-size: smaller;
+    font-weight: 500;
+
+}
+
+.endLayer img {
+    border-radius: 50%;
+    padding-right: 5px;
 }
 
 /* footer  */
 .footer {
-    height: 7%;
+    height: 3rem;
     margin: 0;
     padding-top: 1rem;
     background-color: rgba(190, 61, 61, 1);
