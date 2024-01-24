@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -42,4 +43,44 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function birthdays(): HasMany
+    {
+        return $this->hasMany(Birthday::class);
+    }
+
+    public function calenders(): HasMany
+    {
+        return $this->hasMany(Calender::class);
+    }
+
+    public function donates(): HasMany
+    {
+        return $this->hasMany(Donate::class);
+    }
+
+    public function expenses(): HasMany
+    {
+        return $this->hasMany(Expense::class);
+    }
+
+    public function incomes(): HasMany
+    {
+        return $this->hasMany(Income::class);
+    }
+
+    public function journals(): HasMany
+    {
+        return $this->hasMany(Journal::class);
+    }
+
+    public function journal_photes(): HasMany
+    {
+        return $this->hasMany(Donate::class);
+    }
+
+    public function styles(): HasMany
+    {
+        return $this->hasMany(Style::class);
+    }
 }
