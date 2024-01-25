@@ -32,8 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/home',[HomeController::class,'index'])->name('home');
-    Route::get('/calender',[CalenderController::class,'index'])->name('calender');
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender');
 });
 
 require __DIR__ . '/auth.php';
