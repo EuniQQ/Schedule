@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Style;
 use App\Models\Calender;
+use App\Models\Income;
+use App\Models\Expense;
 
 
 class CalenderController extends Controller
@@ -20,39 +22,52 @@ class CalenderController extends Controller
         $now = Carbon::now()->locale('zh-tw');
         $thisYear = $now->year;
         $thisMonth = $now->month;
-        $formatMonth = $now->format('m');  //改成有前導0
+        $today = $now->format("d");
+        // 月份改成有前導0
+        $formatMonth = !is_null($month) ? $month : $now->format('m');
         if (is_null($year) && is_null($month)) {
             $year = $thisYear;
             $month = $thisMonth;
         } elseif (is_null($year) && !is_null($month)) {
             $year = $thisYear;
         }
-
         $hebrewYear = 5783 + ($year - 2024);
 
         // 其他參數
         $finance = $this->getFinance($year, $month);
-        $style = $this->getStyle($year, $month);
+        $style =  $this->getStyle($year, $month);
         $calender = $this->getCalender($year, $formatMonth);
-
         $res = [
             'year' => $year,
-            'hebrew' => $hebrewYear,
+            'hebrewYear' => $hebrewYear,
             'month' => $month,
-            'income' => '',
-            'expenses' => '',
-            'balance' => '',
+            'thisMonth' => $thisMonth,
+            'today' => $today,
+            'income' => '$' . $finance[0],
+            'expense' => '$' . $finance[1],
+            'balance' => '$' . $finance[0] - $finance[1] ?? '',
             'style' => $style,
             'calender' => $calender,
         ];
-        return view('content.calender');
+
+        return view('content.calender', $res);
     }
 
     /* 取得財務 */
     protected function getFinance($year, $month)
     {
-        // return auth()->user()->incomes;
+        $monthKey = $year.'-'.$month.'%';
+        $income =  Income::where('user_id', auth()->user()->id)
+            ->where('date', 'like', $monthKey)
+            ->pluck('amount')
+            ->sum() ?? "";
 
+        $expense = Expense::where('user_id', auth()->user()->id)
+            ->where('date', 'like', $monthKey)
+            ->pluck('amount')
+            ->sum() ?? "";
+
+        return [$income, $expense];
     }
 
     /* 取得視覺 */
@@ -66,10 +81,10 @@ class CalenderController extends Controller
         return $styles;
     }
 
-
+    /* 取得月曆 */
     protected function getCalender($year, $formatMonth)
     {
-        // get Calender table record
+        // get DB Calender record
         $argdate = $year . $formatMonth . '%';
         $calender = Calender::where('user_id', auth()->user()->id)
             ->where('date', 'like', $argdate)
@@ -91,10 +106,12 @@ class CalenderController extends Controller
 
         $res = [];
         foreach ($cdnCals as $cdnCal) {
+            $cdnCal['date'] = substr($cdnCal['date'], -2,);
             $found = false;
-            foreach ($calender as $item) {
-                if ($cdnCal['date'] === $item['date']) {
-                    $res[] = array_merge($cdnCal, $item);
+            foreach ($calender as $cal) {
+                $cal['date'] = substr($cal['date'], -2,);
+                if ($cdnCal['date'] === $cal['date']) {
+                    $res[] = array_merge($cdnCal, $cal);
                     $found = true;
                     break;
                 }
@@ -113,10 +130,13 @@ class CalenderController extends Controller
                     'tag_from' => '',
                     'tag_to' => '',
                     'sticker' => '',
+                    'plan' => '',
+                    'plan_time' => '',
                     'photos_link' => '',
                 ];
             }
-        };
+        }
+        return $res;
     }
 
     /**

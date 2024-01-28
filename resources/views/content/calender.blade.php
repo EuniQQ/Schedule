@@ -16,18 +16,18 @@
     <input type="search" name="keyword" id="calYear" placeholder="keyword">
     <!-- select year -->
     <select>
-        <option value="2023">2023</option>
+        <option value="{{$year}}">{{$year}}</option>
     </select>
     <select>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
+        <option value="01">1</option>
+        <option value="02">2</option>
+        <option value="03">3</option>
+        <option value="04">4</option>
+        <option value="05">5</option>
+        <option value="06">6</option>
+        <option value="07">7</option>
+        <option value="08">8</option>
+        <option value="09">9</option>
         <option value="10">10</option>
         <option value="11">11</option>
         <option value="12">12</option>
@@ -42,24 +42,30 @@
 
     <!-- 左半邊 -->
     <div class="sideBar">
-        <img src="{{ asset('storage/img/QQsticker.png') }}" alt="QQ貼圖">
-        <p class="year mt-3">2024</p>
-        <p class="year">5784</p>
+        @if (isset($style['main_img']) && !is_null($style['main_img']))
+        <img src="{{ asset($style['main_img']) }}" alt="主視覺">
+        @else
+        <img src="{{ asset('storage/img/QQsticker.png') }}" alt="主視覺">
+        @endif
+        <p class="year mt-3">{{$year}}</p>
+        <p class="year">{{$hebrewYear}}</p>
 
         <!-- 財務 -->
         <div class="finance">
             <p>本月總收入:</p>
-            <div></div>
+            <div>{{$income}}</div>
 
             <p>本月總支出:</p>
-            <div></div>
+            <div>{{$expense}}</div>
 
             <p>結餘:</p>
-            <div></div>
+            <div>{{$balance}}</div>
         </div>
 
         <div class="footerImg">
-            <img src="{{ asset('storage/img/bell.png')}}" alt="footer圖">
+            @if (isset($style['footer_img']) && !is_null($style['footer_img']))
+            <img src="{{ asset($style['footer_img'])}}" alt="footer圖">
+            @endif
         </div>
     </div>
 
@@ -68,66 +74,96 @@
 
         <!-- month -->
         <div class="month d-flex">
-            <p>1</p>
-            <img src="{{ asset('storage/img/tree.png') }}" alt="topImg">
+            <p>{{ $month }}</p>
+            @if(isset($style['header_img'] ) && !is_null($style['header_img']))
+            <img src="{{ asset($style['header_img']) }}" alt="headerImg">
+            @endif
         </div>
 
         <div class="weekDays">
-            <p>SUN</p>
             <p>MON</p>
             <p>TUE</p>
             <p>WED</p>
             <p>TUR</p>
             <p>FRI</p>
-            <p>SAT</p>
+            <p class="sat">SAT</p>
+            <p class="sun">SUN</p>
         </div>
 
         <!-- calender -->
+
         <div class="calender d-flex">
+            @foreach($calender as $data)
             <!-- 單一格子 -->
-            <div class="singleDay">
+            @if ($month == $thisMonth && $data['date'] == $today)
+            <div class="singleDay" style="background-color:rgba(255, 238, 150, 1)">
+                @else
+                <div class="singleDay">
+                    @endif
+                    <div class="firstLayer d-flex">
 
-                <div class="firstLayer d-flex">
-                    <p class="day">
-                        1<!-- 日期 -->
-                    </p>
-                    <span class="bthd">
-                        <i class="fa-solid fa-cake-candles" style="color:#c200bb">&nbsp;</i>
-                        <span>
-                            Issac<!-- 壽星 -->
-                        </span>
-                    </span>
-                </div>
+                        @if ($data['is_mc_start'] == 1 || $data['is_mc_start'] == 1)
+                        <p class="day mc">
+                            @elseif($data['week'] == '六')
+                        <p class="day sat">
+                            @elseif($data['isHoliday'] || $data['week'] == '日')
+                        <p class="day sun">
+                            @else
+                        <p class="day">
+                            @endif
+                            {{$data['date']}}
+                        </p>
 
-                <div class="middleLayer">
-                    <li>
-                        2:00 公館見 <!-- 行程紀錄 -->
-                    </li>
-                </div>
+                        <div class="d-flex">
+                            @if ($data['birthday_person'] !== "")
+                            <i class="fa-solid fa-cake-candles" style="color:#c200bb">&nbsp;</i>
 
-                <div class="endLayer">
-                    <img class="tagImg" src="" alt="">
-                    <p class="tagText"></p>
+                            <span class="bthd">
+                                <!-- 壽星 -->
+                                {{ $data['birthday_person'] }}
+                            </span>
+                            @endif
+                        </div>
+                    </div>
+
+                    <div class="middleLayer">
+                        @if ($data['plan'] !== "")
+                        <li class="calPlan">
+                            <!-- 行程紀錄 -->
+                            {{ $data['plan_time'] }}&nbsp;{{ $data['plan'] }}
+                        </li>
+                        @endif
+                        @if ($data['description'] !== "")
+                        <li class="calDes">
+                            {{ $data['description'] }}
+                        </li>
+                        @endif
+                    </div>
+
+                    <div class="endLayer" style="background-color: {{ $data['tag_color'] }} ">
+                        <img class="tagImg" src=" {{ $data['sticker'] }} " alt="">
+                        <p class="tagText">{{ $data['tag_title']}}</p>
+                    </div>
                 </div>
+                @endforeach
             </div>
         </div>
-    </div>
 
 
-    <!-- footer -->
-    <div class="footer">
-        <span>1</span>
-        <span>2</span>
-        <span>3</span>
-        <span>4</span>
-        <span>5</span>
-        <span>6</span>
-        <span>7</span>
-        <span>8</span>
-        <span>9</span>
-        <span>10</span>
-        <span>11</span>
-        <span>12</span>
+        <!-- footer -->
+        <div class="footer">
+            <span></span><a href="/calender/{{$year}}/01">1</a>
+            <span></span><a href="/calender/{{$year}}/02">2</a>
+            <span></span><a href="/calender/{{$year}}/03">3</a>
+            <span></span><a href="/calender/{{$year}}/04">4</a>
+            <span></span><a href="/calender/{{$year}}/05">5</a>
+            <span></span><a href="/calender/{{$year}}/06">6</a>
+            <span></span><a href="/calender/{{$year}}/07">7</a>
+            <span></span><a href="/calender/{{$year}}/08">8</a>
+            <span></span><a href="/calender/{{$year}}/09">9</a>
+            <span></span><a href="/calender/{{$year}}/10">10</a>
+            <span></span><a href="/calender/{{$year}}/11">11</a>
+            <span></span><a href="/calender/{{$year}}/12">12</a>
+        </div>
     </div>
-</div>
-@endsection
+    @endsection

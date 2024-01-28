@@ -60,14 +60,15 @@
     border-radius: 10%;
     height: 1.5rem;
     align-self: center;
-    padding: 0;
+    padding: 3px 0 0 0;
     margin-bottom: 10px;
-
+    font-size: smaller;
 }
 
 /* 右半部 */
 .right {
-    padding: 0.5rem;;
+    padding: 0.5rem;
+    ;
     width: 88%;
     /* 扣掉footer 3rem */
     height: calc(100% - 3rem);
@@ -102,52 +103,78 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
+.sat{
+    color:rgba(107, 171, 3, 1);
+}
+
+.sun{
+    color:rgba(190, 61, 61, 1)
+}
 /* calender */
 .calender {
     width: 100%;
     /* 扣除 month 5rem 、 weekdays 1.5rem*/
     height: calc(100% - 6.5rem);
+    display: flex;
+    flex-wrap: wrap;
 
 }
 
 .singleDay {
     width: calc(100% / 7);
     height: calc(100% / 5);
-    border: 1px solid rgb(151, 151, 151);
+    border: 1px solid rgb(236, 236, 236);
+    box-sizing: border-box;
 }
 
 .day {
-    margin: 0 1rem 0 1rem;
+    margin: 0 1rem 0 0.5rem;
+    font-size: smaller;
+}
+
+.mc {
+    background-color:rgb(253, 179, 179);
+    border-radius:50%;
+    padding: 0 3px;
 }
 
 .firstLayer {
     height: 30%;
     padding: 0.2rem 0.5rem;
+    padding-top: 0.4rem;
 }
 
-.firstLayer>span>span {
+.bthd {
     font-size: smaller;
 }
 
 .middleLayer {
     height: 40%;
-    text-align: center;
+    text-align: start;
+    padding-left:2rem;
 }
 
 .middleLayer li {
     font-size: 12px;
     margin: 0;
-    color: rgb(115, 185, 250);
+
+}
+
+.calPlan{
+    color: rgb(32, 157, 230);
+}
+
+.calDes {
+    color: brown;
 }
 
 .endLayer {
     display: flex;
     justify-content: center;
-    background-color: rgb(218, 240, 184);
     height: 30%;
-    padding-top: 3px;
-    font-size: smaller;
-    font-weight: 500;
+    padding-top: 0.4rem;
+    font-size:smaller;
+    font-weight: 800;
 
 }
 
