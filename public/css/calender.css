@@ -67,8 +67,7 @@
 
 /* 右半部 */
 .right {
-    padding: 0.5rem;
-    ;
+    padding: 1rem;
     width: 88%;
     /* 扣掉footer 3rem */
     height: calc(100% - 3rem);
@@ -103,13 +102,6 @@
     font-family: 'Courier New', Courier, monospace;
 }
 
-.sat{
-    color:rgba(107, 171, 3, 1);
-}
-
-.sun{
-    color:rgba(190, 61, 61, 1)
-}
 /* calender */
 .calender {
     width: 100%;
@@ -120,21 +112,46 @@
 
 }
 
+.singleDay:nth-child(odd) {
+    background-color: rgb(245, 242, 238);
+}
+
 .singleDay {
     width: calc(100% / 7);
     height: calc(100% / 5);
     border: 1px solid rgb(236, 236, 236);
     box-sizing: border-box;
+    text-align: center;
 }
+
+.plusIcon {
+    margin: 0 auto;
+    z-index: 999;
+    display: none;
+    transform:translate(25%,50%);
+}
+
+.singleDay:hover .plusIcon {
+    display: block;
+}
+
 
 .day {
     margin: 0 1rem 0 0.5rem;
     font-size: smaller;
 }
 
+.sat {
+    color: rgba(107, 171, 3, 1);
+}
+
+.sun {
+    color: rgba(190, 61, 61, 1)
+}
+
 .mc {
-    background-color:rgb(253, 179, 179);
-    border-radius:50%;
+    background-color: rgb(253, 179, 179);
+    border-radius: 50%;
     padding: 0 3px;
 }
 
@@ -151,7 +168,7 @@
 .middleLayer {
     height: 40%;
     text-align: start;
-    padding-left:2rem;
+    padding-left: 2rem;
 }
 
 .middleLayer li {
@@ -160,7 +177,7 @@
 
 }
 
-.calPlan{
+.calPlan {
     color: rgb(32, 157, 230);
 }
 
@@ -173,7 +190,7 @@
     justify-content: center;
     height: 30%;
     padding-top: 0.4rem;
-    font-size:smaller;
+    font-size: smaller;
     font-weight: 800;
 
 }
@@ -187,13 +204,24 @@
 .footer {
     height: 3rem;
     margin: 0;
-    padding-top: 1rem;
+    padding-top: .8rem;
     background-color: rgba(190, 61, 61, 1);
     text-align: center;
 }
 
+.footer a {
+    text-decoration: none;
+    color: aliceblue;
+}
+
+.footer a:hover {
+    text-decoration: none;
+    font-size: larger;
+
+}
+
 .footer span {
-    margin: 0 1rem 0 0;
+    margin: 0 2rem 0 0;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bolder;
     font-size: 1.2rem;

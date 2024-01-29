@@ -91,7 +91,6 @@
         </div>
 
         <!-- calender -->
-
         <div class="calender d-flex">
             @foreach($calender as $data)
             <!-- 單一格子 -->
@@ -100,13 +99,11 @@
                 @else
                 <div class="singleDay">
                     @endif
-                    <div class="firstLayer d-flex">
 
-                        @if ($data['is_mc_start'] == 1 || $data['is_mc_start'] == 1)
-                        <p class="day mc">
-                            @elseif($data['week'] == '六')
+                    <div class="firstLayer d-flex">
+                        @if( $data['week'] == '六')
                         <p class="day sat">
-                            @elseif($data['isHoliday'] || $data['week'] == '日')
+                            @elseif($data['isHoliday']== '日' || $data['week'] == '日')
                         <p class="day sun">
                             @else
                         <p class="day">
@@ -115,7 +112,7 @@
                         </p>
 
                         <div class="d-flex">
-                            @if ($data['birthday_person'] !== "")
+                            @if (isset($data['birthday_person']) && $data['birthday_person'] !== "")
                             <i class="fa-solid fa-cake-candles" style="color:#c200bb">&nbsp;</i>
 
                             <span class="bthd">
@@ -127,23 +124,27 @@
                     </div>
 
                     <div class="middleLayer">
-                        @if ($data['plan'] !== "")
+                    <i class="fa-solid fa-circle-plus fa-2xl plusIcon" style="color: #dedede;"></i>
+                        @if (isset($data['description']) && $data['description']
+                        !== "")
+                        <li class="calDes">
+                            {{ $data['description'] }}
+                        </li>
+                        @endif
+                        @if (isset($data['plan']) && $data['plan'] !== "")
                         <li class="calPlan">
                             <!-- 行程紀錄 -->
                             {{ $data['plan_time'] }}&nbsp;{{ $data['plan'] }}
                         </li>
                         @endif
-                        @if ($data['description'] !== "")
-                        <li class="calDes">
-                            {{ $data['description'] }}
-                        </li>
-                        @endif
                     </div>
 
+                    @if(isset($data['tag_color']) && !is_null($data['tag_color']))
                     <div class="endLayer" style="background-color: {{ $data['tag_color'] }} ">
-                        <img class="tagImg" src=" {{ $data['sticker'] }} " alt="">
+                        <img class="tagImg" src=" {{ $data['sticker'] }}??'' " alt="">
                         <p class="tagText">{{ $data['tag_title']}}</p>
                     </div>
+                    @endif
                 </div>
                 @endforeach
             </div>

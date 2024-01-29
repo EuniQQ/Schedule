@@ -31,6 +31,7 @@ class CalenderController extends Controller
         } elseif (is_null($year) && !is_null($month)) {
             $year = $thisYear;
         }
+
         $hebrewYear = 5783 + ($year - 2024);
 
         // 其他參數
@@ -53,10 +54,11 @@ class CalenderController extends Controller
         return view('content.calender', $res);
     }
 
+
     /* 取得財務 */
     protected function getFinance($year, $month)
     {
-        $monthKey = $year.'-'.$month.'%';
+        $monthKey = $year . '-' . $month . '%';
         $income =  Income::where('user_id', auth()->user()->id)
             ->where('date', 'like', $monthKey)
             ->pluck('amount')
@@ -70,6 +72,7 @@ class CalenderController extends Controller
         return [$income, $expense];
     }
 
+
     /* 取得視覺 */
     protected function getStyle($year, $month)
     {
@@ -81,6 +84,7 @@ class CalenderController extends Controller
         return $styles;
     }
 
+
     /* 取得月曆 */
     protected function getCalender($year, $formatMonth)
     {
@@ -91,7 +95,7 @@ class CalenderController extends Controller
             ->get()
             ->toArray();
 
-        // 串接TaiwanCalendar
+        // 串接當年度TaiwanCalendar
         $client = new Client();
         $cdnUrl = 'https://cdn.jsdelivr.net/gh/ruyut/TaiwanCalendar/data/' . $year . '.json';
         $response = $client->get($cdnUrl);
@@ -104,7 +108,18 @@ class CalenderController extends Controller
             return strpos($item['date'], $searchPrefix) === 0;
         });
 
+        $firDay = Carbon::parse($year . '/' . $formatMonth . '/01');
+        $firWeekDay = $firDay->dayOfWeek;
+
         $res = [];
+        for ($i = 1; $i < $firWeekDay; $i++) {
+            $res[] = [
+                'date' => '',
+                'week' => '',
+                'isHoliday' => '',
+            ];
+        }
+        
         foreach ($cdnCals as $cdnCal) {
             $cdnCal['date'] = substr($cdnCal['date'], -2,);
             $found = false;
@@ -136,6 +151,7 @@ class CalenderController extends Controller
                 ];
             }
         }
+
         return $res;
     }
 
