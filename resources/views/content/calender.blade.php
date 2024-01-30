@@ -9,6 +9,53 @@
 @section('content')
 <div class="row d-flex content">
 
+    <!-- Add Schedule Modal -->
+    <div id="addModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addModalLabel">新增行程</h5>
+                <span class="closeModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                    <p>【 WHO'S BIRTHDAY 】</p>
+                    <label for="name" class="my-2">Name :</label>
+                    <input type="text" id="name" name="birthday_person" class="my-2"><br>
+                    <p>【 MC 】</p>
+                    <input type="radio" id="mc_start" value="mc_start" name="mc">
+                    <label for="mc">start&nbsp;&nbsp;</label>
+                    <input type="radio" id="mc_end" value="mc_end" name="mc">
+                    <label for="mc">end</label><br>
+
+                    <p>【 PLAN 】</p>
+                    <label for="plan_time">Time :</label>
+                    <input type="text" id="plan_time" name="plan_time"><br>
+                    <label for="content">Content :</label>
+                    <input type="text" id="content" name="content"><br>
+
+                    <p>【 ADD TAG 】</p>
+                    <label for="tag_from">From :</label>
+                    <input type="date" id="tag_from" name="tag_from"><br>
+                    <label for="tag_to">To :</label>
+                    <input type="date" id="tag_to" name="tag_to"><br>
+                    <label for="tag_title">Tag Title :</label>
+                    <input type="text" id="tag_title" name="tag_title"><br>
+                    <label for="tag_color">Tag Color :</label>
+                    <input type="tag_color" id="tag_color" name="tag_color"><br>
+                    <label for="sticker">Sticker :</label>
+                    <input type="file" id="sticker" name="sticker" accept="image/gif,image/jpeg,image/png" data-target="preview_upload_sticker">
+                    <img id="preview_upload_sticker" src="#" data-target="preview_upload_sticker"><br>
+                    <label for="img_link">Images Link :</label>
+                    <input type="text" name="img_link">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="closeModal btn btn-secondary">Close</button>
+                <button class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+    <!-- Add Schedule Modal END-->
 
     <!-- 左半邊 -->
     <div class="sideBar py-1 ">
@@ -140,9 +187,7 @@
 
                     <div class="middleLayer">
                         <!-- hover plusIcon -->
-                        <!-- <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#exampleModal"> -->
                         <i class="fa-solid fa-circle-plus fa-2xl plusIcon" style="color: #dedede;"></i>
-                        <!-- </button> -->
 
                         @if (isset($data['description']) && $data['description']
                         !== "")
@@ -159,7 +204,7 @@
                     </div>
 
                     @if(isset($data['tag_color']) && !is_null($data['tag_color']))
-                    <div class="endLayer" style="background-color: {{$data['tag_color']}} ">
+                    <div class="endLayer" style="background-color: {{ $data['tag_color'] }} ">
                         <img class="tagImg" src=" {{ $data['sticker'] }}??'' " alt="">
                         <p class="tagText">{{ $data['tag_title']}}</p>
                     </div>
@@ -185,64 +230,10 @@
             <a href="/calender/{{$year}}/11">11</a>
             <a href="/calender/{{$year}}/12">12</a>
         </div>
-
-
-        <!-- modal -->
-        <!-- Button trigger modal -->
-
-
-
-
-        <!-- Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">新增行程</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form action="">
-                            <p>【 WHO'S BIRTHDAY 】</p>
-                            <label for="name" class="my-2">Name :</label>
-                            <input type="text" id="name" name="birthday_person" class="my-2"><br>
-
-                            <p>【 MC 】</p>
-                            <input type="radio" id="mc_start" value="mc_start" name="mc">
-                            <label for="mc">start&nbsp;&nbsp;</label>
-                            <input type="radio" id="mc_end" value="mc_end" name="mc">
-                            <label for="mc">end</label><br>
-
-                            <p>【 PLAN 】</p>
-                            <label for="plan_time">Time :</label>
-                            <input type="text" id="plan_time" name="plan_time"><br>
-                            <label for="content">Content :</label>
-                            <input type="text" id="content" name="content"><br>
-
-                            <p>【 ADD TAG 】</p>
-                            <label for="tag_from">From :</label>
-                            <input type="date" id="tag_from" name="tag_from"><br>
-                            <label for="tag_to">To :</label>
-                            <input type="date" id="tag_to" name="tag_to"><br>
-                            <label for="tag_title">Tag Title :</label>
-                            <input type="text" id="tag_title" name="tag_title"><br>
-                            <label for="tag_color">Tag Color :</label>
-                            <input type="tag_color" id="tag_color" name="tag_color"><br>
-                            <label for="sticker">Sticker :</label>
-                            <input type="file" id="sticker" name="sticker" accept="image/gif,image/jpeg,image/png" data-target="preview_upload_sticker">
-                            <img id="preview_upload_sticker" src="#" data-target="preview_upload_sticker"><br>
-                        </form>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+
     @endsection
 
     @section('endJs')
-    <link rel="stylesheet" href="resources/js/calender.js">
+    <script src="/js/calender.js"></script>
     @endsection

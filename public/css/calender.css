@@ -56,8 +56,8 @@
 }
 
 .yearUnderLine {
-    width:50%;
-    margin:0 auto
+    width: 50%;
+    margin: 0 auto
 }
 
 /* 財報 */
@@ -151,18 +151,6 @@
     background-color: rgba(255, 238, 150, 1)
 }
 
-.plusIcon {
-    margin: 0 auto;
-    z-index: 999;
-    display: none;
-    transform: translate(25%, 50%);
-}
-
-.singleDay:hover .plusIcon {
-    display: block;
-}
-
-
 .day {
     margin: 0 1rem 0 0.5rem;
     font-size: smaller;
@@ -228,6 +216,39 @@
 }
 
 /* 增加行程model */
+.plusIcon {
+    margin: 0 auto;
+    z-index: 999;
+    display: none;
+    transform: translate(25%, 50%);
+}
+
+.singleDay:hover .plusIcon {
+    display: block;
+}
+
+.modal {
+    display: none;
+    z-index: 20;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-title {
+    font-weight: 800;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10px auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 30%;
+}
+
 .modal-body p,
 label,
 input {
@@ -248,10 +269,6 @@ input {
     text-align: center;
 }
 
-.footer a {
-    text-decoration: none;
-    color: aliceblue;
-}
 
 .footer a:hover {
     text-decoration: none;
@@ -265,6 +282,7 @@ input {
     font-weight: bolder;
     font-size: 1.2rem;
     color: aliceblue;
+    text-decoration: none;
 }
 
 .footerImg {
