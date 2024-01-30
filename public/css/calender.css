@@ -1,3 +1,12 @@
+.content {
+    width: 100vw;
+    /* height: calc(100% - 40px); */
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    /* border: 1px solid blue; */
+}
+
 /* layout主內容 */
 .main {
     margin: 0;
@@ -6,14 +15,23 @@
 
 /* layout header */
 .menuIcon {
-    text-align: left;
+    text-align: right;
+    height: 40px;
 }
 
 .search {
-    float: right;
-    margin: 5px 20px;
+    position: absolute;
+    right: 10px;
 }
 
+.search>button,
+.search>input,
+.search>select,
+.search>input::placeholder {
+    height: 30px;
+}
+
+.search>select,
 .search>input::placeholder {
     font-size: smaller;
 }
@@ -25,7 +43,6 @@
     height: calc(100% - 3rem);
     background-color: rgb(255, 255, 255);
     text-align: center;
-
 }
 
 .sideBar img {
@@ -38,12 +55,17 @@
     color: rgba(173, 203, 199, 1);
 }
 
+.yearUnderLine {
+    width:50%;
+    margin:0 auto
+}
+
 /* 財報 */
 .finance {
     display: flex;
     flex-direction: column;
     width: 80%;
-    margin: 0 auto;
+    margin: 1rem auto;
     position: relative;
     top: 120px;
 }
@@ -51,7 +73,7 @@
 .finance p {
     font-size: 12px;
     align-self: first baseline;
-    margin-bottom: 0;
+    margin-bottom: 0.3rem;
 }
 
 .finance div {
@@ -71,6 +93,7 @@
     width: 88%;
     /* 扣掉footer 3rem */
     height: calc(100% - 3rem);
+    /* border: 1px solid red; */
 }
 
 .month {
@@ -109,7 +132,7 @@
     height: calc(100% - 6.5rem);
     display: flex;
     flex-wrap: wrap;
-
+    box-sizing: border-box;
 }
 
 .singleDay:nth-child(odd) {
@@ -124,11 +147,15 @@
     text-align: center;
 }
 
+.todayBg {
+    background-color: rgba(255, 238, 150, 1)
+}
+
 .plusIcon {
     margin: 0 auto;
     z-index: 999;
     display: none;
-    transform:translate(25%,50%);
+    transform: translate(25%, 50%);
 }
 
 .singleDay:hover .plusIcon {
@@ -200,6 +227,18 @@
     padding-right: 5px;
 }
 
+/* 增加行程model */
+.modal-body p,
+label,
+input {
+    margin: .3rem;
+    font-size: small;
+}
+
+.modal-body p {
+    color: brown;
+}
+
 /* footer  */
 .footer {
     height: 3rem;
@@ -220,7 +259,7 @@
 
 }
 
-.footer span {
+.footer a {
     margin: 0 2rem 0 0;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bolder;

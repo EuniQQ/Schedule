@@ -117,9 +117,10 @@ class CalenderController extends Controller
                 'date' => '',
                 'week' => '',
                 'isHoliday' => '',
+                'id' => ''
             ];
         }
-        
+
         foreach ($cdnCals as $cdnCal) {
             $cdnCal['date'] = substr($cdnCal['date'], -2,);
             $found = false;
@@ -137,6 +138,7 @@ class CalenderController extends Controller
                     'week' => $cdnCal['week'],
                     'isHoliday' => $cdnCal['isHoliday'],
                     'description' => $cdnCal['description'],
+                    'id' => '',
                     'birthday_person' => '',
                     'is_mc_start' => '',
                     'is_mc_end' => '',
