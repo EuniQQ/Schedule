@@ -9,53 +9,6 @@
 @section('content')
 <div class="row d-flex content">
 
-    <!-- Add Schedule Modal -->
-    <div id="addModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addModalLabel">新增行程</h5>
-                <span class="closeModal">&times;</span>
-            </div>
-            <div class="modal-body">
-                <form action="#">
-                    <p>【 WHO'S BIRTHDAY 】</p>
-                    <label for="name" class="my-2">Name :</label>
-                    <input type="text" id="name" name="birthday_person" class="my-2"><br>
-                    <p>【 MC 】</p>
-                    <input type="radio" id="mc_start" value="mc_start" name="mc">
-                    <label for="mc">start&nbsp;&nbsp;</label>
-                    <input type="radio" id="mc_end" value="mc_end" name="mc">
-                    <label for="mc">end</label><br>
-
-                    <p>【 PLAN 】</p>
-                    <label for="plan_time">Time :</label>
-                    <input type="text" id="plan_time" name="plan_time"><br>
-                    <label for="content">Content :</label>
-                    <input type="text" id="content" name="content"><br>
-
-                    <p>【 ADD TAG 】</p>
-                    <label for="tag_from">From :</label>
-                    <input type="date" id="tag_from" name="tag_from"><br>
-                    <label for="tag_to">To :</label>
-                    <input type="date" id="tag_to" name="tag_to"><br>
-                    <label for="tag_title">Tag Title :</label>
-                    <input type="text" id="tag_title" name="tag_title"><br>
-                    <label for="tag_color">Tag Color :</label>
-                    <input type="tag_color" id="tag_color" name="tag_color"><br>
-                    <label for="sticker">Sticker :</label>
-                    <input type="file" id="sticker" name="sticker" accept="image/gif,image/jpeg,image/png" data-target="preview_upload_sticker">
-                    <img id="preview_upload_sticker" src="#" data-target="preview_upload_sticker"><br>
-                    <label for="img_link">Images Link :</label>
-                    <input type="text" name="img_link">
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="closeModal btn btn-secondary">Close</button>
-                <button class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-    <!-- Add Schedule Modal END-->
 
     <!-- 左半邊 -->
     <div class="sideBar py-1 ">
@@ -155,11 +108,61 @@
         <!-- calender -->
         <div class="calender d-flex">
             @foreach($calender as $data)
+
+            <!-- Add Schedule Modal -->
+            <div id="addModal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addModalLabel">新增行程</h5>
+                        <span class="closeModal">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <form action="{{ route('calender.create') }}" enctype="multipart/form-data" method="post">
+                            @csrf
+                            <input type="hidden" name="date" value="">
+                            <input type="hidden" name="user_id" value="{{ $userId }}">
+                            <p>【 WHO'S BIRTHDAY 】</p>
+                            <label for="name" class="my-2">Name :</label>
+                            <input type="text" id="name" name="birthday_person" class="my-2"><br>
+                            <p>【 MC 】</p>
+                            <input type="radio" value=1 name="is_mc_start">
+                            <label for="mc">start&nbsp;&nbsp;</label>
+                            <input type="radio" value=1 name="is_mc_end">
+                            <label for="mc">end</label><br>
+                            <p>【 PLAN 】</p>
+                            <label for="plan_time">Time :</label>
+                            <input type="time" name="plan_time"><br>
+                            <label for="content">Content :</label>
+                            <input type="text" id="content" name="plan"><br>
+                            <p>【 ADD TAG 】</p>
+                            <label for="tag_from">From :</label>
+                            <input type="date" name="tag_from"><br>
+                            <label for="tag_to">To :</label>
+                            <input type="date" name="tag_to"><br>
+                            <label for="tagTitle">Tag Title :</label>
+                            <input type="text" name="tag_title"><br>
+                            <label for="tagColor">Tag Color :</label>
+                            <input type="color" name="tag_color" value="rgba(0,0,0,0)"><br>
+                            <label for="stickerInp">Sticker :</label>
+                            <input type="file" id="stickerInp" name="sticker" accept="image/*">
+                            <img id="stickerPre" src="#" alt=""><br>
+                            <label for="photos_link">Images Link :</label>
+                            <input type="text" name="photos_link"><br>
+                            <div class="modal-footer my-2 ">
+                                <button class="closeModal btn btn-secondary">Close</button>
+                                <button type="submit" class="btn btn-primary" id="addModalSubmit">save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Schedule Modal END-->
+
             <!-- 單一格子 -->
             @if ($month == $thisMonth && $data['date'] == $today)
-            <div id="{{ $data['date'] }}" class="singleDay todayBg" data-id="{{ $data['id'] }}">
+            <div class="singleDay todayBg" data-id="{{ $data['id'] }}">
                 @else
-                <div id="{{ $data['date'] }}" class="singleDay" data-id="{{ $data['id'] }}">
+                <div class="singleDay" data-id="{{ $data['id'] }}">
                     @endif
 
                     <div class="firstLayer d-flex">
@@ -187,7 +190,7 @@
 
                     <div class="middleLayer">
                         <!-- hover plusIcon -->
-                        <i class="fa-solid fa-circle-plus fa-2xl plusIcon" style="color: #dedede;"></i>
+                        <i id="{{ $data['fullDate'] }}" class="fa-solid fa-circle-plus fa-2xl plusIcon" style="color: #dedede;"></i>
 
                         @if (isset($data['description']) && $data['description']
                         !== "")

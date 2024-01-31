@@ -260,6 +260,12 @@ input {
     color: brown;
 }
 
+#stickerPre {
+    width: 10rem;
+    height: auto;
+    border: 1px dashed gray;
+}
+
 /* footer  */
 .footer {
     height: 3rem;

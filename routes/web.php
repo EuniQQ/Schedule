@@ -34,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender');
+    Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
 });
 
 require __DIR__ . '/auth.php';

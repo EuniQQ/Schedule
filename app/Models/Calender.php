@@ -24,10 +24,11 @@ class Calender extends Model
         'tag_to',
         'sticker',
         'photos_link',
+        'user_id'
     ];
 
     public function user(): BelongsTo
-{
-    return $this->belongsTo(User::class);
-}
+    {
+        return $this->belongsTo(User::class);
+    }
 }

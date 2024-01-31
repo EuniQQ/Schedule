@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Style;
@@ -49,6 +50,7 @@ class CalenderController extends Controller
             'balance' => '$' . $finance[0] - $finance[1] ?? '',
             'style' => $style,
             'calender' => $calender,
+            'userId' => auth()->user()->id,
         ];
 
         return view('content.calender', $res);
@@ -122,6 +124,7 @@ class CalenderController extends Controller
         }
 
         foreach ($cdnCals as $cdnCal) {
+            $cdnCal['fullDate'] = $cdnCal['date'];
             $cdnCal['date'] = substr($cdnCal['date'], -2,);
             $found = false;
             foreach ($calender as $cal) {
@@ -138,6 +141,7 @@ class CalenderController extends Controller
                     'week' => $cdnCal['week'],
                     'isHoliday' => $cdnCal['isHoliday'],
                     'description' => $cdnCal['description'],
+                    'fullDate' => $cdnCal['fullDate'],
                     'id' => '',
                     'birthday_person' => '',
                     'is_mc_start' => '',
@@ -153,16 +157,19 @@ class CalenderController extends Controller
                 ];
             }
         }
-
         return $res;
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $newSchedul = $request->all();
+        $newSchedul['user_id'] = auth()->user()->id;
+        Calender::create($newSchedul);
+
+        return redirect()->back();
     }
 
     /**
