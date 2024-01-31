@@ -207,8 +207,10 @@
                     </div>
 
                     @if(isset($data['tag_color']) && !is_null($data['tag_color']))
-                    <div class="endLayer" style="background-color: {{ $data['tag_color'] }} ">
-                        <img class="tagImg" src=" {{ $data['sticker'] }}??'' " alt="">
+                    <div class="endLayer" style="background-color:{{ $data['tag_color'] }}">
+                        @if(!empty($data['sticker']))
+                        <img src="{{ $data['sticker'] }}" alt="sticker">
+                        @endif
                         <p class="tagText">{{ $data['tag_title']}}</p>
                     </div>
                     @endif

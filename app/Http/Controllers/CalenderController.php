@@ -11,10 +11,13 @@ use App\Models\Style;
 use App\Models\Calender;
 use App\Models\Income;
 use App\Models\Expense;
-
+use App\Http\Traits\UploadImgTrait;
+use Illuminate\Http\RedirectResponse;
 
 class CalenderController extends Controller
 {
+    use UploadImgTrait;
+
     /**
      * Display a listing of the resource.
      */
@@ -163,10 +166,32 @@ class CalenderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request)
+    public function create(Request $request): RedirectResponse
     {
-        $newSchedul = $request->all();
+        $validated = $request->validate([
+            'date' => 'required | string',
+            'user_id' => 'required | integer | exists:App\Models\User,id',
+            'is_mc_start' => 'boolean | nullable',
+            'is_mc_end' => 'boolean | nullable',
+            'plan_time' => 'date_format | nullable',
+            'plan' => 'string | nullable',
+            'tag_from' => 'date | nullable',
+            'tag_to' => 'date | nullable',
+            'tag_title' => 'string | nullable',
+            'tag_color' => 'string | nullable',
+            'sticker' => 'image | nullable',
+            'photos_link' => 'url | nullable'
+        ]);
+
+        // 上傳圖片 & 搬檔案
+        if ($request->hasFile('sticker')) {
+            $type = "sticker";
+            $uploadImg = $this->ImgProcessing($request, $type);
+        };
+
+        $newSchedul = $validated;
         $newSchedul['user_id'] = auth()->user()->id;
+        $newSchedul['sticker'] = $uploadImg;
         Calender::create($newSchedul);
 
         return redirect()->back();
