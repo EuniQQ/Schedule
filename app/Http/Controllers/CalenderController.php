@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Response;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Style;
@@ -109,6 +110,7 @@ class CalenderController extends Controller
         // 只留下當月的cdnCals data
         $searchPrefix = str($year . $formatMonth);
         $cdnCals = array_filter($cdnCals, function ($item) use ($searchPrefix) {
+
             // 檢查"date"是否以$searchPrefix開頭，如果是就留下來
             return strpos($item['date'], $searchPrefix) === 0;
         });
@@ -210,7 +212,8 @@ class CalenderController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $res = Calender::find($id);
+        return Response::json($res);
     }
 
     /**

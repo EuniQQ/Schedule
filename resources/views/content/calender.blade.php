@@ -107,19 +107,19 @@
 
         <!-- calender -->
         <div class="calender d-flex">
-            @foreach($calender as $data)
 
             <!-- Add Schedule Modal -->
             <div id="addModal" class="modal">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel">新增行程</h5>
+                        <h5 class="modal-title" id="addModalLabel"></h5>
                         <span class="closeModal">&times;</span>
                     </div>
                     <div class="modal-body">
                         <form action="{{ route('calender.create') }}" enctype="multipart/form-data" method="post">
                             @csrf
                             <input type="hidden" name="date" value="">
+                            <input type="hidden" name="id" value="">
                             <input type="hidden" name="user_id" value="{{ $userId }}">
                             <p>【 WHO'S BIRTHDAY 】</p>
                             <label for="name" class="my-2">Name :</label>
@@ -142,7 +142,7 @@
                             <label for="tagTitle">Tag Title :</label>
                             <input type="text" name="tag_title"><br>
                             <label for="tagColor">Tag Color :</label>
-                            <input type="color" name="tag_color" value="rgba(0,0,0,0)"><br>
+                            <input type="color" name="tag_color" value="#C7EEFF"><br>
                             <label for="stickerInp">Sticker :</label>
                             <input type="file" id="stickerInp" name="sticker" accept="image/*">
                             <img id="stickerPre" src="#" alt=""><br>
@@ -150,13 +150,16 @@
                             <input type="text" name="photos_link"><br>
                             <div class="modal-footer my-2 ">
                                 <button class="closeModal btn btn-secondary">Close</button>
-                                <button type="submit" class="btn btn-primary" id="addModalSubmit">save</button>
+                                <button type="submit" class="btn btn-primary" id="addModalSubmit" data-id="">save</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <!-- Add Schedule Modal END-->
+
+
+            @foreach($calender as $data)
 
             <!-- 單一格子 -->
             @if ($month == $thisMonth && $data['date'] == $today)
@@ -190,7 +193,7 @@
 
                     <div class="middleLayer">
                         <!-- hover plusIcon -->
-                        <i id="{{ $data['fullDate'] }}" class="fa-solid fa-circle-plus fa-2xl plusIcon" style="color: #dedede;"></i>
+                        <i id="{{ $data['fullDate'] }}" class="fa-solid fa-circle-plus fa-2xl plusIcon" style="color: #dedede;" data-id="{{ $data['id'] }}"></i>
 
                         @if (isset($data['description']) && $data['description']
                         !== "")
@@ -206,8 +209,8 @@
                         @endif
                     </div>
 
-                    @if(isset($data['tag_color']) && !is_null($data['tag_color']))
-                    <div class="endLayer" style="background-color:{{ $data['tag_color'] }}">
+                    @if(isset($data['tag_color']) && !empty($data['tag_color']))
+                    <div class="endLayer" style="background-color:{{$data['tag_color']}}">
                         @if(!empty($data['sticker']))
                         <img src="{{ $data['sticker'] }}" alt="sticker">
                         @endif
@@ -241,4 +244,5 @@
 
     @section('endJs')
     <script src="/js/calender.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     @endsection
