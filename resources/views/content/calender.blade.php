@@ -47,6 +47,57 @@
     <div class="right">
         @include('layouts.menu')
 
+        <!-- Add Schedule Modal -->
+        <div id="addModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addModalLabel"></h5>
+                    <span class="closeModal">&times;</span>
+                </div>
+                <div class="modal-body">
+                    <form id="modalForm" action="" enctype="multipart/form-data" method="post">
+                        @csrf
+                        <input type="hidden" name="date" value="">
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="user_id" value="{{ $userId }}">
+                        <p>【 WHO'S BIRTHDAY 】</p>
+                        <label for="name" class="my-2">Name :</label>
+                        <input type="text" id="name" name="birthday_person" class="my-2"><br>
+                        <p>【 MC 】</p>
+                        <input type="radio" value=1 name="is_mc_start">
+                        <label for="mc">start&nbsp;&nbsp;</label>
+                        <input type="radio" value=1 name="is_mc_end">
+                        <label for="mc">end</label><br>
+                        <p>【 PLAN 】</p>
+                        <label for="plan_time">Time :</label>
+                        <input type="time" name="plan_time"><br>
+                        <label for="content">Content :</label>
+                        <input type="text" id="content" name="plan"><br>
+                        <p>【 ADD TAG 】</p>
+                        <label for="tag_from">From :</label>
+                        <input type="date" name="tag_from"><br>
+                        <label for="tag_to">To :</label>
+                        <input type="date" name="tag_to"><br>
+                        <label for="tagTitle">Tag Title :</label>
+                        <input type="text" name="tag_title"><br>
+                        <label for="tag_color">Tag Color :</label>
+                        <input type="color" name="tag_color" value=null><br>
+                        <label for="sticker">Sticker :</label>
+                        <input type="file" id="stickerInp" name="sticker" accept="image/*">
+                        <img id="stickerPre" src="#" alt=""><br>
+                        <label for="photos_link">Images Link :</ label>
+                            <input type="text" name="photos_link"><br>
+                            <div class="modal-footer my-2 ">
+                                <button class="closeModal btn btn-secondary">Close</button>
+                                <button type="submit" class="btn btn-primary" id="addModalSubmit" data-id="">save</button>
+                                <button type="submit" class="btn btn-danger" id="editModalSubmit" data-id="">save</button>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- Add Schedule Modal END-->
+
         <!-- month -->
         <div class="month d-flex">
             <p>{{ $month }}</p>
@@ -108,56 +159,6 @@
         <!-- calender -->
         <div class="calender d-flex">
 
-            <!-- Add Schedule Modal -->
-            <div id="addModal" class="modal">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="addModalLabel"></h5>
-                        <span class="closeModal">&times;</span>
-                    </div>
-                    <div class="modal-body">
-                        <form action="{{ route('calender.create') }}" enctype="multipart/form-data" method="post">
-                            @csrf
-                            <input type="hidden" name="date" value="">
-                            <input type="hidden" name="id" value="">
-                            <input type="hidden" name="user_id" value="{{ $userId }}">
-                            <p>【 WHO'S BIRTHDAY 】</p>
-                            <label for="name" class="my-2">Name :</label>
-                            <input type="text" id="name" name="birthday_person" class="my-2"><br>
-                            <p>【 MC 】</p>
-                            <input type="radio" value=1 name="is_mc_start">
-                            <label for="mc">start&nbsp;&nbsp;</label>
-                            <input type="radio" value=1 name="is_mc_end">
-                            <label for="mc">end</label><br>
-                            <p>【 PLAN 】</p>
-                            <label for="plan_time">Time :</label>
-                            <input type="time" name="plan_time"><br>
-                            <label for="content">Content :</label>
-                            <input type="text" id="content" name="plan"><br>
-                            <p>【 ADD TAG 】</p>
-                            <label for="tag_from">From :</label>
-                            <input type="date" name="tag_from"><br>
-                            <label for="tag_to">To :</label>
-                            <input type="date" name="tag_to"><br>
-                            <label for="tagTitle">Tag Title :</label>
-                            <input type="text" name="tag_title"><br>
-                            <label for="tagColor">Tag Color :</label>
-                            <input type="color" name="tag_color" value="#C7EEFF"><br>
-                            <label for="stickerInp">Sticker :</label>
-                            <input type="file" id="stickerInp" name="sticker" accept="image/*">
-                            <img id="stickerPre" src="#" alt=""><br>
-                            <label for="photos_link">Images Link :</label>
-                            <input type="text" name="photos_link"><br>
-                            <div class="modal-footer my-2 ">
-                                <button class="closeModal btn btn-secondary">Close</button>
-                                <button type="submit" class="btn btn-primary" id="addModalSubmit" data-id="">save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <!-- Add Schedule Modal END-->
-
 
             @foreach($calender as $data)
 
@@ -192,8 +193,10 @@
                     </div>
 
                     <div class="middleLayer">
+                        @if( !empty($data['date']))
                         <!-- hover plusIcon -->
                         <i id="{{ $data['fullDate'] }}" class="fa-solid fa-circle-plus fa-2xl plusIcon" style="color: #dedede;" data-id="{{ $data['id'] }}"></i>
+                        @endif
 
                         @if (isset($data['description']) && $data['description']
                         !== "")
@@ -201,6 +204,7 @@
                             {{ $data['description'] }}
                         </li>
                         @endif
+
                         @if (isset($data['plan']) && $data['plan'] !== "")
                         <li class="calPlan">
                             <!-- 行程紀錄 -->

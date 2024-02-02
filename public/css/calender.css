@@ -183,13 +183,12 @@
 .middleLayer {
     height: 40%;
     text-align: start;
-    padding-left: 2rem;
+    padding-left: 0.5rem;
 }
 
 .middleLayer li {
     font-size: 12px;
     margin: 0;
-
 }
 
 .calPlan {
@@ -266,6 +265,11 @@ input {
     width: 10rem;
     height: auto;
     border: 1px dashed gray;
+}
+
+#addModalSubmit,
+#editModalSubmit {
+    display: none;
 }
 
 /* footer  */

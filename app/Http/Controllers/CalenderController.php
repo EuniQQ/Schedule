@@ -124,15 +124,17 @@ class CalenderController extends Controller
                 'date' => '',
                 'week' => '',
                 'isHoliday' => '',
-                'id' => ''
+                'id' => '',
+                'fulldate' => ''
             ];
         }
 
         foreach ($cdnCals as $cdnCal) {
-            $cdnCal['fullDate'] = $cdnCal['date'];
+            $cdnCal['fullDate'] = $cdnCal['date'] ?? '';
             $cdnCal['date'] = substr($cdnCal['date'], -2,);
             $found = false;
             foreach ($calender as $cal) {
+                $cal['plan_time'] = !empty($cal['plan_time']) ? carbon::createFromFormat('H:i:s', $cal['plan_time'])->format('H:i') : '';
                 $cal['date'] = substr($cal['date'], -2,);
                 if ($cdnCal['date'] === $cal['date']) {
                     $res[] = array_merge($cdnCal, $cal);
@@ -168,36 +170,33 @@ class CalenderController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request): RedirectResponse
+    public function create(Request $request)
     {
         $validated = $request->validate([
-            'date' => 'required | string',
             'user_id' => 'required | integer | exists:App\Models\User,id',
+            'date' => 'required | string',
+            'birthday_person' => 'string | nullable',
             'is_mc_start' => 'boolean | nullable',
             'is_mc_end' => 'boolean | nullable',
-            'plan_time' => 'date_format | nullable',
             'plan' => 'string | nullable',
+            'plan_time' => 'nullable',
+            'tag_color' => 'string | nullable',
+            'tag_title' => 'string | nullable',
             'tag_from' => 'date | nullable',
             'tag_to' => 'date | nullable',
-            'tag_title' => 'string | nullable',
-            'tag_color' => 'string | nullable',
             'sticker' => 'image | nullable',
             'photos_link' => 'url | nullable'
         ]);
 
-        // 上傳圖片 & 搬檔案
-        if ($request->hasFile('sticker')) {
-            $type = "sticker";
-            $uploadImg = $this->ImgProcessing($request, $type);
-        };
-
         $newSchedul = $validated;
+        $newSchedul['sticker'] = $this->handleImg($request);
         $newSchedul['user_id'] = auth()->user()->id;
-        $newSchedul['sticker'] = $uploadImg;
         Calender::create($newSchedul);
 
         return redirect()->back();
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -221,7 +220,6 @@ class CalenderController extends Controller
      */
     public function edit(string $id)
     {
-        //
     }
 
     /**
@@ -229,7 +227,16 @@ class CalenderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $newSchedul = $request->all();
+        unset($newSchedul['_token']);
+        $newSchedul['sticker'] = $this->handleImg($request);
+        $res = Calender::where('id', $id)
+            ->update($newSchedul);
+        if ($res >= 1) {
+            return redirect()->back();
+        } else {
+            abort(500, '更新失敗');
+        }
     }
 
     /**
@@ -238,5 +245,21 @@ class CalenderController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+
+    /**
+     * 上傳圖片 & 搬檔案
+     */
+    public function handleImg($request)
+    {
+        if ($request->hasFile('sticker')) {
+            $type = "sticker";
+            $uploadImg = $this->ImgProcessing($request, $type);
+            $newSchedul['sticker'] = $uploadImg;
+            return $newSchedul['sticker'];
+        } else {
+            return;
+        }
     }
 }
