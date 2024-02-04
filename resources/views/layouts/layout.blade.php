@@ -20,12 +20,9 @@
 
 <body>
     <div class="container">
-
         @yield('content')
-
-
-        @yield('endJs')
     </div>
+    @yield('endJs')
 
 
 

@@ -81,13 +81,14 @@
                         <label for="tagTitle">Tag Title :</label>
                         <input type="text" name="tag_title"><br>
                         <label for="tag_color">Tag Color :</label>
-                        <input type="color" name="tag_color" value=null><br>
+                        <input type="color" name="tag_color"><br>
                         <label for="sticker">Sticker :</label>
                         <input type="file" id="stickerInp" name="sticker" accept="image/*">
                         <img id="stickerPre" src="#" alt=""><br>
                         <label for="photos_link">Images Link :</ label>
                             <input type="text" name="photos_link"><br>
-                            <div class="modal-footer my-2 ">
+                            <input type="reset">
+                            <div class="modal-footer">
                                 <button class="closeModal btn btn-secondary">Close</button>
                                 <button type="submit" class="btn btn-primary" id="addModalSubmit" data-id="">save</button>
                                 <button type="submit" class="btn btn-danger" id="editModalSubmit" data-id="">save</button>

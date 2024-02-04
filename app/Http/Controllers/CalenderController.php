@@ -191,6 +191,9 @@ class CalenderController extends Controller
         $newSchedul = $validated;
         $newSchedul['sticker'] = $this->handleImg($request);
         $newSchedul['user_id'] = auth()->user()->id;
+        if ($newSchedul['tag_color'] == '#000000') {
+        $newSchedul['tag_color'] = null;
+        }
         Calender::create($newSchedul);
 
         return redirect()->back();

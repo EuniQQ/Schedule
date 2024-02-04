@@ -19,7 +19,6 @@ var tagColorInp = document.querySelector("#addModal input[name='tag_color']")
  * 監聽modal表單元素的變更事件
  */
 let changes = {};
-// let changes = [];
 addModal.addEventListener('change', function (e) {
     const target = e.target;
     const id = saveChgBtn.getAttribute('data-id');
@@ -52,18 +51,9 @@ window.onclick = evt => {
  */
 stickerInp.onchange = evt => {
     const [file] = stickerInp.files
-    if (file) {
-        stickerPre.src = URL.createObjectURL(file)
-    }
+    stickerPre.src = URL.createObjectURL(file);
 }
 
-/**
- * tagColor改變時
- */
-let isTagColorModified = false;
-tagColorInp.onchange = evt => {
-    isTagColorModified = true;
-}
 
 $(document)
     .on("click", ".plusIcon", function (e) {
@@ -91,22 +81,6 @@ $(document)
     .on("click", ".closeModal", function (e) {
         addModal.style.display = "none";
     })
-
-    .on("submit", "#modalForm", function (e) {
-        // 防止表單自動提交
-        e.preventDefault();
-
-        if (isTagColorModified === 'false') {
-            const tagColor = $("#addModal input[name='tag_color']").val();
-            if (tagColor === '#000000') {
-                $("#addModal input[name='tag_color']").val();
-            }
-        }
-
-        // 繼續提交表單
-        this.submit();
-    })
-
 
 
 
