@@ -17,6 +17,8 @@
 .menu p {
     font-size: 1rem;
     text-decoration: none;
+    
+
 }
 
 .type {
@@ -28,6 +30,5 @@
 
 .logout {
     background-color: rgb(255, 218, 8);
-    font-weight: bolder;
     padding: 3%;
 }

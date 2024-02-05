@@ -11,3 +11,9 @@ body {
     margin: 0;
     height: 100vh;
 }
+
+/* 通用css */
+.removeBtnSty {
+    background-color: transparent;
+    border:none;
+}
