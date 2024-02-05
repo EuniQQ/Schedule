@@ -17,7 +17,7 @@ use App\Http\Controllers\CalenderController;
 
 // Route::middleware('auth:sanctum')->group(function () {
 Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);
-// Route::post('/daylySchedule/{id}', [CalenderController::class, 'update']);
+Route::delete('/daylySchedule/{id}', [CalenderController::class, 'destroy'])->name('calender.destroy');
 Route::get('/user', function (Request $request) {
     return $request->user();
 });

@@ -125,7 +125,7 @@ class CalenderController extends Controller
                 'week' => '',
                 'isHoliday' => '',
                 'id' => '',
-                'fulldate' => ''
+                'fullDate' => ''
             ];
         }
 
@@ -192,7 +192,7 @@ class CalenderController extends Controller
         $newSchedul['sticker'] = $this->handleImg($request);
         $newSchedul['user_id'] = auth()->user()->id;
         if ($newSchedul['tag_color'] == '#000000') {
-        $newSchedul['tag_color'] = null;
+            $newSchedul['tag_color'] = null;
         }
         Calender::create($newSchedul);
 
@@ -245,9 +245,19 @@ class CalenderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id, Request $request)
     {
-        //
+        $request = $request->all();
+        $schedule = Calender::find($id);
+        if ($request['userId'] == $schedule->user_id) {
+            if (is_null($schedule)) {
+                abort(404, 'Not found');
+            }
+            $message = $schedule->delete() == true ? "刪除成功" : "刪除失敗";
+            return Response::json(['message' => $message]);
+        } else {
+            abort(403);
+        }
     }
 
 

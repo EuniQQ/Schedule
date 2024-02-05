@@ -10,9 +10,9 @@ var mondalForm = document.getElementById("modalForm");
 var modalTitle = document.getElementById("addModalLabel");
 var saveBtn = document.getElementById("addModalSubmit");
 var saveChgBtn = document.getElementById("editModalSubmit");
+var delBtn = document.getElementById("delModalSubmit");
 var stickerInp = document.getElementById("stickerInp");
 var tagColorInp = document.querySelector("#addModal input[name='tag_color']")
-
 
 
 /**
@@ -55,6 +55,7 @@ stickerInp.onchange = evt => {
 }
 
 
+
 $(document)
     .on("click", ".plusIcon", function (e) {
         addModal.style.display = "block";
@@ -74,16 +75,66 @@ $(document)
             saveBtn.style.display = "none";
             saveChgBtn.style.display = "block";
             saveChgBtn.setAttribute('data-id', calenderId);
+            delBtn.setAttribute('data-id', calenderId);
             mondalForm.action = "/calender/" + calenderId;
         }
     })
 
+    /**
+     * 關閉modal
+     */
     .on("click", ".closeModal", function (e) {
         addModal.style.display = "none";
     })
 
+    /**
+     * 刪除單日行程
+     */
+    .on("click", "#delModalSubmit", function (e) {
+        const calenderId = e.target.getAttribute('data-id');
+        const date = $("#addModal input[name='date']").val();
+        const userId = $("#addModal input[name='user_id']").val();
+        addModal.style.display = "none";
+        $.ajax({
+            url: "/api/daylySchedule/" + calenderId,
+            type: "POST",
+            data: {
+                _method: "DELETE",
+                userId: userId
+            },
+            success: function (res) {
+                alert(res.message);
+                updateDailySchedule(date);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        })
+    })
 
 
+/**
+ * 更新已刪除單格內容
+ * @param {*} date 
+ */
+function updateDailySchedule(date) {
+    console.log('DATE = ' + date);
+    const element = document.getElementById("i" + date);
+    console.log('element=' + element);
+    if (element) {
+        const bthd = element.querySelector(".bthd");
+        const middleLayer = element.querySelector(".middleLayer");
+        const calPlan = middleLayer.querySelector(".calPlan");
+        const endLayer = element.querySelector(".endLayer");
+        const bthdSet = element.querySelector(".bthdSet");
+        bthdSet.innerHTML = '';
+        endLayer.innerHTML = '';
+        endLayer.setAttribute('style', '');
+        if (middleLayer) {
+            middleLayer.removeChild(calPlan);
+        }
+    }
+}
 
 
 /**

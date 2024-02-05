@@ -54,7 +54,7 @@
                     <h5 class="modal-title" id="addModalLabel"></h5>
                     <span class="closeModal">&times;</span>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body d-flex">
                     <form id="modalForm" action="" enctype="multipart/form-data" method="post">
                         @csrf
                         <input type="hidden" name="date" value="">
@@ -89,9 +89,10 @@
                             <input type="text" name="photos_link"><br>
                             <input type="reset">
                             <div class="modal-footer">
-                                <button class="closeModal btn btn-secondary">Close</button>
+                                <button type="button" class="closeModal btn btn-secondary">Close</button>
                                 <button type="submit" class="btn btn-primary" id="addModalSubmit" data-id="">save</button>
-                                <button type="submit" class="btn btn-danger" id="editModalSubmit" data-id="">save</button>
+                                <button type="submit" class="btn btn-warning" id="editModalSubmit" data-id="">save</button>
+                                <button type="button" class="btn btn-danger" id="delModalSubmit" data-id="">del</button>
                             </div>
                     </form>
                 </div>
@@ -165,9 +166,9 @@
 
             <!-- 單一格子 -->
             @if ($month == $thisMonth && $data['date'] == $today)
-            <div class="singleDay todayBg" data-id="{{ $data['id'] }}">
+            <div id="i{{ $data['fullDate'] }}" class="singleDay todayBg" data-id="{{ $data['id'] }}">
                 @else
-                <div class="singleDay" data-id="{{ $data['id'] }}">
+                <div id="i{{ $data['fullDate'] }}" class="singleDay" data-id="{{ $data['id'] }}">
                     @endif
 
                     <div class="firstLayer d-flex">
@@ -181,10 +182,9 @@
                             {{$data['date']}}
                         </p>
 
-                        <div class="d-flex">
+                        <div class="d-flex bthdSet">
                             @if (isset($data['birthday_person']) && $data['birthday_person'] !== "")
                             <i class="fa-solid fa-cake-candles" style="color:#c200bb">&nbsp;</i>
-
                             <span class="bthd">
                                 <!-- 壽星 -->
                                 {{ $data['birthday_person'] }}
@@ -217,7 +217,7 @@
                     @if(isset($data['tag_color']) && !empty($data['tag_color']))
                     <div class="endLayer" style="background-color:{{$data['tag_color']}}">
                         @if(!empty($data['sticker']))
-                        <img src="{{ $data['sticker'] }}" alt="sticker">
+                        <img class="sticker" src="{{ $data['sticker'] }}" alt="sticker">
                         @endif
                         <p class="tagText">{{ $data['tag_title']}}</p>
                     </div>
