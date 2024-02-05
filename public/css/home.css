@@ -1,22 +1,21 @@
 /* layout主內容 */
 .content {
     background-color: rgba(253, 237, 156, 1);
-}
-
-/* layout header */
-.menuIcon {
-    text-align: left;
-    background-color: rgba(253, 237, 156, 1);
+    background-size: 100%;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
 }
 
 
 /* 圖片區 */
 .right {
     width: 40%;
+    height: 100%;
     display: flex;
     flex-direction: column;
-    justify-content: flex-end;
-    box-sizing: border-box;
+    justify-content: space-between;
+    margin: 0;
 }
 
 .right>img {
@@ -25,22 +24,22 @@
     margin: 0 auto;
 }
 
+.right>.icons {
+    align-self: flex-end;
+}
+
 .left {
-    padding: 0 10rem;
-    box-sizing: border-box;
     width: 60%;
-    height: calc(100%-40px);
+    height: 100%;
 }
 
 /* 文字區 */
 .left>div:first-child {
-    box-sizing: border-box;
     background-color: rgb(255, 255, 255);
-    box-sizing: border-box;
     border-radius: 50%;
-    margin: 2rem 0 3rem 0;
-    width: 100%;
-    height: 90%;
+    margin: 2rem auto;
+    width: 70%;
+    height: 85%;
 }
 
 .title {

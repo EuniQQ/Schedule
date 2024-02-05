@@ -1,10 +1,8 @@
 .content {
     width: 100vw;
-    /* height: calc(100% - 40px); */
     height: 100vh;
     padding: 0;
     margin: 0;
-    /* border: 3px solid blue; */
 }
 
 /* layout主內容 */
@@ -43,7 +41,6 @@
     height: calc(100% - 3rem);
     background-color: rgb(255, 255, 255);
     text-align: center;
-    /* border: 1px solid green; */
 }
 
 .sideBar img {
@@ -94,7 +91,6 @@
     width: 88%;
     /* 扣掉footer 3rem */
     height: calc(100% - 3rem);
-    /* border: 1px solid red; */
 }
 
 .month {
