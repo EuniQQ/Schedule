@@ -101,6 +101,63 @@
             </div>
             <!-- Add Schedule Modal END-->
 
+
+            <!-- Offcanvas : Setting  -->
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasRightLabel"></h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <!-- 主視覺 -->
+                    <div class="d-flex">
+                        <p>Main IMG :</p>
+                        <input id="mainImgInp" class="imgInput" type="file" accept="image/*" name="mainImg">
+                    </div>
+                    <div class="imgSet">
+                        <img id="mainImgPre" src="" alt="">
+                    </div>
+
+                    <!-- header img -->
+                    <div class="d-flex">
+                        <p>Head IMG :</p>
+                        <input id="headerImgInp" class="imgInput" type="file" accept="image/*" name="mainImg">
+                    </div>
+                    <div class="imgSet">
+                        <img id="headerImgPre" src="" alt="">
+                    </div>
+
+                    <!-- footer img -->
+                    <div class="d-flex">
+                        <p>Footer IMG :</p>
+                        <input id="footerImgInp" class="imgInput" type="file" accept="image/*" name="mainImg">
+                    </div>
+                    <div class="imgSet">
+                        <img id="footerImgPre" src="" alt="">
+                    </div>
+
+                    <!-- footer color -->
+                    <div class="d-flex">
+                        <p class="mx-2">Footer Color :</p>
+                        <input type="color" value="#aa0f0f">
+                    </div>
+
+                    <!-- calender background -->
+                    <div class="d-flex">
+                        <p class="mx-2">Calender Color :</p>
+                        <input type="color" value="#f5f2ee">
+                    </div>
+
+                    <div class="d-index text-center mt-4">
+                        <button type="reset" class="btn btn-secondary px-2 mx-1">清除
+                        </button>
+                        <button type="button" class="btn btn-warning px-2 mx-1">送出</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Offcanvas : Setting END -->
+
+
             <!-- month -->
             <div class="month d-flex">
                 <p>{{ $month }}</p>
@@ -221,5 +278,6 @@
 
     @section('endJs')
     <script src="/js/calender.js"></script>
+    <script src="/js/calStyleSetting.js"></script>
     <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     @endsection

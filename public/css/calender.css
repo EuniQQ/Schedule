@@ -133,7 +133,7 @@
 }
 
 .singleDay:nth-child(odd) {
-    background-color: rgb(245, 242, 238);
+    background-color: #f5f2ee;
 }
 
 .singleDay {
@@ -240,7 +240,7 @@
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: #f8f7f4;
     margin: 10px auto;
     padding: 20px;
     border: 1px solid #888;
@@ -303,3 +303,34 @@ input {
     bottom: 30px;
     left: 50px;
 }
+
+
+/* setting style canvas */
+.imgSet {
+    border: 1px dashed gray;
+    width: 200px;
+    height: 128px;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.offcanvas-body p {
+    padding-left: 1rem;
+    font-weight: bolder;
+    font-size: smaller;
+    margin-right: 1rem;
+}
+
+.imgInput {
+    z-index: 20;
+}
+
+#mainImgPre,
+#headerImgPre,
+#footerImgPre {
+    height: 128px;
+    width: auto;
+    margin: 0 auto;
+}
+
+/* style setting canvas END*/

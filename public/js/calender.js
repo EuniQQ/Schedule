@@ -56,6 +56,8 @@ stickerInp.onchange = evt => {
 
 
 
+
+
 $(document)
     .on("click", ".plusIcon", function (e) {
         addModal.style.display = "block";
