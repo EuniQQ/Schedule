@@ -12,10 +12,13 @@ class Style extends Model
     use HasFactory;
 
     protected $fillable = [
+        'year',
         'month',
+        'user_id',
         'main_img',
-        'head_img',
+        'header_img',
         'footer_img',
+        'footer_color',
         'bg_color',
     ];
 

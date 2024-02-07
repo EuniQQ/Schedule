@@ -112,7 +112,7 @@
                     <!-- 主視覺 -->
                     <div class="d-flex">
                         <p>Main IMG :</p>
-                        <input id="mainImgInp" class="imgInput" type="file" accept="image/*" name="mainImg">
+                        <input id="mainImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
                         <img id="mainImgPre" src="" alt="">
@@ -120,38 +120,38 @@
 
                     <!-- header img -->
                     <div class="d-flex">
-                        <p>Head IMG :</p>
-                        <input id="headerImgInp" class="imgInput" type="file" accept="image/*" name="mainImg">
+                        <p>Header IMG :</p>
+                        <input id="headerImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
                         <img id="headerImgPre" src="" alt="">
                     </div>
 
                     <!-- footer img -->
-                    <div class="d-flex">
+                    <div class="d-flex ">
                         <p>Footer IMG :</p>
-                        <input id="footerImgInp" class="imgInput" type="file" accept="image/*" name="mainImg">
+                        <input id="footerImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
                         <img id="footerImgPre" src="" alt="">
                     </div>
 
-                    <!-- footer color -->
                     <div class="d-flex">
+                        <!-- footer color -->
                         <p class="mx-2">Footer Color :</p>
-                        <input type="color" value="#aa0f0f">
+                        <input id="ftColorInp" type="color" value="#aa0f0f">
                     </div>
 
-                    <!-- calender background -->
                     <div class="d-flex">
+                        <!-- calender background -->
                         <p class="mx-2">Calender Color :</p>
-                        <input type="color" value="#f5f2ee">
+                        <input id="calColorInp" type="color" value="#f5f2ee">
                     </div>
 
                     <div class="d-index text-center mt-4">
                         <button type="reset" class="btn btn-secondary px-2 mx-1">清除
                         </button>
-                        <button type="button" class="btn btn-warning px-2 mx-1">送出</button>
+                        <button id="offcanvasSmt" type="button" class="btn btn-warning px-2 mx-1" data-year="{{ $year }}" data-month="{{ $month }}" data-userId="{{ $userId }}">送出</button>
                     </div>
                 </div>
             </div>

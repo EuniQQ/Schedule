@@ -305,32 +305,36 @@ input {
 }
 
 
-/* setting style canvas */
+/* setting style offcanvas */
 .imgSet {
     border: 1px dashed gray;
-    width: 200px;
-    height: 128px;
-    margin: 20px auto;
+    width: 150px;
+    height: 96px;
+    margin: 10px auto;
     text-align: center;
-}
-
-.offcanvas-body p {
-    padding-left: 1rem;
-    font-weight: bolder;
-    font-size: smaller;
-    margin-right: 1rem;
-}
-
-.imgInput {
-    z-index: 20;
+    margin-bottom: 3rem;
+    ;
 }
 
 #mainImgPre,
 #headerImgPre,
 #footerImgPre {
-    height: 128px;
+    height: 100px;
     width: auto;
     margin: 0 auto;
 }
 
-/* style setting canvas END*/
+.offcanvas-body p {
+    padding-left: 2rem;
+    font-weight: bolder;
+    font-size: smaller;
+    margin-right: 1rem;
+}
+
+.offcanvas-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* style setting offcanvas END*/

@@ -262,17 +262,48 @@ class CalenderController extends Controller
 
 
     /**
+     * 新增月曆視覺api
+     */
+    public function storeStyle(Request $request, $year, $month)
+    {
+        $data = $request->all();
+        if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
+            $imgsUrl = $this->handleImg($request);
+            $data['main_img'] = $imgsUrl['main_img'];
+            $data['header_img'] = $imgsUrl['header_img'];
+            $data['footer_img'] = $imgsUrl['footer_img'];
+        }
+        $data['month'] = $month;
+        $data['year'] = $year;
+
+        Style::create($data);
+    }
+
+
+    /**
      * 上傳圖片 & 搬檔案
      */
     public function handleImg($request)
     {
         if ($request->hasFile('sticker')) {
             $type = "sticker";
-            $uploadImg = $this->ImgProcessing($request, $type);
-            $newSchedul['sticker'] = $uploadImg;
-            return $newSchedul['sticker'];
+            $file = $request->file($type);
+            $uploadImg = $this->ImgProcessing($file, $type);
+            $res = $uploadImg;
         } else {
-            return;
+
+            for ($i = 0; $i < 3; $i++) {
+                $imgs = ["main_img", "header_img", "footer_img"];
+                $type = $imgs[$i];
+                if ($request->hasFile($type)) {
+                    $file = $request->file($type);
+                    $res[$type] = $this->ImgProcessing($file, $type);
+                } else {
+                    $res[$type] = "";
+                }
+            }
         }
+
+        return $res;
     }
 }
