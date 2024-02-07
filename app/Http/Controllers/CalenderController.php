@@ -41,7 +41,7 @@ class CalenderController extends Controller
 
         // 其他參數
         $finance = $this->getFinance($year, $month);
-        $style =  $this->getStyle($year, $month);
+        $style =  $this->getStyle($year, $month) ?? " ";
         $calender = $this->getCalender($year, $formatMonth);
         $res = [
             'year' => $year,
@@ -87,6 +87,10 @@ class CalenderController extends Controller
             ->where('month', $month)
             ->select('main_img', 'header_img', 'footer_img', 'footer_color', 'bg_color')
             ->first();
+
+        if (is_null($styles)) {
+            $styles['main_img'] = $styles['header_img'] = $styles['footer_img'] = $styles['footer_color'] = $styles['bg_color'] = null;
+        }
         return $styles;
     }
 
@@ -261,6 +265,7 @@ class CalenderController extends Controller
     }
 
 
+
     /**
      * 新增月曆視覺api
      */
@@ -277,6 +282,11 @@ class CalenderController extends Controller
         $data['year'] = $year;
 
         Style::create($data);
+    }
+
+
+    public function updateStyle()
+    {
     }
 
 

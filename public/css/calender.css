@@ -108,7 +108,7 @@
 }
 
 .month img {
-    width: 80px;
+    width: auto;
     height: 80px;
 }
 
@@ -212,7 +212,7 @@
     padding-right: 5px;
 }
 
-/* 增加行程model */
+/* 增加行程model START*/
 .plusIcon {
     margin: 0 auto;
     z-index: 999;
@@ -270,7 +270,10 @@ input {
     display: none;
 }
 
-/* footer  */
+/* 增加行程model END */
+
+
+/* footer */
 .footer {
     height: 3rem;
     margin: 0;
@@ -309,17 +312,16 @@ input {
 .imgSet {
     border: 1px dashed gray;
     width: 150px;
-    height: 96px;
+    height: 100px;
     margin: 10px auto;
     text-align: center;
-    margin-bottom: 3rem;
-    ;
+    margin-bottom: 2rem;
 }
 
 #mainImgPre,
 #headerImgPre,
 #footerImgPre {
-    height: 100px;
+    height: 98px;
     width: auto;
     margin: 0 auto;
 }

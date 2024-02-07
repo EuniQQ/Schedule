@@ -102,7 +102,7 @@
             <!-- Add Schedule Modal END-->
 
 
-            <!-- Offcanvas : Setting  -->
+            <!-- Offcanvas : Setting Style -->
             <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
                 <div class="offcanvas-header">
                     <h5 id="offcanvasRightLabel"></h5>
@@ -115,7 +115,7 @@
                         <input id="mainImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
-                        <img id="mainImgPre" src="" alt="">
+                        <img id="mainImgPre" src="{{ asset($style['main_img']) }}" alt="">
                     </div>
 
                     <!-- header img -->
@@ -124,7 +124,7 @@
                         <input id="headerImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
-                        <img id="headerImgPre" src="" alt="">
+                        <img id="headerImgPre" src="{{ asset($style['header_img']) }}" alt="">
                     </div>
 
                     <!-- footer img -->
@@ -133,19 +133,19 @@
                         <input id="footerImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
-                        <img id="footerImgPre" src="" alt="">
+                        <img id="footerImgPre" src="{{ asset($style['footer_img']) }}" alt="">
                     </div>
 
                     <div class="d-flex">
                         <!-- footer color -->
                         <p class="mx-2">Footer Color :</p>
-                        <input id="ftColorInp" type="color" value="#aa0f0f">
+                        <input id="ftColorInp" type="color" value="{{ asset($style['footer_color']) }}">
                     </div>
 
                     <div class="d-flex">
                         <!-- calender background -->
                         <p class="mx-2">Calender Color :</p>
-                        <input id="calColorInp" type="color" value="#f5f2ee">
+                        <input id="calColorInp" type="color" value="{{ asset($style['bg_color']) }}">
                     </div>
 
                     <div class="d-index text-center mt-4">
