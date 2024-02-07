@@ -326,14 +326,14 @@ input {
     margin: 0 auto;
 }
 
-.offcanvas-body p {
+.styleOffcanvas p {
     padding-left: 2rem;
     font-weight: bolder;
     font-size: smaller;
     margin-right: 1rem;
 }
 
-.offcanvas-body {
+.styleOffcanvas {
     display: flex;
     flex-direction: column;
     justify-content: center;

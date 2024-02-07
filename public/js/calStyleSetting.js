@@ -1,11 +1,17 @@
 var headers = {
     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
 }
+
+// OFFCANVAS 表單
 var mainImgInp = document.getElementById("mainImgInp");
 
 var headerImgInp = document.getElementById("headerImgInp");
 
 var footerImgInp = document.getElementById("footerImgInp");
+
+var ftColorInp = document.getElementById("ftColorInp");
+
+var calColorInp = document.getElementById("calColorInp");
 
 var mainImgPre = document.getElementById("mainImgPre");
 
@@ -13,12 +19,22 @@ var headerImgPre = document.getElementById("headerImgPre");
 
 var footerImgPre = document.getElementById("footerImgPre");
 
+var styleCanvas = document.getElementById("offcanvasRight");
+
 var offcanvasSmt = document.getElementById("offcanvasSmt");
 
-var ftColorInp = document.getElementById("ftColorInp");
+var offcanvasId = offcanvasSmt.getAttribute("data-id");
 
-var calColorInp = document.getElementById("calColorInp");
+// 月曆頁
+var mainImg = document.getElementById("mainImg");
 
+var headerImg = document.getElementById("headerImg");
+
+var footerImg = document.getElementById("footerImg");
+
+var footer = document.querySelector(".footer");
+
+var oddCalElements = document.querySelectorAll(".singleDay:nth-child(odd)");
 
 /**
  * (通用)上傳img同時預覽、可刪除
@@ -38,7 +54,35 @@ function previewSelect(event) {
 }
 
 
+/**
+ * 監聽offcanvas表單元素的變更事件
+ */
+var offcvsChgs = new FormData();
+styleCanvas.addEventListener('change', function (e) {
+    const target = e.target;
+    const id = offcanvasSmt.getAttribute('data-id');
+    const inpName = target.name;
+    if (target.tagName === 'INPUT') {
+        if (target.type === 'file') {
+            const file = target.files[0];
+            offcvsChgs.append(inpName, file);
+        } else {
+            offcvsChgs.append(inpName, target.value);
+        }
+    }
+})
+
+
 $(document).on("click", "#offcanvasSmt", function (e) {
+
+    if (!offcanvasId) {
+        sendCreatAjax();
+    } else {
+        sendUpdateAjax();
+    }
+})
+
+function sendCreatAjax() {
     const year = offcanvasSmt.getAttribute("data-year");
     const month = offcanvasSmt.getAttribute("data-month");
     const userId = offcanvasSmt.getAttribute("data-userId");
@@ -65,10 +109,48 @@ $(document).on("click", "#offcanvasSmt", function (e) {
         contentType: false,
         processData: false,
         success: function (res) {
-            console.log(res)
+            updateAfterAjax(res);
         },
         error: function (error) {
             console.log(error);
         }
     })
-})
+}
+
+
+function sendUpdateAjax() {
+    $.ajax({
+        url: "/api/calender/style/" + offcanvasId,
+        type: "POST",
+        dataType: "json",
+        headers: headers,
+        data: offcvsChgs,
+        contentType: false,
+        processData: false,
+        success: function (res) {
+            updateAfterAjax(res);
+        },
+        error: function (error) {
+            console.log(error);
+        }
+    })
+    offcvsChgs = new FormData();  // reset
+    styleCanvas.style.display = "none";
+}
+
+
+/**
+ * update style of calender after setting style
+ * @param {*} res = json
+ */
+function updateAfterAjax(res) {
+    mainImg.src = mainImgPre.src = res.mainImg;
+    headerImg.src = headerImgPre.src = res.headerImg;
+    footerImg.src = footerImgPre.src = res.footerImg;
+    footer.style.backgroundColor = res.footer_color;
+    ftColorInp.value = res.footer_color;
+    oddCalElements.forEach(function (element) {
+        element.style.backgroundColor = res.bg_color;
+    });
+    calColorInp.value = res.bg_color;
+}

@@ -4,6 +4,18 @@
 <link rel="stylesheet" href="{{asset('css/calender.css')}}">
 @endsection
 
+@section('style')
+<style>
+    .footer {
+        background-color: {{$style['footer_color']}};
+    }
+
+    .singleDay:nth-child(odd) {
+        background-color: {{$style['bg_color']}};
+    }
+</style>
+@endsection
+
 @section('title','月曆')
 
 @section('content')
@@ -14,9 +26,9 @@
         <!-- 左半邊 -->
         <div class="sideBar py-1 ">
             @if (isset($style['main_img']) && !is_null($style['main_img']))
-            <img src="{{ asset($style['main_img']) }}" alt="主視覺">
+            <img id="mainImg" src="{{ asset($style['main_img']) }}" alt="">
             @else
-            <img src="{{ asset('storage/img/QQsticker.png') }}" alt="主視覺">
+            <img src="{{ asset('storage/img/QQsticker.png') }}" alt="">
             @endif
             <p class="year mt-3">{{$year}}</p>
             <p>
@@ -39,7 +51,7 @@
 
             <div class="footerImg">
                 @if (isset($style['footer_img']) && !is_null($style['footer_img']))
-                <img src="{{ asset($style['footer_img'])}}" alt="footer圖">
+                <img id="footerImg" src="{{ asset($style['footer_img'])}}" alt="">
                 @endif
             </div>
         </div>
@@ -108,11 +120,11 @@
                     <h5 id="offcanvasRightLabel"></h5>
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
-                <div class="offcanvas-body">
+                <div class="offcanvas-body styleOffcanvas">
                     <!-- 主視覺 -->
                     <div class="d-flex">
                         <p>Main IMG :</p>
-                        <input id="mainImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
+                        <input id="mainImgInp" class="imgInput" type="file" accept="image/*" name="main_img" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
                         <img id="mainImgPre" src="{{ asset($style['main_img']) }}" alt="">
@@ -121,7 +133,7 @@
                     <!-- header img -->
                     <div class="d-flex">
                         <p>Header IMG :</p>
-                        <input id="headerImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
+                        <input id="headerImgInp" class="imgInput" type="file" accept="image/*" name="header_img" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
                         <img id="headerImgPre" src="{{ asset($style['header_img']) }}" alt="">
@@ -130,28 +142,28 @@
                     <!-- footer img -->
                     <div class="d-flex ">
                         <p>Footer IMG :</p>
-                        <input id="footerImgInp" class="imgInput" type="file" accept="image/*" onchange="previewSelect(event)">
+                        <input id="footerImgInp" class="imgInput" type="file" accept="image/*" name="footer_img" onchange="previewSelect(event)">
                     </div>
                     <div class="imgSet">
                         <img id="footerImgPre" src="{{ asset($style['footer_img']) }}" alt="">
                     </div>
 
                     <div class="d-flex">
-                        <!-- footer color -->
-                        <p class="mx-2">Footer Color :</p>
-                        <input id="ftColorInp" type="color" value="{{ asset($style['footer_color']) }}">
-                    </div>
-
-                    <div class="d-flex">
                         <!-- calender background -->
                         <p class="mx-2">Calender Color :</p>
-                        <input id="calColorInp" type="color" value="{{ asset($style['bg_color']) }}">
+                        <input id="calColorInp" type="color" value="{{ asset
+($style['bg_color']) }}" name="bg_color">
+                    </div>
+                    <div class="d-flex">
+                        <!-- footer color -->
+                        <p class="mx-2">Footer Color :</p>
+                        <input id="ftColorInp" type="color" value="{{ asset($style['footer_color']) }}" name="footer_color">
                     </div>
 
                     <div class="d-index text-center mt-4">
                         <button type="reset" class="btn btn-secondary px-2 mx-1">清除
                         </button>
-                        <button id="offcanvasSmt" type="button" class="btn btn-warning px-2 mx-1" data-year="{{ $year }}" data-month="{{ $month }}" data-userId="{{ $userId }}">送出</button>
+                        <button id="offcanvasSmt" type="button" class="btn btn-warning px-2 mx-1" data-year="{{ $year }}" data-month="{{ $month }}" data-userId="{{ $userId }}" data-id="{{ $style['id'] }}">送出</button>
                     </div>
                 </div>
             </div>
@@ -162,7 +174,7 @@
             <div class="month d-flex">
                 <p>{{ $month }}</p>
                 @if(isset($style['header_img'] ) && !is_null($style['header_img']))
-                <img src="{{ asset($style['header_img']) }}" alt="headerImg">
+                <img id="headerImg" src="{{ asset($style['header_img']) }}" alt="">
                 @endif
 
                 <!-- icon 區-->

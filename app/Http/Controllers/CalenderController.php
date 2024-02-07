@@ -85,11 +85,11 @@ class CalenderController extends Controller
         $styles = Style::where('user_id', auth()->user()->id)
             ->where('year', $year)
             ->where('month', $month)
-            ->select('main_img', 'header_img', 'footer_img', 'footer_color', 'bg_color')
+            ->select('id', 'main_img', 'header_img', 'footer_img', 'footer_color', 'bg_color')
             ->first();
 
         if (is_null($styles)) {
-            $styles['main_img'] = $styles['header_img'] = $styles['footer_img'] = $styles['footer_color'] = $styles['bg_color'] = null;
+            $styles['id'] = $styles['main_img'] = $styles['header_img'] = $styles['footer_img'] = $styles['footer_color'] = $styles['bg_color'] = null;
         }
         return $styles;
     }
@@ -274,9 +274,9 @@ class CalenderController extends Controller
         $data = $request->all();
         if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
             $imgsUrl = $this->handleImg($request);
-            $data['main_img'] = $imgsUrl['main_img'];
-            $data['header_img'] = $imgsUrl['header_img'];
-            $data['footer_img'] = $imgsUrl['footer_img'];
+            $data['main_img'] = $imgsUrl['main_img'] ?? "";
+            $data['header_img'] = $imgsUrl['header_img'] ?? "";
+            $data['footer_img'] = $imgsUrl['footer_img'] ?? "";
         }
         $data['month'] = $month;
         $data['year'] = $year;
@@ -285,8 +285,20 @@ class CalenderController extends Controller
     }
 
 
-    public function updateStyle()
+    /**
+     * 修改月曆視覺api
+     */
+    public function updateStyle(Request $request, $id)
     {
+        $data = $request->all();
+        if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
+            $imgsUrl = $this->handleImg($request);
+            $data = array_merge($data, $imgsUrl);
+        }
+        $res = Style::where('id', $id)->update($data);
+
+        $newArr =  Style::find($id)->toArray();
+        return Response::json($newArr);
     }
 
 
@@ -308,8 +320,6 @@ class CalenderController extends Controller
                 if ($request->hasFile($type)) {
                     $file = $request->file($type);
                     $res[$type] = $this->ImgProcessing($file, $type);
-                } else {
-                    $res[$type] = "";
                 }
             }
         }
