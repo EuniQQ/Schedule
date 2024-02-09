@@ -161,7 +161,7 @@
                     </div>
 
                     <div class="d-index text-center mt-4">
-                        <button type="reset" class="btn btn-secondary px-2 mx-1">清除
+                        <button id="resetStyleBtn" type="reset" class="btn btn-secondary px-2 mx-1" data-userId="{{ $userId }}" data-id="{{ $style['id'] }}">重置
                         </button>
                         <button id="offcanvasSmt" type="button" class="btn btn-warning px-2 mx-1" data-year="{{ $year }}" data-month="{{ $month }}" data-userId="{{ $userId }}" data-id="{{ $style['id'] }}">送出</button>
                     </div>

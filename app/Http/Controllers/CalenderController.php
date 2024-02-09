@@ -285,6 +285,7 @@ class CalenderController extends Controller
     }
 
 
+    
     /**
      * 修改月曆視覺api
      */
@@ -302,6 +303,29 @@ class CalenderController extends Controller
 
         return Response::json($newArr);
     }
+
+
+
+    /**
+     * 刪除單月月曆視覺api
+     */
+    public function destroyStyle(Request $request, Style $style)
+    {
+        $request = $request->all();
+        if ($style) {
+
+            if (auth()->user()->id == $style->user_id) {
+                $res = $style->delete();
+            } else {
+                abort(403, "權限不足，無法刪除");
+            }
+        } else {
+            abort(404, "查無資料");
+        }
+
+        return Response::json($res);
+    }
+
 
 
     /**

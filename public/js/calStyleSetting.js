@@ -73,14 +73,36 @@ styleCanvas.addEventListener('change', function (e) {
 })
 
 
-$(document).on("click", "#offcanvasSmt", function (e) {
+$(document)
+    .on("click", "#offcanvasSmt", function (e) {
 
-    if (!offcanvasId) {
-        sendCreatAjax();
-    } else {
-        sendUpdateAjax();
-    }
-})
+        if (!offcanvasId) {
+            sendCreatAjax();
+        } else {
+            sendUpdateAjax();
+        }
+    })
+
+    .on("click", "#resetStyleBtn", function (e) {
+        const deleteId = e.target.getAttribute("data-id");
+        const userId = e.target.getAttribute("data-userId");
+        confirm("您是否確認要重置此頁視覺設定?")
+        $.ajax({
+            url: "/api/calender/style/" + deleteId,
+            type: "POST",
+            headers: headers,
+            data: {
+                _method: "DELETE",
+                userId: userId
+            },
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (res) {
+                console.log(res);
+            }
+        })
+    })
 
 function sendCreatAjax() {
     const year = offcanvasSmt.getAttribute("data-year");
