@@ -109,7 +109,9 @@ function sendCreatAjax() {
         contentType: false,
         processData: false,
         success: function (res) {
-            updateAfterAjax(res);
+            // updateAfterAjax(res);
+            console.log(res);
+            window.location.reload();
         },
         error: function (error) {
             console.log(error);
@@ -128,14 +130,16 @@ function sendUpdateAjax() {
         contentType: false,
         processData: false,
         success: function (res) {
-            updateAfterAjax(res);
+            $(".styleSettingOffcvs").hide();
+            $(".offcanvas-backdrop").remove();  // 移除offcanvas的關閉背景
+            // updateAfterAjax(res);
+            window.location.reload();
         },
         error: function (error) {
             console.log(error);
         }
     })
     offcvsChgs = new FormData();  // reset
-    styleCanvas.style.display = "none";
 }
 
 

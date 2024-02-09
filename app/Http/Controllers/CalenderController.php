@@ -298,6 +298,8 @@ class CalenderController extends Controller
         $res = Style::where('id', $id)->update($data);
 
         $newArr =  Style::find($id)->toArray();
+        $newArr['month'] = str_pad($newArr['month'], 2, 0, STR_PAD_LEFT);
+
         return Response::json($newArr);
     }
 
