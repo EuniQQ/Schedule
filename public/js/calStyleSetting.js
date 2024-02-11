@@ -126,7 +126,10 @@ $(document)
                 userId: userId
             },
             success: function (res) {
-                console.log(res);
+                $(".styleSettingOffcvs").hide();
+                $(".offcanvas-backdrop").remove();
+                window.location.reload();
+                alert("重置完成");
             },
             error: function (res) {
                 console.log(res);
@@ -161,7 +164,8 @@ function sendCreatAjax() {
         processData: false,
         success: function (res) {
             // updateAfterAjax(res);
-            console.log(res);
+            $(".styleSettingOffcvs").hide();
+            $(".offcanvas-backdrop").remove();
             window.location.reload();
         },
         error: function (error) {

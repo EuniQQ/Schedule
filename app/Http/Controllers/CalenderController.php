@@ -285,7 +285,7 @@ class CalenderController extends Controller
     }
 
 
-    
+
     /**
      * 修改月曆視覺api
      */
@@ -309,11 +309,11 @@ class CalenderController extends Controller
     /**
      * 刪除單月月曆視覺api
      */
-    public function destroyStyle(Request $request, Style $style)
+    public function destroyStyle(Request $request, $id)
     {
         $request = $request->all();
+        $style = Style::find($id);
         if ($style) {
-
             if (auth()->user()->id == $style->user_id) {
                 $res = $style->delete();
             } else {
