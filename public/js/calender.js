@@ -1,6 +1,3 @@
-var headers = {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-};
 var addModal = document.getElementById('addModal');
 var openModalBtn = document.getElementsByClassName('plusIcon');
 var closeBtn = document.getElementsByClassName('btn-close');
@@ -13,6 +10,38 @@ var saveChgBtn = document.getElementById("editModalSubmit");
 var delBtn = document.getElementById("delModalSubmit");
 var stickerInp = document.getElementById("stickerInp");
 var tagColorInp = document.querySelector("#addModal input[name='tag_color']")
+
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        'Authorization': 'Bearer' + getApiToken()
+    }
+});
+
+
+
+/**
+ * 取得apiToken
+ */
+function getApiToken() {
+    let issetApiToken = document.cookie.indexOf("api_token");
+    let apiToken = issetApiToken > 0 ? getCookie('api_token') : null;
+
+    return apiToken
+}
+
+
+/**
+ * 取得特定cookie值
+ */
+function getCookie(name) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length == 2) {
+        return parts.pop().split(";").shift();
+    }
+}
 
 
 /**

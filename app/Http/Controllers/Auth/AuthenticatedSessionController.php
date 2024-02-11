@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cookie;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -29,6 +30,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $token = $request->user()->createToken('loginToken')->plainTextToken;
+        Cookie::queue("api_token", $token, 86400, null, null, null, false);
+
         return redirect()->intended(RouteServiceProvider::HOME);
     }
 
@@ -42,7 +46,9 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
+        // 撤銷用於驗證當下請求的令牌
+        // $request->user()->currentAccessToken()->delete();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

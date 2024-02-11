@@ -15,13 +15,13 @@ use App\Http\Controllers\CalenderController;
 |
 */
 
-// Route::middleware('auth:sanctum')->group(function () {
-Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);
-Route::delete('/daylySchedule/{id}', [CalenderController::class, 'destroy'])->name('calender.destroy');
-Route::post('/calender/style/{year}/{month}', [CalenderController::class, 'storeStyle'])->name('calender.styleAdd');
-Route::post('/calender/style/{id}', [CalenderController::class, 'updateStyle'])->name('calender.styleUpdate');
-Route::delete('/calender/style/{id}', [CalenderController::class, 'destroyStyle'])->name('calender.styleDelete');
-Route::get('/user', function (Request $request) {
-    return $request->user();
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);
+    Route::delete('/daylySchedule/{id}', [CalenderController::class, 'destroy'])->name('calender.destroy');
+    Route::post('/calender/style/{year}/{month}', [CalenderController::class, 'storeStyle'])->name('calender.styleAdd');
+    Route::post('/calender/style/{id}', [CalenderController::class, 'updateStyle'])->name('calender.styleUpdate');
+    Route::delete('/calender/style/{id}', [CalenderController::class, 'destroyStyle'])->name('calender.styleDelete');
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
 });
-// });

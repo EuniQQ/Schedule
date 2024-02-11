@@ -1,7 +1,3 @@
-var headers = {
-    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-}
-
 // OFFCANVAS 表單
 var mainImgInp = document.getElementById("mainImgInp");
 
@@ -36,8 +32,43 @@ var footer = document.querySelector(".footer");
 
 var oddCalElements = document.querySelectorAll(".singleDay:nth-child(odd)");
 
+
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+        'Authorization': 'Bearer' + getApiToken()
+    }
+});
+
+
+
 /**
- * (通用)上傳img同時預覽、可刪除
+ * 取得apiToken
+ */
+function getApiToken() {
+    let issetApiToken = document.cookie.indexOf("api_token");
+    let apiToken = issetApiToken > 0 ? getCookie('api_token') : null;
+
+    return apiToken
+}
+
+
+/**
+ * 取得特定cookie值
+ */
+function getCookie(name) {
+    const value = "; " + document.cookie;
+    const parts = value.split("; " + name + "=");
+    if (parts.length == 2) {
+        return parts.pop().split(";").shift();
+    }
+}
+
+
+
+/**
+ * 上傳img同時預覽、可刪除
  */
 function previewSelect(event) {
     const inputId = event.target.id;
@@ -90,7 +121,6 @@ $(document)
         $.ajax({
             url: "/api/calender/style/" + deleteId,
             type: "POST",
-            headers: headers,
             data: {
                 _method: "DELETE",
                 userId: userId
@@ -126,7 +156,6 @@ function sendCreatAjax() {
         url: "/api/calender/style/" + year + "/" + month,
         method: "POST",
         dataType: "json",
-        headers: headers,
         data: formData,
         contentType: false,
         processData: false,
@@ -143,11 +172,11 @@ function sendCreatAjax() {
 
 
 function sendUpdateAjax() {
+
     $.ajax({
         url: "/api/calender/style/" + offcanvasId,
         type: "POST",
         dataType: "json",
-        headers: headers,
         data: offcvsChgs,
         contentType: false,
         processData: false,
