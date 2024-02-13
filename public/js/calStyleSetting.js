@@ -101,6 +101,7 @@ styleCanvas.addEventListener('change', function (e) {
             offcvsChgs.append(inpName, target.value);
         }
     }
+    console.log(target.name + " =" + target.value);
 })
 
 
@@ -137,6 +138,21 @@ $(document)
         })
     })
 
+    .on("click", "#delCalColor", function (e) {
+        calColorInp.value = "#000000";
+        // 加入變更事件中
+        offcvsChgs.append("bg_color", "#000000");
+        console.log("bg_color" + " =" + "#000000");
+
+    })
+
+    .on("click", "#delFtColor", function () {
+        ftColorInp.value = "#000000";
+        offcvsChgs.append("footer_color", "#000000");
+        console.log("footer_color" + " =" + "#000000");
+    })
+
+
 function sendCreatAjax() {
     const year = offcanvasSmt.getAttribute("data-year");
     const month = offcanvasSmt.getAttribute("data-month");
@@ -163,7 +179,6 @@ function sendCreatAjax() {
         contentType: false,
         processData: false,
         success: function (res) {
-            // updateAfterAjax(res);
             $(".styleSettingOffcvs").hide();
             $(".offcanvas-backdrop").remove();
             window.location.reload();
@@ -187,7 +202,6 @@ function sendUpdateAjax() {
         success: function (res) {
             $(".styleSettingOffcvs").hide();
             $(".offcanvas-backdrop").remove();  // 移除offcanvas的關閉背景
-            // updateAfterAjax(res);
             window.location.reload();
         },
         error: function (error) {

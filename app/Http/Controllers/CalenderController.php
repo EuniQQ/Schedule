@@ -292,16 +292,23 @@ class CalenderController extends Controller
     public function updateStyle(Request $request, $id)
     {
         $data = $request->all();
+
         if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
             $imgsUrl = $this->handleImg($request);
             $data = array_merge($data, $imgsUrl);
+        } elseif (isset($data['bg_color']) && $data['bg_color'] == '#000000') {
+            $data['bg_color'] = null;
+        } elseif (isset($data['footer_color']) && $data['footer_color'] == '#000000') {
+            $data['footer_color'] = null;
         }
+
         $res = Style::where('id', $id)->update($data);
 
-        $newArr =  Style::find($id)->toArray();
-        $newArr['month'] = str_pad($newArr['month'], 2, 0, STR_PAD_LEFT);
+        // $newArr =  Style::find($id)->toArray();
+        // 將月份改為有前導0 str
+        // $newArr['month'] = str_pad($newArr['month'], 2, 0, STR_PAD_LEFT);
 
-        return Response::json($newArr);
+        return Response::json(['update_access' => $res]);
     }
 
 

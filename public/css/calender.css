@@ -339,4 +339,19 @@ input {
     justify-content: center;
 }
 
+.colorSet {
+    display: flex;
+    align-items: center;
+}
+
+#delCalColor,
+#delFtColor {
+    color: rgb(58, 86, 136);
+    font-size: x-small;
+    text-decoration: underline;
+    margin-left: 2px;
+    padding: 0;
+}
+
+
 /* style setting offcanvas END*/

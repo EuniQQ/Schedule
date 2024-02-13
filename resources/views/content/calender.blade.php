@@ -148,22 +148,23 @@
                         <img id="footerImgPre" src="{{ asset($style['footer_img']) }}" alt="">
                     </div>
 
-                    <div class="d-flex">
+                    <div class="colorSet">
                         <!-- calender background -->
                         <p class="mx-2">Calender Color :</p>
-                        <input id="calColorInp" type="color" value="{{ asset
-($style['bg_color']) }}" name="bg_color">
+                        <input id="calColorInp" type="color" value="{{ asset($style['bg_color']) }}" name="bg_color">
+                        <span id="delCalColor">Delete</span>
                     </div>
-                    <div class="d-flex">
+                    <div class="colorSet">
                         <!-- footer color -->
                         <p class="mx-2">Footer Color :</p>
                         <input id="ftColorInp" type="color" value="{{ asset($style['footer_color']) }}" name="footer_color">
+                        <span id="delFtColor">Delete</span>
                     </div>
 
                     <div class="d-index text-center mt-4">
-                        <button id="resetStyleBtn" type="reset" class="btn btn-secondary px-2 mx-1" data-userId="{{ $userId }}" data-id="{{ $style['id'] }}">重置
+                        <button id="resetStyleBtn" type="reset" class="secBtn btn btn-secondary px-2 mx-1" data-userId="{{ $userId }}" data-id="{{ $style['id'] }}">重置
                         </button>
-                        <button id="offcanvasSmt" type="button" class="btn btn-warning px-2 mx-1" data-year="{{ $year }}" data-month="{{ $month }}" data-userId="{{ $userId }}" data-id="{{ $style['id'] }}">送出</button>
+                        <button id="offcanvasSmt" type="button" class="warBtn btn btn-warning px-2 mx-1" data-year="{{ $year }}" data-month="{{ $month }}" data-userId="{{ $userId }}" data-id="{{ $style['id'] }}">送出</button>
                     </div>
                 </div>
             </div>
