@@ -118,24 +118,26 @@ $(document)
     .on("click", "#resetStyleBtn", function (e) {
         const deleteId = e.target.getAttribute("data-id");
         const userId = e.target.getAttribute("data-userId");
-        confirm("您是否確認要重置此頁視覺設定?")
-        $.ajax({
-            url: "/api/calender/style/" + deleteId,
-            type: "POST",
-            data: {
-                _method: "DELETE",
-                userId: userId
-            },
-            success: function (res) {
-                $(".styleSettingOffcvs").hide();
-                $(".offcanvas-backdrop").remove();
-                window.location.reload();
-                alert("重置完成");
-            },
-            error: function (res) {
-                console.log(res);
-            }
-        })
+        const yes = confirm("您是否確認要重置此頁視覺設定?");
+        if (yes) {
+            $.ajax({
+                url: "/api/calender/style/" + deleteId,
+                type: "POST",
+                data: {
+                    _method: "DELETE",
+                    userId: userId
+                },
+                success: function (res) {
+                    $(".styleSettingOffcvs").hide();
+                    $(".offcanvas-backdrop").remove();
+                    window.location.reload();
+                    alert("重置完成");
+                },
+                error: function (res) {
+                    console.log(res);
+                }
+            })
+        }
     })
 
     .on("click", "#delCalColor", function (e) {
