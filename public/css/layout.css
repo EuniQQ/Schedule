@@ -23,3 +23,22 @@ body {
     background-color: transparent;
     border: none;
 }
+
+/* 送出/重置鍵 click效果*/
+.warBtn {
+    box-shadow: 0 5px #8f8f8f;
+}
+
+.secBtn {
+    box-shadow: 0 5px #acacac;
+}
+
+.warBtn:active {
+    box-shadow: 0 2px #666;
+    transform: translateY(2px);
+}
+
+.secBtn:active {
+    box-shadow: 0 2px #867307;
+    transform: translateY(2px);
+}
