@@ -10,139 +10,144 @@ var saveChgBtn = document.getElementById("editModalSubmit");
 var delBtn = document.getElementById("delModalSubmit");
 var stickerInp = document.getElementById("stickerInp");
 var tagColorInp = document.querySelector("#addModal input[name='tag_color']")
+var dayNum = document.getElementsByClassName('day');
 
 
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        'Authorization': 'Bearer' + getApiToken()
-    }
-});
+$(document).ready(function () {
 
 
-
-/**
- * 取得apiToken
- */
-function getApiToken() {
-    let issetApiToken = document.cookie.indexOf("api_token");
-    let apiToken = issetApiToken > 0 ? getCookie('api_token') : null;
-
-    return apiToken
-}
-
-
-/**
- * 取得特定cookie值
- */
-function getCookie(name) {
-    const value = "; " + document.cookie;
-    const parts = value.split("; " + name + "=");
-    if (parts.length == 2) {
-        return parts.pop().split(";").shift();
-    }
-}
-
-
-/**
- * 監聽modal表單元素的變更事件
- */
-let changes = {};
-addModal.addEventListener('change', function (e) {
-    const target = e.target;
-    const id = saveChgBtn.getAttribute('data-id');
-    if (target.tagName === 'INPUT') {
-        if (target.type === 'file') {
-            const file = target.files[0];
-            const formData = new FormData();
-            formData.append('sticker', file);
-            changes['sticker'] = formData;
-        } else {
-            changes[target.name] = target.value;
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+            'Authorization': 'Bearer' + getApiToken()
         }
-        console.log(target.name + " =" + changes[target.name]);
+    });
+
+
+
+    /**
+     * 取得apiToken
+     */
+    function getApiToken() {
+        let issetApiToken = document.cookie.indexOf("api_token");
+        let apiToken = issetApiToken > 0 ? getCookie('api_token') : null;
+
+        return apiToken
     }
-})
 
 
-/**
- * 點擊modal以外處，關閉modal
- */
-window.onclick = evt => {
-    if (evt.target == addModal) {
-        addModal.style.display = "none";
+    /**
+     * 取得特定cookie值
+     */
+    function getCookie(name) {
+        const value = "; " + document.cookie;
+        const parts = value.split("; " + name + "=");
+        if (parts.length == 2) {
+            return parts.pop().split(";").shift();
+        }
     }
-}
 
 
-/**
- * 上傳sticker同時預覽
- */
-stickerInp.onchange = evt => {
-    const [file] = stickerInp.files
-    stickerPre.src = URL.createObjectURL(file);
-}
-
-
-
-
-
-$(document)
-    .on("click", ".plusIcon", function (e) {
-        addModal.style.display = "block";
-        const plusIconId = e.target.id;
-        const calenderId = e.target.getAttribute('data-id');
-        $("#addModal input[name='date']").val(plusIconId);
-        $("#addModal input[name='id']").val(calenderId);
-
-        if (calenderId === '') {
-            modalTitle.innerText = "新增行程";
-            saveChgBtn.style.display = "none";
-            saveBtn.style.display = "block";
-            mondalForm.action = "/calender";
-        } else {
-            modalTitle.innerText = "修改行程";
-            getModalContent(calenderId);
-            saveBtn.style.display = "none";
-            saveChgBtn.style.display = "block";
-            saveChgBtn.setAttribute('data-id', calenderId);
-            delBtn.setAttribute('data-id', calenderId);
-            mondalForm.action = "/calender/" + calenderId;
+    /**
+     * 監聽modal表單元素的變更事件
+     */
+    let changes = {};
+    addModal.addEventListener('change', function (e) {
+        const target = e.target;
+        const id = saveChgBtn.getAttribute('data-id');
+        if (target.tagName === 'INPUT') {
+            if (target.type === 'file') {
+                const file = target.files[0];
+                const formData = new FormData();
+                formData.append('sticker', file);
+                changes['sticker'] = formData;
+            } else {
+                changes[target.name] = target.value;
+            }
+            console.log(target.name + " =" + changes[target.name]);
         }
     })
 
-    /**
-     * 關閉modal
-     */
-    .on("click", ".closeModal", function (e) {
-        addModal.style.display = "none";
-    })
 
     /**
-     * 刪除單日行程
+     * 點擊modal以外處，關閉modal
      */
-    .on("click", "#delModalSubmit", function (e) {
-        const calenderId = e.target.getAttribute('data-id');
-        const date = $("#addModal input[name='date']").val();
-        const userId = $("#addModal input[name='user_id']").val();
-        addModal.style.display = "none";
-        $.ajax({
-            url: "/api/daylySchedule/" + calenderId,
-            type: "POST",
-            data: {
-                _method: "DELETE",
-                userId: userId
-            },
-            success: function (res) {
-                alert(res.message);
-                updateDailySchedule(date);
-            },
-            error: function (error) {
-                console.log(error);
+    window.onclick = evt => {
+        if (evt.target == addModal) {
+            addModal.style.display = "none";
+        }
+    }
+
+
+    /**
+     * 上傳sticker同時預覽
+     */
+    stickerInp.onchange = evt => {
+        const [file] = stickerInp.files
+        stickerPre.src = URL.createObjectURL(file);
+    }
+
+
+
+
+
+    $(document)
+        .on("click", ".plusIcon", function (e) {
+            addModal.style.display = "block";
+            const plusIconId = e.target.id;
+            const calenderId = e.target.getAttribute('data-id');
+            $("#addModal input[name='date']").val(plusIconId);
+            $("#addModal input[name='id']").val(calenderId);
+
+            if (calenderId === '') {
+                modalTitle.innerText = "新增行程";
+                saveChgBtn.style.display = "none";
+                saveBtn.style.display = "block";
+                mondalForm.action = "/calender";
+            } else {
+                modalTitle.innerText = "修改行程";
+                getModalContent(calenderId);
+                saveBtn.style.display = "none";
+                saveChgBtn.style.display = "block";
+                saveChgBtn.setAttribute('data-id', calenderId);
+                delBtn.setAttribute('data-id', calenderId);
+                mondalForm.action = "/calender/" + calenderId;
             }
         })
-    })
 
+        /**
+         * 關閉modal
+         */
+        .on("click", ".closeModal", function (e) {
+            addModal.style.display = "none";
+        })
+
+        /**
+         * 刪除單日行程
+         */
+        .on("click", "#delModalSubmit", function (e) {
+            const calenderId = e.target.getAttribute('data-id');
+            const date = $("#addModal input[name='date']").val();
+            const userId = $("#addModal input[name='user_id']").val();
+            addModal.style.display = "none";
+            $.ajax({
+                url: "/api/daylySchedule/" + calenderId,
+                type: "POST",
+                data: {
+                    _method: "DELETE",
+                    userId: userId
+                },
+                success: function (res) {
+                    alert(res.message);
+                    updateDailySchedule(date);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            })
+        })
+
+})
 
 /**
  * 更新已刪除單格內容
@@ -196,3 +201,5 @@ function getModalContent(calenderId) {
         }
     })
 }
+
+

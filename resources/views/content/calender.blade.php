@@ -2,6 +2,7 @@
 
 @section('css')
 <link rel="stylesheet" href="{{asset('css/calender.css')}}">
+<link rel="stylesheet" href="{{asset('css/commonUse.css')}}">
 @endsection
 
 @section('style')

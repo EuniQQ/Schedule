@@ -8,7 +8,7 @@
         <p class="type">日&nbsp;&nbsp;誌</p>
         <p><a href="{{ route('calender.index') }}">·&nbsp;當月月曆</a></p>
         <p>·&nbsp;每月事紀</p>
-        <p>·&nbsp;每日記事</p>
+        <p><a href="{{ route('journal') }}">·&nbsp;每日記事</a></p>
         <p class="type">記&nbsp;&nbsp;帳</p>
         <p>·&nbsp;收入</p>
         <p>·&nbsp;支出</p>

@@ -1,3 +1,2 @@
-
 <!-- search input -->
-<input type="search" name="keyword" id="calYear" placeholder="keyword">
+<input class="m-1" type="search" name="keyword" id="calYear" placeholder="keyword">

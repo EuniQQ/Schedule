@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalenderController;
+use App\Http\Controllers\JournalController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender.index');
     Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
     Route::post('/calender/{id}', [CalenderController::class, 'update'])->name('calender.update');
+    Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
 });
 
 require __DIR__ . '/auth.php';
