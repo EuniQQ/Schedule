@@ -1,61 +1,171 @@
-/* 切版 */
-.content {
-    background-color: rgba(243, 242, 232, 1);
+body{
+    background-color: rgb(233, 231, 213);
+    height:100vh;
+}
+
+.container {
+    width: auto;
+    height: 100vh;
     box-sizing: border-box;
 }
 
-.icons {
-    display: flex;
-    align-items: flex-start;
-    position: absolute;
-    right: 10px;
-    margin-top: 1rem;
+
+/* Banner區 */
+@media(min-width:769px) {
+    .banner {
+        display: flex;
+        background-color: rgb(233, 231, 213);
+        width: 100%;
+        height: 18vh;
+        padding: 0;
+        /* position: fixed; */
+    }
 }
 
-.banner {
-    width: 100vw;
-    height: 20vh;
-    border: 1px solid green;
+
+@media(max-width:768px) {
+    .banner {
+        background-color: rgb(233, 231, 213);
+        width: 100%;
+        padding: 0;
+    }
 }
 
-.main {
-    margin: 0;
-    padding: 0;
-    width: 100vw;
-    height: 80vh;
-    border: 1px solid red;
+
+@media(min-width:769px) {
+    .icons {
+        display: flex;
+        align-items: flex-start;
+        position: fixed;
+        right: 10px;
+        top: 5px;
+    }
 }
 
-.main>.col {
-    display: flex;
-    flex-wrap: wrap;
+
+@media(max-width:768px) {
+    .icon {
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
-/* 上半部 */
-.yearSet {
-    margin: 2rem 0 0 10rem;
+
+@media(min-width:769px) {
+    .years {
+        margin: 1rem 0 0 6rem;
+        height: fit-content;
+    }
+
+    .month {
+        padding: 0 0 0 1.5rem;
+        height: fit-content;
+    }
+
+    .yearSet {
+        display: flex;
+        padding: 0;
+    }
 }
+
+
+@media(max-width:768px) {
+    .years {
+        margin: 1rem 0 0 0;
+        height: fit-content;
+    }
+
+    .month {
+        margin: 1rem 0.5rem 0;
+        height: fit-content;
+    }
+
+    .yearSet {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+
 
 .year {
     font-size: 2rem;
-    line-height: 1rem;
+    margin: 0;
     color: rgba(173, 203, 199, 1);
 }
 
+
+.yearUnderLine {
+    margin: 3px 0;
+}
+
+
 .month p {
+    color: rgba(120, 60, 60, 1);
     font-size: 5rem;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-style: italic;
-    color: rgba(120, 60, 60, 1);
-    margin-top: 1.5rem;
-    padding-left: 2rem;
 }
+
 
 .switchLabel {
     font-weight: bolder;
 }
 
+
 /* 主內容 */
+@media(min-width:769px) {
+
+    .main {
+        background-color: rgb(233, 231, 213);
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 82vh;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+    }
+}
+
+
+@media(max-width:768px) {
+    .main {
+        background-color: rgb(233, 231, 213);
+        margin: 0;
+        padding: 0;
+        width: 100vw;
+    }
+}
+
+
+/* 日期+文字組+照片 */
+@media(min-width:769px) {
+    .dailySet {
+        width: 35%;
+        margin: 0.5rem 3rem;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+}
+
+
+@media(max-width:768px) {
+    .dailySet {
+        width: 100%;
+        padding: 1rem 2rem;
+    }
+}
+
+
+/* 日期+文字組 */
+.dailyCon {
+    display: flex;
+    align-items: center;
+}
+
+
 .date {
     font-size: 1.5rem;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
@@ -64,18 +174,14 @@
     margin-right: 1rem;
 }
 
-.dailySet {
-    margin: 0.5rem 1rem;
-    align-items: center;
-    width: 45%;
-    display: flex;
+
+/* 文字組 */
+.dailyText {
+    border-radius: 40px;
+    background-color: rgb(255, 255, 255);
+    padding: 1rem 1.5rem;
 }
 
-.dailyText {
-    border-radius: 30px;
-    background-color: rgb(255, 255, 255);
-    padding: 1rem;
-}
 
 .dailyText>.topic {
     color: rgb(143, 3, 3);
@@ -83,13 +189,65 @@
     margin-bottom: 5px;
 }
 
-.record {
+
+.dailyText>.text {
     margin: 0;
     text-align: justify;
 }
 
-.topic,
-.record {
-    font-size: 1rem;
 
+.topic,
+.text {
+    font-size: 1rem;
+}
+
+
+@media(min-width:769px) {
+    .photos {
+        width: 80%;
+        display: flex;
+        padding: 10px 0 0 10px;
+    }
+}
+
+
+@media(max-width:768px) {
+    .photos {
+        margin-top: 1rem;
+        width: 80vw;
+    }
+}
+
+
+@media(min-width:769px) {
+
+    .photo,
+    .more {
+        text-align: center;
+        margin: 0 2px;
+    }
+}
+
+
+@media(max-width:768px) {
+
+    .photo,
+    .more {
+        flex: 0 0 18%;
+        margin: 0 2px;
+        padding: 5% 2%;
+    }
+}
+
+
+.photo {
+    background-color: rgb(206, 206, 206);
+    color: aliceblue;
+    padding: 5% 8%;
+}
+
+
+.more {
+    background-color: rgba(246, 217, 68, 1);
+    padding: 5% 5%;
 }
