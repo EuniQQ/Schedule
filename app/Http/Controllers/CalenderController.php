@@ -192,13 +192,12 @@ class CalenderController extends Controller
             'photos_link' => 'url | nullable'
         ]);
 
-        $newSchedul = $validated;
-        $newSchedul['sticker'] = $this->handleImg($request);
-        $newSchedul['user_id'] = auth()->user()->id;
-        if ($newSchedul['tag_color'] == '#000000') {
-            $newSchedul['tag_color'] = null;
+        $validated['sticker'] = isset($validated['sticker']) ? $this->handleImg($request) : null;
+        $validated['user_id'] = auth()->user()->id;
+        if ($validated['tag_color'] == '#000000') {
+            $validated['tag_color'] = null;
         }
-        Calender::create($newSchedul);
+        Calender::create($validated);
 
         return redirect()->back();
     }
@@ -236,7 +235,8 @@ class CalenderController extends Controller
     {
         $newSchedul = $request->all();
         unset($newSchedul['_token']);
-        $newSchedul['sticker'] = $this->handleImg($request);
+        $newSchedul['sticker'] = isset($validated['sticker']) ?
+            $this->handleImg($request) : null;
         $res = Calender::where('id', $id)
             ->update($newSchedul);
         if ($res >= 1) {
