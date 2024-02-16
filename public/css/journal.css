@@ -1,6 +1,6 @@
-body{
+body {
     background-color: rgb(233, 231, 213);
-    height:100vh;
+    height: 100vh;
 }
 
 .container {
@@ -177,9 +177,26 @@ body{
 
 /* 文字組 */
 .dailyText {
+    z-index: 10;
     border-radius: 40px;
+    /* border-radius: 40px 0 0 40px; */
+}
+
+.dailyText,
+.editBtn {
     background-color: rgb(255, 255, 255);
     padding: 1rem 1.5rem;
+}
+
+.editBtn {
+    border-radius: 0 40px 40px 0;
+    background: rgb(190, 169, 63);
+    height: 100%;
+    width: auto;
+    color: white;
+    margin: 0;
+    display: none;
+    align-items: center;
 }
 
 
