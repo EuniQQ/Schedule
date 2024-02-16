@@ -37,7 +37,7 @@ class CalenderController extends Controller
             $year = $thisYear;
         }
 
-        $hebrewYear = 5783 + ($year - 2024);
+        $hebrewYear = 5783 + (intval($year) - 2024);
 
         // 其他參數
         $finance = $this->getFinance($year, $month);

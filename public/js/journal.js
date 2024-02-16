@@ -44,9 +44,7 @@ function getJournals() {
     const year = today.getFullYear();
     const month = today.getMonth() + 1;
     const monthStr = month < 10 ? '0' + month : month;
-    console.log(year);
-    console.log(monthStr);
-    console.log("/api/journal/" + year + "/" + monthStr);
+
     $.ajax({
         url: "/api/journal/" + year + "/" + monthStr,
         method: "GET",
