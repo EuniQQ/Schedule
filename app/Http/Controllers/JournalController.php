@@ -31,6 +31,7 @@ class JournalController extends Controller
                 'date' => date('m/d', strtotime($journal->date)),
                 'title' => $journal->title,
                 'content' => $journal->content,
+                'photosLink' => $journal->photo_link,
                 'photos' => $journal->journal_photos->map(function ($photo) {
                     return [
                         'photo_id' => $photo->id,
@@ -45,7 +46,8 @@ class JournalController extends Controller
         $res['hebrewYear'] = 5783 + (intval($year) - 2024);
         $res['month'] = $month;
         $res['data'] = $data;
+        
 
-        return Response::json($data);
+        return Response::json($res);
     }
 }
