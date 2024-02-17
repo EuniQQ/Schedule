@@ -1,7 +1,12 @@
 var dailyTexts = document.getElementsByClassName("dailyText");
+
 var editInps = document.getElementsByClassName("editBtn");
+
 var toggleSwitch = document.getElementById("flexSwitchCheckDefault");
+
 var mainContent = document.getElementById("main");
+
+var editModal = document.getElementById("editJournalModal");
 
 
 $(document).ready(function () {
@@ -15,7 +20,18 @@ $(document).ready(function () {
 
     getJournals();
 
-})
+});
+
+
+
+
+$(document)
+    .on("click", ".editBtn", function (e) {
+        let journalId = e.target.getAttribute("data-id");
+        console.log(journalId);
+        getEditModelData(journalId);
+    })
+
 
 
 
@@ -62,7 +78,10 @@ function getJournals() {
     })
 }
 
-
+/**
+ * create journal list
+ * @param res json
+ */
 function putInValues(res) {
     $("#adYear").val(res.year);
     $("#hebrewYear").val(res.hebrewYear);
@@ -101,11 +120,14 @@ function putInValues(res) {
 
         let editBtn = document.createElement('p');
         editBtn.className = "editBtn";
-        editBtn.id = "edit" + item.id;
+        editBtn.setAttribute("data-id", item.id);
+        editBtn.setAttribute("type", "button");
+        editBtn.setAttribute("data-bs-toggle", "modal");
+        editBtn.setAttribute("data-bs-target", "#editModal");
         editBtn.textContent = "EDIT";
         dailyCon.appendChild(editBtn);
 
-        // 如果有照片
+        // if has photos
         if (item.photos.length > 0) {
             let photos = document.createElement('div');
             photos.classList.add("photos", "d-flex");
@@ -125,7 +147,7 @@ function putInValues(res) {
 
                 let space = document.createElement('div');
 
-                if (k === remain-1) {
+                if (k === remain - 1) {
                     space.innerHTML = "more";
                     space.className = "more";
                     photos.appendChild(space);
@@ -138,4 +160,9 @@ function putInValues(res) {
 
         mainContent.appendChild(fragment);
     })
+}
+
+
+function getEditModelData() {
+
 }

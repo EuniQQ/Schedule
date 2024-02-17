@@ -191,7 +191,9 @@ body {
 .dailyText,
 .editBtn {
     background-color: rgb(255, 255, 255);
-    padding: 1rem 1.5rem;
+    padding: 1rem;
+    font-weight: 500;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .editBtn {
@@ -281,4 +283,20 @@ body {
 .more {
     background-color: rgba(246, 217, 68, 1);
     padding: 10px;
+}
+
+/* Edit Modal*/
+.modal-body {
+    margin: 0 auto;
+}
+
+#editModal>label,
+input {
+    margin: 0.5rem auto;
+}
+
+.photoPre {
+    width: 10rem;
+    height: auto;
+    border: 1px dashed gray;
 }

@@ -9,10 +9,13 @@
 
 @section('content')
 <div class="container">
+
+
     <div class="row d-flex content">
 
         <!-- menu 區 -->
         @include('layouts.menu')
+
 
         <!-- banner 區 -->
         <div class="col banner">
@@ -52,27 +55,64 @@
             </div>
         </div>
 
+        <!-- Edit Modal -->
+        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editModalLabel">編輯日記</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <label for="date">Date :&nbsp;</label>
+                        <input type="date" name="date"><br>
+
+                        <label for="title">Title :&nbsp;</label>
+                        <input type="text" name="title"><br>
+
+                        <label for="text">Content :&nbsp;</label>
+                        <textarea name="content"></textarea><br>
+
+                        <label for="photo1">Photo 1 :&nbsp;</label>
+                        <input type="file" name="photo1">
+                        <div class="photoPre">
+                            <img id="photo1Pre" src="" alt="">
+                        </div>
+
+                        <label for="photo2">Photo 2 :&nbsp;</label>
+                        <input type="file" name="photo2">
+                        <div class="photoPre">
+                            <img id="photo2Pre" src="" alt="">
+                        </div>
+
+                        <label for="photo3">Photo 3 :&nbsp;</label>
+                        <input type="file" name="photo3">
+                        <div class="photoPre">
+                            <img id="photo3Pre" src="" alt="">
+                        </div>
+
+                        <label for="photo4">Photo 4 :&nbsp;</label>
+                        <input type="file" name="photo4">
+                        <div class="photoPre">
+                            <img id="photo4Pre" src="" alt="">
+                        </div>
+
+                        <label for="link">Photo's Link :</label>
+                        <input type="url" name="link"><br>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes<button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Edit Modal END-->
+
         <!-- 主內文區 -->
         <div id="main" class="main col col-lg-6 col-md-6 col-sm-12">
-            <!-- 單則內容 -->
-            <!-- <div class="dailySet"> -->
-            <!-- <div class="dailyCon"> -->
-            <!-- <p class="date">2/15</p> -->
-            <!-- <div class="dailyText"> -->
-            <!-- <p class="topic">臉圓圓聖誕交換禮物</p> -->
-            <!-- <p class="text">今天臉圓圓在三重 老串角居酒屋，君君和小珠都準備了聖誕禮物，君君送了我們每人兩包燕麥餅乾，小珠則是送了我們一人一條雅詩蘭黛護唇膏</p> -->
-            <!-- </div> -->
-            <!-- <p class="editBtn">EDIT</p> -->
-            <!-- </div> -->
 
-            <!-- <div class="photos d-flex"> -->
-            <!-- <img class="photo" src="/storage/img/journals/01.jpeg" alt=""> -->
-            <!-- <div class="photo"></div> -->
-            <!-- <div class="photo"></div> -->
-            <!-- <div class="photo"></div> -->
-            <!-- <div class="more">more</div> -->
-            <!-- </div> -->
-            <!-- </div> -->
+
         </div>
         @endsection
 
