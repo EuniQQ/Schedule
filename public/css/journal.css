@@ -5,8 +5,6 @@ body {
 
 .container {
     width: auto;
-    height: 100vh;
-    box-sizing: border-box;
 }
 
 
@@ -16,9 +14,9 @@ body {
         display: flex;
         background-color: rgb(233, 231, 213);
         width: 100%;
-        height: 18vh;
+        height: 15%;
         padding: 0;
-        /* position: fixed; */
+        margin: 0;
     }
 }
 
@@ -28,6 +26,7 @@ body {
         background-color: rgb(233, 231, 213);
         width: 100%;
         padding: 0;
+        margin: 0;
     }
 }
 
@@ -120,7 +119,7 @@ body {
         margin: 0;
         padding: 0;
         width: 100%;
-        height: 82vh;
+        height: 70%;
         display: flex;
         flex-direction: column;
         flex-wrap: wrap;
@@ -135,6 +134,62 @@ body {
         padding: 0;
         width: 100vw;
     }
+}
+
+/* footer 新增按鈕 */
+footer {
+    height: 10%;
+    margin: 0 auto;
+    padding: 0;
+}
+
+footer div {
+    border: 3px solid rgb(12, 12, 12);
+    border-radius: 10px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: rgb(24, 20, 3);
+    background-color: rgba(246, 217, 68, 1);
+    box-shadow: 0 9px rgb(24, 20, 3);
+    display: none;
+    margin: 0 auto;
+}
+
+footer p {
+    margin: 0 auto;
+}
+
+@media(min-width:1025px) {
+    footer div {
+        width: 15vw;
+        height: 80%;
+        padding-top: 20px;
+    }
+}
+
+@media(min-width:721px) and (max-width:1024px) {
+    footer div {
+        width: 30vw;
+        height: 80%;
+        padding-top: 15px;
+    }
+}
+
+@media(max-width:720px) {
+    footer div {
+        width: 40vw;
+        height: 80%;
+        padding-top: 5px;
+    }
+}
+
+footer div:hover {
+    background-color: rgb(228, 141, 28);
+}
+
+footer div:active {
+    box-shadow: 0 5px rgb(24, 20, 3);
+    transform: translateY(4px);
 }
 
 
@@ -185,7 +240,6 @@ body {
 .dailyText {
     z-index: 10;
     border-radius: 40px;
-    /* border-radius: 40px 0 0 40px; */
 }
 
 .dailyText,
@@ -295,8 +349,19 @@ input {
     margin: 0.5rem auto;
 }
 
-.photoPre {
-    width: 10rem;
-    height: auto;
+
+.imgSet {
     border: 1px dashed gray;
+    width: 150px;
+    height: 100px;
+    margin: 10px auto;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+
+.imgSet img {
+    height: 98px;
+    width: auto;
+    margin: 0 auto;
 }

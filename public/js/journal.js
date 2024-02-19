@@ -6,7 +6,13 @@ var toggleSwitch = document.getElementById("flexSwitchCheckDefault");
 
 var mainContent = document.getElementById("main");
 
-var editModal = document.getElementById("editJournalModal");
+var modal = document.getElementById("editModal");
+
+var modalTitle = document.getElementById("editModalLabel");
+
+var addBtn = document.getElementById("addBtn");
+
+var saveChgBtn = document.getElementsByClassName(".save");
 
 
 $(document).ready(function () {
@@ -24,17 +30,53 @@ $(document).ready(function () {
 
 
 
-
 $(document)
+    .on("click", "#addBtn", function (e) {
+        modalTitle.innerHTML = "新增日記";
+    })
+
     .on("click", ".editBtn", function (e) {
-        let journalId = e.target.getAttribute("data-id");
-        console.log(journalId);
+        modalTitle.innerHTML = "修改日記";
+        journalId = e.target.getAttribute("data-id");
         getEditModelData(journalId);
     })
 
+    .on("change", ".upload", function (e) {
+        previewSelect(e);
+    })
+
+    .on("click", ".save", function (e) {
+
+        $.ajax({
+            url: "/api/journal",
+            method: "POST",
+            data: changes,
+            processData: false, // 避免 jQuery 對數據進行處理
+            contentType: false, // 告訴 jQuery 不要設置 Content-Type 標頭，因為 FormData 會自動處理
+            success: function (res) {
+                // 
+            },
+            error: function (err) {
+                let errMessage = err.responseJSON.message;
+                let messages = errMessage.split('\n');  // 將err照換行符分成多行
+                const modalBody = document.getElementById('modalBody');
+
+                messages.forEach(message => {
+                    let showErr = document.createElement('div');
+                    showErr.textContent = errMessage;
+                    showErr.className = "alert alert-danger";
+                    modalBody.insertBefore(showErr, modalBody.firstChild);
+                })
+            }
+        })
+        changes = new FormData();
+    })
+// 
 
 
-
+/**
+ * 監聽edit mode是否開啟
+ */
 toggleSwitch.addEventListener("change", function (e) {
     if (e.target.checked) {
 
@@ -44,7 +86,7 @@ toggleSwitch.addEventListener("change", function (e) {
         for (let j = 0; j < editInps.length; j++) {
             editInps[j].style = "display:flex";
         }
-
+        addBtn.style.display = "flex";
     } else {
 
         for (let i = 0; i < dailyTexts.length; i++) {
@@ -53,8 +95,29 @@ toggleSwitch.addEventListener("change", function (e) {
         for (let j = 0; j < editInps.length; j++) {
             editInps[j].style = "display:none";
         }
+        addBtn.style.display = "none";
     }
 })
+
+
+/**
+ * 監聽modal表單元素的變更事件
+ */
+let changes = new FormData();
+modal.addEventListener('change', function (e) {
+    const target = e.target;
+    const id = target.getAttribute('data-id');
+    if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+        if (target.type === 'file') {
+            changes.append(target.name, target.files[0]);
+        } else {
+            changes.append(target.name, target.value);
+        }
+        // console.log(target.name + " =" + changes[target.name]);
+    }
+})
+
+
 
 
 /**
@@ -157,6 +220,9 @@ function putInValues(res) {
                 }
             }
         }
+
+        let add = document.createElement('div');
+
 
         mainContent.appendChild(fragment);
     })

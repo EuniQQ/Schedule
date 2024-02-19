@@ -26,11 +26,11 @@ function getCookie(name) {
 /**
  * 上傳img同時預覽、可刪除
  */
-function previewSelect(event) {
-    const inputId = event.target.id;
+function previewSelect(e) {
+    const inputId = e.target.id;
     const input = document.getElementById(inputId);
     const file = input.files[0];
-    const imgSet = input.parentNode.nextElementSibling;
+    const imgSet = input.nextElementSibling;
     const imgPre = imgSet.querySelector('img');
 
     if (file) {

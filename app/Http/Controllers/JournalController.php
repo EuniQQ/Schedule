@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\Journal;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class JournalController extends Controller
@@ -46,8 +47,64 @@ class JournalController extends Controller
         $res['hebrewYear'] = 5783 + (intval($year) - 2024);
         $res['month'] = $month;
         $res['data'] = $data;
-        
+
 
         return Response::json($res);
+    }
+
+
+
+    public function create(Request $request)
+    {
+        $rule = [
+            'date' => 'required | date',
+            'title' => 'required | string',
+            'content' => 'required | min:30',
+            'photo1 | photo2 | photo3 | photo4 ' => 'file | nullable',
+            'des1 | des2 | des3 | des4' => 'string | nullable',
+            'link' => 'nullable'
+        ];
+
+
+        $_data = $request->post();
+        $validator = Validator::make($_data, $rule, $this->message(), $this->attribute());
+        if ($validator->fails()) {
+            $error = $this->ifValidateFails($validator);
+            return Response(['message' => $error], 422);
+        }
+
+        $validated = $validator->validated();
+        
+
+        return Response::json(['message' => 'ok']);
+    }
+
+
+    protected function message()
+    {
+        return [
+            'required' => ':attribute為必填',
+            'string' => ':attribute必須為文字',
+            'min:30' => ':attribute字數需大於30字',
+            'date' => ':attribute必須為日期格式',
+            'file' => ':attribute必須為檔案格式'
+        ];
+    }
+
+    protected function attribute()
+    {
+        return [
+            'date' => '日期',
+            'title' => '標題',
+            'content' => '內文',
+            'photo1' => '照片1',
+            'photo2' => '照片2',
+            'photo3' => '照片3',
+            'photo4' => '照片4',
+            'des1' => '圖1的照片敘述',
+            'des2' => '圖2的照片敘述',
+            'des3' => '圖3的照片敘述',
+            'des4' => '圖4的照片敘述',
+        ];
     }
 }
