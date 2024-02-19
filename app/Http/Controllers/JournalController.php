@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\Journal;
+use App\Models\Journal_photo;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
+use App\Http\Traits\UploadImgTrait;
 
 class JournalController extends Controller
 {
+    use UploadImgTrait;
+
     public function index()
     {
         return view('content.journal',);
@@ -56,12 +59,19 @@ class JournalController extends Controller
 
     public function create(Request $request)
     {
+
         $rule = [
             'date' => 'required | date',
             'title' => 'required | string',
             'content' => 'required | min:30',
-            'photo1 | photo2 | photo3 | photo4 ' => 'file | nullable',
-            'des1 | des2 | des3 | des4' => 'string | nullable',
+            'photo1 ' => 'file | nullable',
+            'photo2 ' => 'file | nullable',
+            'photo3 ' => 'file | nullable',
+            'photo4 ' => 'file | nullable',
+            'des1' => 'string | nullable',
+            'des2' => 'string | nullable',
+            'des3' => 'string | nullable',
+            'des4' => 'string | nullable',
             'link' => 'nullable'
         ];
 
@@ -74,9 +84,43 @@ class JournalController extends Controller
         }
 
         $validated = $validator->validated();
-        
+        $journal = new Journal;
+        $journal->user_id = auth()->user()->id;
+        $journal->date = $validated['date'];
+        $journal->title = $validated['title'];
+        $journal->content = $validated['content'];
+        $journal->photo_link = isset($validated['link']) ? $validated['link'] : null;
+        $journal->save();
+
+        $insertedId = $journal->id;
+        if ($request->hasAny(['photo1', 'photo2', 'photo3', 'photo4'])) {
+            $this->handleJournalImg($request, $insertedId);
+        }
 
         return Response::json(['message' => 'ok']);
+    }
+
+
+    protected function handleJournalImg($request, $insertedId)
+    {
+        $_data = $request->post();
+
+        for ($i = 1; $i <= 3; $i++) {
+            $name = 'photo' . $i;
+
+            if ($request->hasFile($name)) {
+                $type = 'journal';
+                $file = $request->File($name);
+                $jnPhoto = new Journal_photo;
+                $jnPhoto->journal_id = $insertedId;
+                $jnPhoto->name = $name;
+                $jnPhoto->url = $this->ImgProcessing($file, $type);
+                $desName = "des" . $i;
+                $jnPhoto->description = isset($_data[$desName]) ? $_data[$desName] : null;
+                $jnPhoto->save();
+            }
+            return;
+        }
     }
 
 

@@ -45,16 +45,22 @@ $(document)
         previewSelect(e);
     })
 
+
+    /**
+     * create journal AJAX
+     */
     .on("click", ".save", function (e) {
 
         $.ajax({
             url: "/api/journal",
             method: "POST",
             data: changes,
-            processData: false, // 避免 jQuery 對數據進行處理
-            contentType: false, // 告訴 jQuery 不要設置 Content-Type 標頭，因為 FormData 會自動處理
+            processData: false, // 避免jQuery對數據進行處理
+            contentType: false, // 告訴jQuery不要設置 Content-Type header，因FormData會自動處理
             success: function (res) {
-                // 
+                $("#editModal").hide();
+                $(".modal-backdrop").remove();
+                window.location.reload();
             },
             error: function (err) {
                 let errMessage = err.responseJSON.message;
@@ -71,7 +77,7 @@ $(document)
         })
         changes = new FormData();
     })
-// 
+
 
 
 /**
@@ -100,6 +106,7 @@ toggleSwitch.addEventListener("change", function (e) {
 })
 
 
+
 /**
  * 監聽modal表單元素的變更事件
  */
@@ -113,15 +120,13 @@ modal.addEventListener('change', function (e) {
         } else {
             changes.append(target.name, target.value);
         }
-        // console.log(target.name + " =" + changes[target.name]);
     }
 })
 
 
 
-
 /**
- * get journal list API
+ * get journal list AJAX
  */
 function getJournals() {
     const today = new Date();
