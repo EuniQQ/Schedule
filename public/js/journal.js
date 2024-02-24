@@ -1,18 +1,18 @@
 var dailyTexts = document.getElementsByClassName("dailyText");
 
-var editInps = document.getElementsByClassName("editBtn");
-
 var toggleSwitch = document.getElementById("flexSwitchCheckDefault");
+
+var saveChgBtn = document.getElementsByClassName(".save");
 
 var mainContent = document.getElementById("main");
 
-var modal = document.getElementById("editModal");
-
-var modalTitle = document.getElementById("editModalLabel");
-
 var addBtn = document.getElementById("addBtn");
 
-var saveChgBtn = document.getElementsByClassName(".save");
+var editInps = document.getElementsByClassName("editBtn");
+
+var modal = document.getElementById("editModal");
+
+var modalTitle = document.getElementById("editModalLabel")
 
 
 $(document).ready(function () {
@@ -45,6 +45,32 @@ $(document)
         previewSelect(e);
     })
 
+    /**
+     * clean input val when close modal
+     */
+    .on("click", ".closeEdit", function () {
+        const textInps = document.querySelectorAll('input[type="text"]');
+        const uploadInps = document.querySelectorAll('input[type="upload"]');
+        const imgPres = document.querySelectorAll(".imgSet img");
+        const hiddenInp = document.querySelector('input[type="hidden"]');
+        const dateInp = document.querySelector('input[type="date"]');
+        const contentInp = document.getElementById("moContent");
+        const linkInp = document.querySelector('input[type="url"]');
+
+        textInps.forEach(textInp => {
+            textInp.value = '';
+        });
+
+        uploadInps.forEach(uploadInp => {
+            uploadInp = '';
+        });
+
+        imgPres.forEach(img => {
+            img.src = '';
+        })
+
+        hiddenInp.value = dateInp.value = contentInp.value = linkInp.value = '';
+    })
 
     /**
      * create journal AJAX
@@ -141,10 +167,12 @@ function getJournals() {
             console.log(res);
             putInValues(res);
         },
-        error: function (error) {
+        error: function (err) {
         }
     })
 }
+
+
 
 /**
  * create journal list
@@ -227,13 +255,40 @@ function putInValues(res) {
         }
 
         let add = document.createElement('div');
-
-
         mainContent.appendChild(fragment);
     })
 }
 
 
-function getEditModelData() {
 
+/**
+ * get editing data
+ */
+function getEditModelData(journalId) {
+    $.ajax({
+        url: "api/journal/" + journalId,
+        method: "GET",
+        contentType: "json",
+        success: function (res) {
+            $("#modalBody input[name='id']").val(res[0].id);
+            $("#modalBody input[name='date']").val(res[0].date);
+            $("#modalBody input[name='title']").val(res[0].title);
+            $("#modalBody input[name='link']").val(res[0].photosLink);
+            $("#modalBody textarea[name='content']").val(res[0].content);
+
+            $("#saveEdit").dataset = res[0].id;
+            res[0].photos.forEach(function (photo, i) {
+                let name = 'des' + (i + 1);
+                let imgId = 'photo' + (i + 1) + 'Pre';
+                const des = document.querySelector(`input[name="${name}"]`);
+                const img = document.getElementById(imgId);
+                des.value = photo.description;
+                img.src = photo.url;
+            })
+        },
+        error: function (err) {
+            alert(err.responseJSON.message);
+        }
+    })
 }
+

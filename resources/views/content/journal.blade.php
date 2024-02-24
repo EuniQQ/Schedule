@@ -62,72 +62,66 @@
 
                     <div class="modal-header">
                         <h5 class="modal-title" id="editModalLabel"></h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        <button type="button" class="closeEdit btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
                     <div id="modalBody" class="modal-body">
-                        <label for="date">
+
+                        <input type="hidden" name="id">
+
+                        <label>
                             <p class="d-inline text-danger">*</p>日期 :&nbsp;
                         </label>
-                        <input type="date" name="date" value="{{ old('date') }}"><br>
-                        @error('date')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                        <input type="date" name="date"><br>
 
-                        <label for="title">
+                        <label>
                             <p class="d-inline text-danger">*</p>標題 :&nbsp;
                         </label>
-                        <input type="text" name="title" value="{{ old('title') }}"><br>
-                        @error('title')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                        <input type="text" name="title"><br>
 
-                        <label for="text">
+                        <label>
                             <p class="d-inline text-danger">*</p>內文 :&nbsp;
                         </label>
-                        <textarea name="content" minlength="30" rows="5" cols="30" class="@error('content') is-invalid @enderror"></textarea><br>
-                        @error('content')
-                        <div class="alert alert-danger">{{ $message }}</div>
-                        @enderror
+                        <textarea id="moContent" name="content" minlength="30" rows="5" cols="30" placeholder="寫下美好的一天..."></textarea><br>
 
-                        <label for="photo1">照片1 :&nbsp;</label>
-                        <input id="photo1" class="upload" type="file" name="photo1" value="{{ old('photo1') }}>">
+                        <label>照片1 :&nbsp;</label>
+                        <input class="upload" type="file" name="photo1">
                         <div class="imgSet">
-                            <img id="photo1Pre" src="" alt="">
+                            <img id="photo1Pre">
                         </div>
-                        <label for="des1">照片描述 ：</label>
-                        <input type="text" name="des1" value="{{ old('des1') }}"><br>
+                        <label>照片描述 ：</label>
+                        <input type="text" name="des1"><br>
 
-                        <label for="photo2">照片2 :&nbsp;</label>
-                        <input id="photo2" class="upload" type="file" name="photo2" value="{{ old('photo1') }}>">
+                        <label>照片2 :&nbsp;</label>
+                        <input class="upload" type="file" name="photo2">
                         <div class="imgSet">
-                            <img id="photo2Pre" src="" alt="">
+                            <img id="photo2Pre">
                         </div>
-                        <label for="des2">照片描述 ：</label>
-                        <input type="text" name="des2" value="{{ old('des2') }}"><br>
+                        <label>照片描述 ：</label>
+                        <input type="text" name="des2"><br>
 
-                        <label for="photo3">照片3 :&nbsp;</label>
-                        <input id="photo3" class="upload" type="file" name="photo3" value="{{ old('photo3') }}>">
+                        <label>照片3 :&nbsp;</label>
+                        <input class="upload" type="file" name="photo3">
                         <div class="imgSet">
-                            <img id="photo3Pre" src="" alt="">
+                            <img id="photo3Pre">
                         </div>
-                        <label for="des3">照片描述 ：</label>
-                        <input type="text" name="des3" value="{{ old('des3') }}"><br>
+                        <label>照片描述 ：</label>
+                        <input type="text" name="des3"><br>
 
-                        <label for="photo4">照片4 :&nbsp;</label>
-                        <input id="photo4" class="upload" type="file" name="photo4" value="{{ old('photo4') }}>">
+                        <label>照片4 :&nbsp;</label>
+                        <input class="upload" type="file" name="photo4">
                         <div class="imgSet">
-                            <img id="photo4Pre" src="" alt="">
+                            <img id="photo4Pre">
                         </div>
-                        <label for="des4">照片描述 ：</label>
-                        <input type="text" name="des4" value="{{ old('des4') }}"><br>
+                        <label>照片描述 ：</label>
+                        <input type="text" name="des4"><br>
 
-                        <label for="link">照片集連結 :</label>
-                        <input type="url" name="link" value="{{ old('link') }}"><br>
+                        <labe>照片集連結 :</label>
+                            <input type="url" name="link"><br>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="save btn btn-warning" data-id="">Save<button>
+                        <button type="button" class="closeEdit btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button id="saveEdit" type="button" class="save btn btn-warning">Save<button>
                     </div>
                 </div>
             </div>

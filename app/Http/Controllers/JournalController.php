@@ -19,6 +19,9 @@ class JournalController extends Controller
         return view('content.journal',);
     }
 
+    /**
+     * get journal list
+     */
     public function getJournal($year, $month)
     {
         $searchKey = $year . '-' . $month . '%';
@@ -29,22 +32,8 @@ class JournalController extends Controller
             ->orderBy('date', 'asc')
             ->get();
 
-        $data = $journals->transform(function ($journal) {
-            return [
-                'id' => $journal->id,
-                'date' => date('m/d', strtotime($journal->date)),
-                'title' => $journal->title,
-                'content' => $journal->content,
-                'photosLink' => $journal->photo_link,
-                'photos' => $journal->journal_photos->map(function ($photo) {
-                    return [
-                        'photo_id' => $photo->id,
-                        'url' => $photo->url,
-                        'description' => $photo->description,
-                    ];
-                })
-            ];
-        });
+        $type = 'add';
+        $data = $this->transform($journals, $type);
 
         $res['year'] = $year;
         $res['hebrewYear'] = 5783 + (intval($year) - 2024);
@@ -56,7 +45,9 @@ class JournalController extends Controller
     }
 
 
-
+    /**
+     * add a journal
+     */
     public function create(Request $request)
     {
 
@@ -122,6 +113,44 @@ class JournalController extends Controller
             return;
         }
     }
+
+
+    /**
+     * show the form for editing the specified resource
+     */
+    public function edit($id)
+    {
+        $journals = Journal::where('id', $id)->with('journal_photos')->get();
+        $type = 'edit';
+        $data = $this->transform($journals, $type);
+
+        return response::json($data);
+    }
+
+
+    protected function transform($journals, $type)
+    {
+        $journals->transform(function ($journal) use (&$type) {
+            return [
+                'id' => $journal->id,
+                'date' => $type == "add" ? date('m/d', strtotime($journal->date)) : $journal->date,
+                'title' => $journal->title,
+                'content' => $journal->content,
+                'photosLink' => $journal->photo_link,
+                'photos' => $journal->journal_photos->map(function ($photo) {
+                    return [
+                        'photo_id' => $photo->id,
+                        'url' => $photo->url,
+                        'description' => $photo->description,
+                        'name' => $photo->name
+                    ];
+                })
+            ];
+        });
+
+        return $journals;
+    }
+
 
 
     protected function message()
