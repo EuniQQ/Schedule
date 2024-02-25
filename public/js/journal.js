@@ -202,10 +202,13 @@ function getJournals() {
     const month = today.getMonth() + 1;
     const monthStr = month < 10 ? '0' + month : month;
 
+
+
     $.ajax({
         url: "/api/journal/" + year + "/" + monthStr,
         method: "GET",
         success: function (res) {
+            $("#main").empty();
             putInValues(res);
         },
         error: function (err) {
@@ -234,6 +237,7 @@ function putInValues(res) {
 
         let dailyCon = document.createElement('div');
         dailyCon.className = "dailyCon";
+        dailyCon.id = "daily" + item.id;
         dailySet.appendChild(dailyCon);
 
         let date = document.createElement('p');;

@@ -132,9 +132,7 @@
         <!-- 主內文區 -->
         <div id="main" class="main col col-lg-6 col-md-6 col-sm-12">
         </div>
-        @error('date')
-        <div class="alert alert-danger">{{ $message }}</div>
-        @enderror
+
         <footer>
             <div id="addBtn" data-bs-toggle="modal" data-bs-target="#editModal">
                 <p><i class="fa-regular fa-face-smile-wink"></i>&nbsp;&nbsp;How's Today ?</p>

@@ -196,6 +196,8 @@ class JournalController extends Controller
                 );
             }
         }
+
+        return response::json(['status_code' => 200, 'message' => 'update success']);
     }
 
 
