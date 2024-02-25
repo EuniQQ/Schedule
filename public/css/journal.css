@@ -365,3 +365,7 @@ input {
     width: auto;
     margin: 0 auto;
 }
+
+.save {
+    display: none;
+}

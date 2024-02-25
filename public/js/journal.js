@@ -2,7 +2,9 @@ var dailyTexts = document.getElementsByClassName("dailyText");
 
 var toggleSwitch = document.getElementById("flexSwitchCheckDefault");
 
-var saveChgBtn = document.getElementsByClassName(".save");
+var saveAddBtn = document.getElementById("saveAdd");
+
+var saveChgBtn = document.getElementById("saveEdit");
 
 var mainContent = document.getElementById("main");
 
@@ -12,7 +14,8 @@ var editInps = document.getElementsByClassName("editBtn");
 
 var modal = document.getElementById("editModal");
 
-var modalTitle = document.getElementById("editModalLabel")
+var modalTitle = document.getElementById("editModalLabel");
+
 
 
 $(document).ready(function () {
@@ -33,11 +36,15 @@ $(document).ready(function () {
 $(document)
     .on("click", "#addBtn", function (e) {
         modalTitle.innerHTML = "新增日記";
+        saveAddBtn.style.display = "block";
+        saveChgBtn.style.display = "none";
     })
 
     .on("click", ".editBtn", function (e) {
         modalTitle.innerHTML = "修改日記";
         journalId = e.target.getAttribute("data-id");
+        saveAddBtn.style.display = "none";
+        saveChgBtn.style.display = "block";
         getEditModelData(journalId);
     })
 
@@ -75,7 +82,7 @@ $(document)
     /**
      * create journal AJAX
      */
-    .on("click", ".save", function (e) {
+    .on("click", "#saveAdd", function (e) {
 
         $.ajax({
             url: "/api/journal",
@@ -90,7 +97,8 @@ $(document)
             },
             error: function (err) {
                 let errMessage = err.responseJSON.message;
-                let messages = errMessage.split('\n');  // 將err照換行符分成多行
+                let messages = errMessage.split('\n');  // 將err照換行符分成多
+                行
                 const modalBody = document.getElementById('modalBody');
 
                 messages.forEach(message => {
@@ -102,6 +110,40 @@ $(document)
             }
         })
         changes = new FormData();
+    })
+
+
+    /**
+     * update journal AJAX
+     */
+    .on("click", "#saveEdit", function (e) {
+        let id = $("#saveEdit").data('id');
+        const moDate = document.getElementById('moDate');
+        const moTitle = document.getElementById('moTitle');
+        const moContent = document.getElementById('moContent');
+
+        if (moDate.value == '' || moTitle.value == '' || moContent.value == '') {
+            alert("日期、標題、內文為必填");
+        }
+        else {
+            $.ajax({
+                url: "/api/journal/" + id,
+                method: "POST",
+                data: changes,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    $("#editModal").hide();
+                    $(".modal-backdrop").remove();
+                    getJournals();
+                },
+                error: function (err) {
+                    console.log(err.responseJSON.message);
+                    alert('更新失敗');
+                }
+            });
+            changes = new FormData();
+        }
     })
 
 
@@ -139,7 +181,7 @@ toggleSwitch.addEventListener("change", function (e) {
 let changes = new FormData();
 modal.addEventListener('change', function (e) {
     const target = e.target;
-    const id = target.getAttribute('data-id');
+
     if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
         if (target.type === 'file') {
             changes.append(target.name, target.files[0]);
@@ -164,7 +206,6 @@ function getJournals() {
         url: "/api/journal/" + year + "/" + monthStr,
         method: "GET",
         success: function (res) {
-            console.log(res);
             putInValues(res);
         },
         error: function (err) {
@@ -275,8 +316,10 @@ function getEditModelData(journalId) {
             $("#modalBody input[name='title']").val(res[0].title);
             $("#modalBody input[name='link']").val(res[0].photosLink);
             $("#modalBody textarea[name='content']").val(res[0].content);
+            $("#saveEdit").data('id', res[0].id);
+            console.log(res[0].id);
+            console.log($("#saveEdit").data('id'));
 
-            $("#saveEdit").dataset = res[0].id;
             res[0].photos.forEach(function (photo, i) {
                 let name = 'des' + (i + 1);
                 let imgId = 'photo' + (i + 1) + 'Pre';
@@ -292,3 +335,19 @@ function getEditModelData(journalId) {
     })
 }
 
+/**
+ * 上傳img同時預覽、可刪除
+ */
+function previewSelect(event) {
+    const inputId = event.target.id;
+    const input = document.getElementById(inputId);
+    const file = input.files[0];
+    const imgSet = input.parentNode.nextElementSibling;
+    const imgPre = imgSet.querySelector('img');
+
+    if (file) {
+        imgPre.src = URL.createObjectURL(file);
+    } else {
+        imgPre.src = "";
+    }
+}

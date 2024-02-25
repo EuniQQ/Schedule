@@ -72,12 +72,12 @@
                         <label>
                             <p class="d-inline text-danger">*</p>日期 :&nbsp;
                         </label>
-                        <input type="date" name="date"><br>
+                        <input id="moDate" type="date" name="date"><br>
 
                         <label>
                             <p class="d-inline text-danger">*</p>標題 :&nbsp;
                         </label>
-                        <input type="text" name="title"><br>
+                        <input id="moTitle" type="text" name="title"><br>
 
                         <label>
                             <p class="d-inline text-danger">*</p>內文 :&nbsp;
@@ -85,7 +85,7 @@
                         <textarea id="moContent" name="content" minlength="30" rows="5" cols="30" placeholder="寫下美好的一天..."></textarea><br>
 
                         <label>照片1 :&nbsp;</label>
-                        <input class="upload" type="file" name="photo1">
+                        <input id="photo1" class="upload" type="file" name="photo1">
                         <div class="imgSet">
                             <img id="photo1Pre">
                         </div>
@@ -93,7 +93,7 @@
                         <input type="text" name="des1"><br>
 
                         <label>照片2 :&nbsp;</label>
-                        <input class="upload" type="file" name="photo2">
+                        <input id="photo2" class="upload" type="file" name="photo2">
                         <div class="imgSet">
                             <img id="photo2Pre">
                         </div>
@@ -101,7 +101,7 @@
                         <input type="text" name="des2"><br>
 
                         <label>照片3 :&nbsp;</label>
-                        <input class="upload" type="file" name="photo3">
+                        <input id="photo3" class="upload" type="file" name="photo3">
                         <div class="imgSet">
                             <img id="photo3Pre">
                         </div>
@@ -109,7 +109,7 @@
                         <input type="text" name="des3"><br>
 
                         <label>照片4 :&nbsp;</label>
-                        <input class="upload" type="file" name="photo4">
+                        <input id="photo4" class="upload" type="file" name="photo4">
                         <div class="imgSet">
                             <img id="photo4Pre">
                         </div>
@@ -121,7 +121,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="closeEdit btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button id="saveEdit" type="button" class="save btn btn-warning">Save<button>
+                        <button id="saveAdd" class="save btn btn-primary">Save<button>
+                                <button id="saveEdit" class="save btn btn-warning">Save<button>
                     </div>
                 </div>
             </div>

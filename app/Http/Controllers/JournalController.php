@@ -83,16 +83,16 @@ class JournalController extends Controller
         $journal->photo_link = isset($validated['link']) ? $validated['link'] : null;
         $journal->save();
 
-        $insertedId = $journal->id;
+        $journalId = $journal->id;
         if ($request->hasAny(['photo1', 'photo2', 'photo3', 'photo4'])) {
-            $this->handleJournalImg($request, $insertedId);
+            $this->handleJournalImg($request, $journalId);
         }
 
         return Response::json(['message' => 'ok']);
     }
 
 
-    protected function handleJournalImg($request, $insertedId)
+    protected function handleJournalImg($request, $journalId)
     {
         $_data = $request->post();
 
@@ -103,7 +103,7 @@ class JournalController extends Controller
                 $type = 'journal';
                 $file = $request->File($name);
                 $jnPhoto = new Journal_photo;
-                $jnPhoto->journal_id = $insertedId;
+                $jnPhoto->journal_id = $journalId;
                 $jnPhoto->name = $name;
                 $jnPhoto->url = $this->ImgProcessing($file, $type);
                 $desName = "des" . $i;
@@ -125,6 +125,77 @@ class JournalController extends Controller
         $data = $this->transform($journals, $type);
 
         return response::json($data);
+    }
+
+
+
+    public function update(Request $request, $id)
+    {
+        $request->all();
+        $rule = [
+            'date' => 'date | nullable',
+            'title' => 'string | nullable',
+            'content' => 'min:30 | nullable',
+            'photo1 ' => 'file | nullable',
+            'photo2 ' => 'file | nullable',
+            'photo3 ' => 'file | nullable',
+            'photo4 ' => 'file | nullable',
+            'des1' => 'string | nullable',
+            'des2' => 'string | nullable',
+            'des3' => 'string | nullable',
+            'des4' => 'string | nullable',
+            'link' => 'url | nullable'
+        ];
+
+        $_data = $request->post();
+        $validator = Validator::make($_data, $rule, $this->message(), $this->attribute());
+        if ($validator->fails()) {
+            $error = $this->ifValidateFails($validator);
+            return Response(['message' => $error], 422);
+        }
+
+        $validated = $validator->validated();
+
+        // 更新 DB Journals
+        $textData = array_filter($_data, function ($key) {
+            return strpos($key, "photo") !== 0 && strpos($key, "des") !== 0;
+        }, ARRAY_FILTER_USE_KEY);
+
+        if (!empty($textData)) {
+            Journal::where('id', $id)
+                ->where('user_id', auth()->user()->id)
+                ->update($textData);
+        };
+
+        // 更新 DB Journal_photos
+        $photoData = array_filter($request->allFiles(), function ($key) {
+            return strpos($key, 'photo') === 0 || strpos($key, 'des') === 0;
+        }, ARRAY_FILTER_USE_KEY);
+
+        for ($i = 1; $i <= 3; $i++) {
+            $photoKey = 'photo' . $i;
+            $desKey = 'des' . $i;
+            $type = 'journal';
+            $file = $request->file($photoKey) ?? null;
+            $argArr = ['journal_id' => $id, 'name' => $photoKey];
+
+            if (!is_null($file) && !array_key_exists($desKey, $photoData)) {
+                Journal_photo::updateOrCreate(
+                    $argArr,
+                    ['url' => $this->ImgProcessing($file, $type)]
+                );
+            } elseif (is_null($file) && array_key_exists($desKey, $photoData)) {
+                Journal_photo::updateOrCreate(
+                    $argArr,
+                    ['description' => $photoData[$desKey]]
+                );
+            } elseif (!is_null($file) && array_key_exists($desKey, $photoData)) {
+                Journal_photo::updateOrCreate(
+                    $argArr,
+                    ['description' => $photoData[$desKey], 'url' => $this->ImgProcessing($file, $type), 'journal_id' => $id, 'name' => $photoKey]
+                );
+            }
+        }
     }
 
 
