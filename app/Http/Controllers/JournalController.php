@@ -214,6 +214,22 @@ class JournalController extends Controller
     }
 
 
+
+    public function destroy($id)
+    {
+
+        $journal = auth()->user()->journals->find($id);
+        if ($journal) {
+            $journal->delete();
+
+            return Response::json(['message' => '刪除成功']);
+        } else {
+            abort("Not found !", 404);
+        }
+    }
+
+
+
     protected function transform($journals, $type)
     {
         $journals->transform(function ($journal) use (&$type) {
@@ -236,6 +252,7 @@ class JournalController extends Controller
 
         return $journals;
     }
+
 
 
     protected function getEditingData($id)

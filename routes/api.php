@@ -29,6 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/calender/style/{id}', [CalenderController::class, 'destroyStyle'])->name('calender.styleDelete');
     Route::delete('/daylySchedule/{id}', [CalenderController::class, 'destroy'])->name('calender.destroy');
     Route::delete('/journal/singleImg/{id}', [JournalController::class, 'deleteImg'])->name('journal.singleDel');
+    Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
 
     Route::get('/user', function (Request $request) {
         return $request->user();

@@ -154,6 +154,29 @@ $(document)
 
 
 
+    .on("click", "#del", function (e) {
+        const id = $("#del").data('id');
+        console.log(id);
+        $.ajax({
+            url: "/api/journal/" + id,
+            type: "POST",
+            data: {
+                _method: "DELETE"
+            },
+            success: function (res) {
+                alert(res.message);
+                $("#editModal").hide();
+                $(".modal-backdrop").remove();
+                getJournals();
+            },
+            error: function (err) {
+
+            }
+        })
+    })
+
+
+
 /**
  * 監聽edit mode是否開啟
  */
@@ -337,6 +360,7 @@ function getEditModelData(journalId) {
 }
 
 
+
 /**
  * 填入edit modal的欄位值
  */
@@ -347,6 +371,7 @@ function putValIntoEditModal(res) {
     $("#modalBody input[name='link']").val(res[0].photosLink);
     $("#modalBody textarea[name='content']").val(res[0].content);
     $("#saveEdit").data('id', res[0].id);
+    $("#del").data('id', res[0].id);
 
     res[0].photos.forEach(function (photo, i) {
         let name = 'des' + (i + 1);
@@ -367,23 +392,6 @@ function putValIntoEditModal(res) {
     })
 }
 
-
-/**
- * 上傳img同時預覽、可刪除
- */
-function previewSelect(event) {
-    const inputId = event.target.id;
-    const input = document.getElementById(inputId);
-    const file = input.files[0];
-    const imgSet = input.parentNode.nextElementSibling;
-    const imgPre = imgSet.querySelector('img');
-
-    if (file) {
-        imgPre.src = URL.createObjectURL(file);
-    } else {
-        imgPre.src = "";
-    }
-}
 
 
 /**
@@ -416,3 +424,23 @@ function clearEditModalInp() {
 
     hiddenInp.value = dateInp.value = contentInp.value = linkInp.value = '';
 }
+
+
+
+/**
+ * 上傳img同時預覽、可刪除
+ */
+function previewSelect(event) {
+    const inputId = event.target.id;
+    const input = document.getElementById(inputId);
+    const file = input.files[0];
+    const imgSet = input.parentNode.nextElementSibling;
+    const imgPre = imgSet.querySelector('img');
+
+    if (file) {
+        imgPre.src = URL.createObjectURL(file);
+    } else {
+        imgPre.src = "";
+    }
+}
+

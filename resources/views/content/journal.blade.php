@@ -119,9 +119,10 @@
                             <input type="url" name="link"><br>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="closeEdit btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         <button id="saveAdd" class="save btn btn-primary">Save<button>
-                                <button id="saveEdit" class="save btn btn-warning">Save<button>
+                        <button id="saveEdit" class="save btn btn-warning">Save<button>
+                        <button id="del" class="btn btn-danger">Del</button>
+                        <button type="button" class="closeEdit btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
