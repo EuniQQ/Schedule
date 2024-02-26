@@ -74,7 +74,7 @@ $(document)
             success: function (res) {
                 $("#editModal").hide();
                 $(".modal-backdrop").remove();
-                window.location.reload();
+                getJournals();
             },
             error: function (err) {
                 let errMessage = err.responseJSON.message;
@@ -147,7 +147,7 @@ $(document)
                 getJournals();
             },
             error: function (err) {
-
+                console.log(err.responseJSON.message);
             }
         })
     })
@@ -170,9 +170,53 @@ $(document)
                 getJournals();
             },
             error: function (err) {
-
+                console.log(err.responseJSON.message);
             }
         })
+    })
+
+
+
+    .on("click", ".photo", function (e) {
+        let imgId = e.target.dataId;
+        console.log(imgId)
+        $.ajax({
+            url: "/api/journal/photoModal/" + imgId,
+            method: "GET",
+            success: function (res) {
+
+                const modal = document.createElement('div');
+                modal.className = 'photoModal';
+                const img = document.createElement('img');
+                img.src = e.target.src;
+                img.className = 'modal-content';
+                const p = document.createElement('p');
+                p.className = 'photoModalP';
+                p.innerText = res.description;
+                modal.appendChild(img);
+                modal.appendChild(p);
+                document.body.appendChild(modal);
+
+                modal.onclick = function () {
+                    document.body.appendChild(modal);
+                }
+
+                document.body.onclick = function () {
+                    document.body.removeChild(modal);
+                }
+
+                modal.onclick = function () {
+                    document.body.removeChild(modal);
+                }
+            },
+            error: function (err) {
+                console.log(err.responseJSON.message);
+            }
+        })
+
+
+
+
     })
 
 
@@ -241,6 +285,7 @@ function getJournals() {
             putInValues(res);
         },
         error: function (err) {
+            console.log(err.responseJSON.message);
         }
     })
 }
@@ -305,9 +350,11 @@ function putInValues(res) {
 
             item.photos.forEach(function (item, j) {
                 let img = document.createElement('img');
-                img.dataId = "photo" + item.photo_id;
+                // img.dataId = "photo" + item.photo_id;
+                img.dataId = item.photo_id;
                 img.className = "photo";
                 img.src = item.url;
+
                 photos.appendChild(img);
             });
 

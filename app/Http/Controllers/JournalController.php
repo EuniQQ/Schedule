@@ -16,7 +16,7 @@ class JournalController extends Controller
 
     public function index()
     {
-        return view('content.journal',);
+        return view('content.journal');
     }
 
     /**
@@ -199,6 +199,7 @@ class JournalController extends Controller
     }
 
 
+
     public function deleteImg(Request $request, $id)
     {
         $_data = $request->post();
@@ -226,6 +227,15 @@ class JournalController extends Controller
         } else {
             abort("Not found !", 404);
         }
+    }
+
+
+
+    public function getPhotoDes($id)
+    {
+        $photo = Journal_photo::find($id);
+        $des = $photo->description;
+        return Response::json(['description' => $des]);
     }
 
 
