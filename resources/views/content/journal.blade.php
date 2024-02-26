@@ -87,15 +87,14 @@
                         <label>照片1 :&nbsp;</label>
                         <input id="photo1" class="upload" type="file" name="photo1">
                         <div class="imgSet">
-                            <img id="photo1Pre">
+                            <img id="photo1Pre" class="photoPre">
                         </div>
                         <label>照片描述 ：</label>
                         <input type="text" name="des1"><br>
 
-                        <label>照片2 :&nbsp;</label>
                         <input id="photo2" class="upload" type="file" name="photo2">
                         <div class="imgSet">
-                            <img id="photo2Pre">
+                            <img id="photo2Pre" class="photoPre">
                         </div>
                         <label>照片描述 ：</label>
                         <input type="text" name="des2"><br>
@@ -103,7 +102,7 @@
                         <label>照片3 :&nbsp;</label>
                         <input id="photo3" class="upload" type="file" name="photo3">
                         <div class="imgSet">
-                            <img id="photo3Pre">
+                            <img id="photo3Pre" class="photoPre">
                         </div>
                         <label>照片描述 ：</label>
                         <input type="text" name="des3"><br>
@@ -111,7 +110,7 @@
                         <label>照片4 :&nbsp;</label>
                         <input id="photo4" class="upload" type="file" name="photo4">
                         <div class="imgSet">
-                            <img id="photo4Pre">
+                            <img id="photo4Pre" class="photoPre">
                         </div>
                         <label>照片描述 ：</label>
                         <input type="text" name="des4"><br>

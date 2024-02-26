@@ -16,7 +16,7 @@ var modal = document.getElementById("editModal");
 
 var modalTitle = document.getElementById("editModalLabel");
 
-
+var modalImgPres = document.getElementsByClassName("photoPre");
 
 $(document).ready(function () {
 
@@ -38,6 +38,7 @@ $(document)
         modalTitle.innerHTML = "新增日記";
         saveAddBtn.style.display = "block";
         saveChgBtn.style.display = "none";
+
     })
 
     .on("click", ".editBtn", function (e) {
@@ -63,7 +64,7 @@ $(document)
         const dateInp = document.querySelector('input[type="date"]');
         const contentInp = document.getElementById("moContent");
         const linkInp = document.querySelector('input[type="url"]');
-
+        const delImgBtns = document.querySelectorAll('.delMoImgBtn');
         textInps.forEach(textInp => {
             textInp.value = '';
         });
@@ -74,6 +75,10 @@ $(document)
 
         imgPres.forEach(img => {
             img.src = '';
+        })
+
+        delImgBtns.forEach(delImgBtn => {
+            delImgBtn.remove();
         })
 
         hiddenInp.value = dateInp.value = contentInp.value = linkInp.value = '';
@@ -240,7 +245,7 @@ function putInValues(res) {
         dailyCon.id = "daily" + item.id;
         dailySet.appendChild(dailyCon);
 
-        let date = document.createElement('p');;
+        let date = document.createElement('p');
         date.className = "date";
         date.textContent = item.date;
         dailyCon.appendChild(date);
@@ -287,10 +292,17 @@ function putInValues(res) {
             for (let k = 0; k < remain; k++) {
 
                 let space = document.createElement('div');
-
                 if (k === remain - 1) {
-                    space.innerHTML = "more";
                     space.className = "more";
+                    if (item.photosLink !== null) {
+                        let moreATag = document.createElement('a');
+                        moreATag.href = item.photosLink;
+                        moreATag.innerHTML = "more";
+                        moreATag.target = "_blank";
+                        space.appendChild(moreATag);
+                    } else {
+                        space.innerHTML = "more";
+                    }
                     photos.appendChild(space);
                 } else {
                     space.className = "photo";
@@ -321,8 +333,6 @@ function getEditModelData(journalId) {
             $("#modalBody input[name='link']").val(res[0].photosLink);
             $("#modalBody textarea[name='content']").val(res[0].content);
             $("#saveEdit").data('id', res[0].id);
-            console.log(res[0].id);
-            console.log($("#saveEdit").data('id'));
 
             res[0].photos.forEach(function (photo, i) {
                 let name = 'des' + (i + 1);
@@ -331,6 +341,15 @@ function getEditModelData(journalId) {
                 const img = document.getElementById(imgId);
                 des.value = photo.description;
                 img.src = photo.url;
+
+                // 建立delImg icon在imgPre後面
+                const icon = document.createElement('i');
+                icon.classList.add('delMoImgBtn', 'fa-solid', 'fa-circle-minus', 'fa-2xl');
+                // insertAdjacentElement()可將元素插入另一元素的指定位置
+                img.insertAdjacentElement('afterend', icon);
+
+
+
             })
         },
         error: function (err) {

@@ -366,6 +366,25 @@ input {
     margin: 0 auto;
 }
 
+
 .save {
     display: none;
+}
+
+
+.delMoImgBtn {
+    margin: 0 auto;
+    display: none;
+    position: relative;
+    top: -50px;
+    z-index: 999;
+}
+
+.imgSet:hover .delMoImgBtn {
+    display: block;
+
+}
+
+.imgSet:hover img {
+    opacity: 0.5;
 }
