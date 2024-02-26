@@ -54,34 +54,10 @@ $(document)
     })
 
     /**
-     * clean input val when close modal
+     * clear input val when close modal
      */
     .on("click", ".closeEdit", function () {
-        const textInps = document.querySelectorAll('input[type="text"]');
-        const uploadInps = document.querySelectorAll('input[type="upload"]');
-        const imgPres = document.querySelectorAll(".imgSet img");
-        const hiddenInp = document.querySelector('input[type="hidden"]');
-        const dateInp = document.querySelector('input[type="date"]');
-        const contentInp = document.getElementById("moContent");
-        const linkInp = document.querySelector('input[type="url"]');
-        const delImgBtns = document.querySelectorAll('.delMoImgBtn');
-        textInps.forEach(textInp => {
-            textInp.value = '';
-        });
-
-        uploadInps.forEach(uploadInp => {
-            uploadInp = '';
-        });
-
-        imgPres.forEach(img => {
-            img.src = '';
-        })
-
-        delImgBtns.forEach(delImgBtn => {
-            delImgBtn.remove();
-        })
-
-        hiddenInp.value = dateInp.value = contentInp.value = linkInp.value = '';
+        clearEditModalInp();
     })
 
     /**
@@ -149,6 +125,31 @@ $(document)
             });
             changes = new FormData();
         }
+    })
+
+    /**
+     * delete one piece of img of edit modal
+     */
+    .on("click", ".delMoImgBtn", function (e) {
+        let imgId = e.target.getAttribute("data-id");
+        let journalId = e.target.getAttribute("data-journalId");
+        console.log(imgId);
+        $.ajax({
+            url: "/api/journal/singleImg/" + imgId,
+            type: "POST",
+            data: {
+                _method: "DELETE",
+                journalId: journalId
+            },
+            success: function (res) {
+                clearEditModalInp();
+                putValIntoEditModal(res);
+                getJournals();
+            },
+            error: function (err) {
+
+            }
+        })
     })
 
 
@@ -327,36 +328,45 @@ function getEditModelData(journalId) {
         method: "GET",
         contentType: "json",
         success: function (res) {
-            $("#modalBody input[name='id']").val(res[0].id);
-            $("#modalBody input[name='date']").val(res[0].date);
-            $("#modalBody input[name='title']").val(res[0].title);
-            $("#modalBody input[name='link']").val(res[0].photosLink);
-            $("#modalBody textarea[name='content']").val(res[0].content);
-            $("#saveEdit").data('id', res[0].id);
-
-            res[0].photos.forEach(function (photo, i) {
-                let name = 'des' + (i + 1);
-                let imgId = 'photo' + (i + 1) + 'Pre';
-                const des = document.querySelector(`input[name="${name}"]`);
-                const img = document.getElementById(imgId);
-                des.value = photo.description;
-                img.src = photo.url;
-
-                // 建立delImg icon在imgPre後面
-                const icon = document.createElement('i');
-                icon.classList.add('delMoImgBtn', 'fa-solid', 'fa-circle-minus', 'fa-2xl');
-                // insertAdjacentElement()可將元素插入另一元素的指定位置
-                img.insertAdjacentElement('afterend', icon);
-
-
-
-            })
+            putValIntoEditModal(res);
         },
         error: function (err) {
             alert(err.responseJSON.message);
         }
     })
 }
+
+
+/**
+ * 填入edit modal的欄位值
+ */
+function putValIntoEditModal(res) {
+    $("#modalBody input[name='id']").val(res[0].id);
+    $("#modalBody input[name='date']").val(res[0].date);
+    $("#modalBody input[name='title']").val(res[0].title);
+    $("#modalBody input[name='link']").val(res[0].photosLink);
+    $("#modalBody textarea[name='content']").val(res[0].content);
+    $("#saveEdit").data('id', res[0].id);
+
+    res[0].photos.forEach(function (photo, i) {
+        let name = 'des' + (i + 1);
+        let imgId = 'photo' + (i + 1) + 'Pre';
+        const des = document.querySelector(`input[name="${name}"]`);
+        const img = document.getElementById(imgId);
+        des.value = photo.description;
+        img.src = photo.url;
+
+        // 建立delImg icon在imgPre後面
+        const icon = document.createElement('i');
+        icon.classList.add('delMoImgBtn', 'fa-solid',
+            'fa-circle-minus', 'fa-2xl');
+        icon.setAttribute('data-id', photo.photo_id);
+        icon.setAttribute('data-journalId', res[0].id);
+        // insertAdjacentElement()可將元素插入另一元素的指定位置
+        img.insertAdjacentElement('afterend', icon);
+    })
+}
+
 
 /**
  * 上傳img同時預覽、可刪除
@@ -373,4 +383,36 @@ function previewSelect(event) {
     } else {
         imgPre.src = "";
     }
+}
+
+
+/**
+ * 將edit modal所有欄位清空
+ */
+function clearEditModalInp() {
+    const textInps = document.querySelectorAll('input[type="text"]');
+    const uploadInps = document.querySelectorAll('input[type="upload"]');
+    const imgPres = document.querySelectorAll(".imgSet img");
+    const hiddenInp = document.querySelector('input[type="hidden"]');
+    const dateInp = document.querySelector('input[type="date"]');
+    const contentInp = document.getElementById("moContent");
+    const linkInp = document.querySelector('input[type="url"]');
+    const delImgBtns = document.querySelectorAll('.delMoImgBtn');
+    textInps.forEach(textInp => {
+        textInp.value = '';
+    });
+
+    uploadInps.forEach(uploadInp => {
+        uploadInp = '';
+    });
+
+    imgPres.forEach(img => {
+        img.src = '';
+    })
+
+    delImgBtns.forEach(delImgBtn => {
+        delImgBtn.remove();
+    })
+
+    hiddenInp.value = dateInp.value = contentInp.value = linkInp.value = '';
 }

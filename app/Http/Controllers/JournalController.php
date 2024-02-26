@@ -120,9 +120,7 @@ class JournalController extends Controller
      */
     public function edit($id)
     {
-        $journals = Journal::where('id', $id)->with('journal_photos')->get();
-        $type = 'edit';
-        $data = $this->transform($journals, $type);
+        $data = $this->getEditingData($id);
 
         return response::json($data);
     }
@@ -201,6 +199,21 @@ class JournalController extends Controller
     }
 
 
+    public function deleteImg(Request $request, $id)
+    {
+        $_data = $request->post();
+        $journalId = $_data['journalId'];
+        $img = Journal_photo::find($id);
+        if ($img) {
+            $img->delete();
+            $data = $this->getEditingData($journalId);
+            return response::json($data);
+        } else {
+            abort("Not found The Picture", 404);
+        }
+    }
+
+
     protected function transform($journals, $type)
     {
         $journals->transform(function ($journal) use (&$type) {
@@ -224,6 +237,15 @@ class JournalController extends Controller
         return $journals;
     }
 
+
+    protected function getEditingData($id)
+    {
+        $journals = Journal::where('id', $id)->with('journal_photos')->get();
+        $type = 'edit';
+        $data = $this->transform($journals, $type);
+
+        return $data;
+    }
 
 
     protected function message()
