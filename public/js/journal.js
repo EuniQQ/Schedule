@@ -2,6 +2,8 @@ var dailyTexts = document.getElementsByClassName("dailyText");
 
 var toggleSwitch = document.getElementById("flexSwitchCheckDefault");
 
+var searchKey = document.getElementById("searchKey");
+
 var saveAddBtn = document.getElementById("saveAdd");
 
 var saveChgBtn = document.getElementById("saveEdit");
@@ -213,10 +215,6 @@ $(document)
                 console.log(err.responseJSON.message);
             }
         })
-
-
-
-
     })
 
 
@@ -265,6 +263,40 @@ modal.addEventListener('change', function (e) {
 })
 
 
+/**
+ * 監聽search欄位
+ */
+searchKey.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        // 防止預設的enter鍵行為,如換行
+        e.preventDefault();
+
+        if (e.target.value !== '') {
+            let keyword = e.target.value;
+            $.ajax({
+                url: "/api/journal/search",
+                method: "GET",
+                data: {
+                    "keyword": keyword
+                },
+                dataType: "json",
+                success: function (res) {
+                    // while迴圈逐次刪除第一個節點
+                    while (mainContent.hasChildNodes()) {
+                        mainContent.removeChild(mainContent.firstChild);
+                    }
+                    putInValues(res);
+                },
+                error: function (err) {
+                }
+            })
+        } else {
+            getJournals();
+        }
+    }
+})
+
+
 
 /**
  * get journal list AJAX
@@ -275,13 +307,14 @@ function getJournals() {
     const month = today.getMonth() + 1;
     const monthStr = month < 10 ? '0' + month : month;
 
-
-
     $.ajax({
         url: "/api/journal/" + year + "/" + monthStr,
         method: "GET",
         success: function (res) {
             $("#main").empty();
+            $("#adYear").val(res.year);
+            $("#hebrewYear").val(res.hebrewYear);
+            $("#month").val(res.month);
             putInValues(res);
         },
         error: function (err) {
@@ -297,10 +330,6 @@ function getJournals() {
  * @param res json
  */
 function putInValues(res) {
-    $("#adYear").val(res.year);
-    $("#hebrewYear").val(res.hebrewYear);
-    $("#month").val(res.month);
-
     res.data.forEach(function (item, i) {
 
         // 建立fragment虛擬容器

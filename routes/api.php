@@ -19,6 +19,7 @@ use App\Http\Controllers\JournalController;
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);
     Route::get('/journal/photoModal/{id}', [JournalController::class, 'getPhotoDes']);
+    Route::get('/journal/search', [JournalController::class, 'search'])->name('journal.search');
     Route::get('/journal/{id}', [JournalController::class, 'edit'])->name('journal.showEdit');
     Route::get('/journal/{year}/{month}', [JournalController::class, 'getJournal'])->name('journal.index');
 

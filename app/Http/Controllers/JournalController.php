@@ -19,6 +19,8 @@ class JournalController extends Controller
         return view('content.journal');
     }
 
+
+
     /**
      * get journal list
      */
@@ -32,7 +34,7 @@ class JournalController extends Controller
             ->orderBy('date', 'asc')
             ->get();
 
-        $type = 'add';
+        $type = 'index';
         $data = $this->transform($journals, $type);
 
         $res['year'] = $year;
@@ -40,9 +42,35 @@ class JournalController extends Controller
         $res['month'] = $month;
         $res['data'] = $data;
 
-
         return Response::json($res);
     }
+
+
+
+    /**
+     * keyword search
+     */
+    public function search(Request $request)
+    {
+        $_data = $request->keyword;
+        $keyword = '%' . $_data . '%';
+
+        $journals = Journal::where('user_id', auth()->user()->id)
+            ->where('title', 'like', $keyword)
+            ->orWhere('content', 'like', $keyword)
+            ->orWhereHas('journal_photos', function ($query) use ($keyword) {
+                $query->where('description', 'like', $keyword);
+            })
+            ->with('journal_photos')
+            ->orderBy('date', 'asc')
+            ->get();
+
+        $type = "search";
+        $data = $this->transform($journals, $type);
+
+        return Response::json(["data" => $data]);
+    }
+
 
 
     /**
@@ -113,6 +141,7 @@ class JournalController extends Controller
             return;
         }
     }
+
 
 
     /**
@@ -245,7 +274,7 @@ class JournalController extends Controller
         $journals->transform(function ($journal) use (&$type) {
             return [
                 'id' => $journal->id,
-                'date' => $type == "add" ? date('m/d', strtotime($journal->date)) : $journal->date,
+                'date' => $type == "index" ? date('m/d', strtotime($journal->date)) : $journal->date,
                 'title' => $journal->title,
                 'content' => $journal->content,
                 'photosLink' => $journal->photo_link,
