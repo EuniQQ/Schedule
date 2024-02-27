@@ -26,10 +26,18 @@ class JournalController extends Controller
      */
     public function getJournal($year, $month)
     {
-        $searchKey = $year . '-' . $month . '%';
 
-        $journals = Journal::where('journals.user_id', '=', auth()->user()->id)
-            ->where('journals.date', 'like', $searchKey)
+        $query = Journal::where('user_id', auth()->user()->id);
+
+        $dates = $query->orderBy('date')->pluck('date')->all();
+        $yearList = [];
+        foreach ($dates as $date) {
+            $yearOpt = date('Y', strtotime($date));
+            $yearList[] = $yearOpt;
+        }
+
+        $searchKey = $year . '-' . $month . '%';
+        $journals = $query->where('date', 'like', $searchKey)
             ->with('journal_photos')
             ->orderBy('date', 'asc')
             ->get();
@@ -41,7 +49,7 @@ class JournalController extends Controller
         $res['hebrewYear'] = 5783 + (intval($year) - 2024);
         $res['month'] = $month;
         $res['data'] = $data;
-
+        $res['yearList'] = array_unique($yearList);
         return Response::json($res);
     }
 

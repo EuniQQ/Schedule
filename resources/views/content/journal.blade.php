@@ -22,15 +22,15 @@
             <!-- year -->
             <div class="yearSet d-flex">
                 <div class="years">
-                    <p id="adYear" class="year">2024</p>
+                    <p id="adYear" class="year"></p>
                     <div>
                         <hr class="yearUnderLine">
                     </div>
-                    <p id="hebrewYear" class="year">5783</p>
+                    <p id="hebrewYear" class="year"></p>
                 </div>
                 <!-- month -->
                 <div class="month">
-                    <p id="month">12</p>
+                    <p id="month"></p>
                 </div>
             </div>
 
@@ -45,8 +45,8 @@
                 </div>
                 @include("icons.searchKey")
                 <!-- select year -->
-                <select class="m-1">
-                    <option value="2024">2024</option>
+                <select id="jourYearSel" class="m-1">
+                    <!-- <option value=""></option> -->
                 </select>
                 @include("icons.searchMonth")
                 @include("icons.search")
@@ -120,9 +120,9 @@
                     </div>
                     <div class="modal-footer">
                         <button id="saveAdd" class="save btn btn-primary">Save<button>
-                        <button id="saveEdit" class="save btn btn-warning">Save<button>
-                        <button id="del" class="btn btn-danger">Del</button>
-                        <button type="button" class="closeEdit btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button id="saveEdit" class="save btn btn-warning">Save<button>
+                                        <button id="del" class="btn btn-danger">Del</button>
+                                        <button type="button" class="closeEdit btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>

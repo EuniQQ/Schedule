@@ -20,6 +20,10 @@ var modalTitle = document.getElementById("editModalLabel");
 
 var modalImgPres = document.getElementsByClassName("photoPre");
 
+var jourYearSel = document.getElementById('jourYearSel');
+
+var jourMonthSel = document.getElementById("searchMonth");
+
 $(document).ready(function () {
 
     $.ajaxSetup({
@@ -218,6 +222,28 @@ $(document)
     })
 
 
+    .on("click", "#searchIcon", function () {
+        let selectedYear = jourYearSel.value;
+        console.log(selectedYear);
+        let selectedMonth = jourMonthSel.value;
+        console.log(selectedMonth);
+        $.ajax({
+            url: "/api/journal/" + selectedYear + "/" + selectedMonth,
+            method: "GET",
+            success: function (res) {
+                $("#main").empty();
+                $("#adYear").text(res.year);
+                $("#hebrewYear").text(res.hebrewYear);
+                $("#month").text(res.month);
+                putInValues(res);
+            },
+            error: function (err) {
+                console.log(err.responseJSON.message);
+            }
+        })
+    })
+
+
 
 /**
  * 監聽edit mode是否開啟
@@ -312,9 +338,10 @@ function getJournals() {
         method: "GET",
         success: function (res) {
             $("#main").empty();
-            $("#adYear").val(res.year);
-            $("#hebrewYear").val(res.hebrewYear);
-            $("#month").val(res.month);
+            $("#adYear").text(res.year);
+            $("#hebrewYear").text(res.hebrewYear);
+            $("#month").text(res.month);
+            makeYearListOpt(res);
             putInValues(res);
         },
         error: function (err) {
@@ -323,6 +350,16 @@ function getJournals() {
     })
 }
 
+
+function makeYearListOpt(res) {
+
+    jourYearSel.value = res.year;
+    res.yearList.forEach(year => {
+        let opt = document.createElement('option');
+        opt.innerHTML = year;
+        jourYearSel.appendChild(opt);
+    })
+}
 
 
 /**

@@ -1,5 +1,5 @@
 <!-- select month -->
-<select class="m-1 ">
+<select id="searchMonth" class="m-1 ">
     <option value="01">1</option>
     <option value="02">2</option>
     <option value="03">3</option>
