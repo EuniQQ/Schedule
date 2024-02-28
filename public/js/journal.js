@@ -351,10 +351,9 @@ function getJournals() {
 }
 
 
-function makeYearListOpt(res) {
 
-    jourYearSel.value = res.year;
-    res.yearList.forEach(year => {
+function makeYearListOpt(res) {
+    Object.values(res.yearList).forEach(year => {
         let opt = document.createElement('option');
         opt.innerHTML = year;
         jourYearSel.appendChild(opt);
