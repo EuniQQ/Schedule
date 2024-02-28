@@ -129,7 +129,9 @@ class CalenderController extends Controller
                 'week' => '',
                 'isHoliday' => '',
                 'id' => '',
-                'fullDate' => ''
+                'fullDate' => '',
+                'is_mc_start' => '',
+                'is_mc_end' => ''
             ];
         }
 
@@ -186,7 +188,6 @@ class CalenderController extends Controller
             'plan_time' => 'nullable',
             'tag_color' => 'string | nullable',
             'tag_title' => 'string | nullable',
-            'tag_from' => 'date | nullable',
             'tag_to' => 'date | nullable',
             'sticker' => 'image | nullable',
             'photos_link' => 'url | nullable'
@@ -194,12 +195,40 @@ class CalenderController extends Controller
 
         $validated['sticker'] = isset($validated['sticker']) ? $this->handleImg($request) : null;
         $validated['user_id'] = auth()->user()->id;
+
         if ($validated['tag_color'] == '#000000') {
             $validated['tag_color'] = null;
         }
-        Calender::create($validated);
 
-        return redirect()->back();
+        $tagStart = $validated['date'];
+        $tagEnd = $validated['tag_to'];
+        $tagColor = $validated['tag_color'];
+        $this->saveTagColors($tagStart, $tagEnd, $tagColor);
+
+        Calender::create($validated);
+        return redirect()->route('calender.index');
+    }
+
+
+    /**
+     * save days of tag color
+     */
+    protected function saveTagColors($tagStart, $tagEnd, $tagColor)
+    {
+        $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
+
+        if ($tagEnd !== $tagStart && $interval > 0) {
+
+            for ($i = 1; $i <= $interval; $i++) {
+                $addDate = intval($tagStart) + $i;
+                Calender::updateOrCreate(
+                    ['date' => $addDate, 'user_id' => auth()->user()->id],
+                    ['tag_color' => $tagColor]
+                );
+            }
+        }
+
+        return;
     }
 
 
@@ -235,12 +264,16 @@ class CalenderController extends Controller
     {
         $newSchedul = $request->all();
         unset($newSchedul['_token']);
+        unset($newSchedul['formatted_date']);
         $newSchedul['sticker'] = isset($validated['sticker']) ?
             $this->handleImg($request) : null;
+
+        // $this->saveTagColors($tagStart, $tagEnd, $tagColor)
+
         $res = Calender::where('id', $id)
             ->update($newSchedul);
         if ($res >= 1) {
-            return redirect()->back();
+            return redirect()->route('calender.index');
         } else {
             abort(500, '更新失敗');
         }

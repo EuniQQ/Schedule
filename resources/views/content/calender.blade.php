@@ -10,7 +10,6 @@
     .footer {
         background-color: {{$style['footer_color']}};
     }
-
     .singleDay:nth-child(odd) {
         background-color: {{$style['bg_color']}};
     }
@@ -71,8 +70,8 @@
                     <div class="modal-body d-flex">
                         <form id="modalForm" action="" enctype="multipart/form-data" method="post">
                             @csrf
-                            <input type="hidden" name="date" value="">
-                            <input type="hidden" name="id" value="">
+                            <input type="hidden" name="date"><!-- yyyymmdd -->
+                            <input type="hidden" name="id">
                             <input type="hidden" name="user_id" value="{{ $userId }}">
                             <p>【 WHO'S BIRTHDAY 】</p>
                             <label for="name" class="my-2">Name :</label>
@@ -89,7 +88,7 @@
                             <input type="text" id="content" name="plan"><br>
                             <p>【 ADD TAG 】</p>
                             <label for="tag_from">From :</label>
-                            <input type="date" name="tag_from"><br>
+                            <input type="date" name="tag_from" disabled><br>
                             <label for="tag_to">To :</label>
                             <input type="date" name="tag_to"><br>
                             <label for="tagTitle">Tag Title :</label>
@@ -205,8 +204,6 @@
             <div class="calender d-flex">
 
 
-            
-
                 @foreach($calender as $data)
 
                 <!-- 單一格子 -->
@@ -217,15 +214,28 @@
                         @endif
 
                         <div class="firstLayer d-flex">
+                            @if( $data['is_mc_start'] == 1 || $data['is_mc_end'] == 1)
+                            @if( $data['week'] == '六')
+                            <p class="day sat mc">
+                                @elseif($data['isHoliday']== '日' || $data['week'] == '日')
+                            <p class="day sun mc">
+                                @else
+                            <p class="day mc">
+                                @endif
+                                {{$data['date']}}
+                            </p>
+                            @else
                             @if( $data['week'] == '六')
                             <p class="day sat">
-                                @elseif($data['isHoliday']== '日' || $data['week'] == '日')
+                                @elseif($data['isHoliday']== '日' ||
+                                $data['week'] == '日')
                             <p class="day sun">
                                 @else
                             <p class="day">
                                 @endif
                                 {{$data['date']}}
                             </p>
+                            @endif
 
                             <div class="d-flex bthdSet">
                                 @if (isset($data['birthday_person']) && $data['birthday_person'] !== "")

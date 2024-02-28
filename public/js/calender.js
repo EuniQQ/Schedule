@@ -90,15 +90,17 @@ $(document).ready(function () {
 
 
 
-
     $(document)
         .on("click", ".plusIcon", function (e) {
             addModal.style.display = "block";
             const plusIconId = e.target.id;
             const calenderId = e.target.getAttribute('data-id');
+            const formattedDate = formatDate(plusIconId);
+            console.log(formattedDate);
             $("#addModal input[name='date']").val(plusIconId);
             $("#addModal input[name='id']").val(calenderId);
-
+            $("#addModal input[name='tag_from']").val(formattedDate);
+            
             if (calenderId === '') {
                 modalTitle.innerText = "新增行程";
                 saveChgBtn.style.display = "none";
@@ -148,6 +150,19 @@ $(document).ready(function () {
         })
 
 })
+
+
+
+/**
+ * 格式化日期
+ * 以正則表達式將"yyyymmdd"轉為"yyyy-mm-dd"
+ */
+function formatDate(dateStr) {
+    const res = dateStr.replace(/^(\d{4})(\d{2})(\d{2})$/, '$1-$2-$3');
+    return res;
+}
+
+
 
 /**
  * 更新已刪除單格內容
@@ -201,5 +216,4 @@ function getModalContent(calenderId) {
         }
     })
 }
-
 

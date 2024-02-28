@@ -155,9 +155,11 @@
 }
 
 .mc {
-    background-color: rgb(253, 179, 179);
+    background-color: rgb(253, 207, 207);
     border-radius: 50%;
-    padding: 0 3px;
+    padding: 3px;
+    width: 2rem;
+    height: 2rem;
 }
 
 .firstLayer {
