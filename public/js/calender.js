@@ -48,6 +48,8 @@ $(document).ready(function () {
     }
 
 
+
+
     /**
      * 監聽modal表單元素的變更事件
      */
@@ -100,7 +102,6 @@ $(document).ready(function () {
             $("#addModal input[name='date']").val(plusIconId);
             $("#addModal input[name='id']").val(calenderId);
             $("#addModal input[name='tag_from']").val(formattedDate);
-            
             if (calenderId === '') {
                 modalTitle.innerText = "新增行程";
                 saveChgBtn.style.display = "none";
@@ -147,6 +148,22 @@ $(document).ready(function () {
                     console.log(error);
                 }
             })
+        })
+
+        /**
+         * 搜尋特定日期
+         */
+        .on("click", "#searchIcon", function () {
+            const searchYear = document.getElementById
+                ('conYearSel');
+            const searchMon = document.getElementById
+                ('searchMonth');
+            let year = searchYear.value;
+            console.log(year);
+            let month = searchMon.value;
+            console.log(month);
+            let url = "/calender/" + year + "/" + month;
+            window.location = url;
         })
 
 })

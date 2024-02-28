@@ -26,6 +26,7 @@ class CalenderController extends Controller
     {
         $now = Carbon::now()->locale('zh-tw');
         $thisYear = $now->year;
+        $hebrewYear = 5783 + (intval($year) - 2024);
         $thisMonth = $now->month;
         $today = $now->format("d");
         // 月份改成有前導0
@@ -37,7 +38,10 @@ class CalenderController extends Controller
             $year = $thisYear;
         }
 
-        $hebrewYear = 5783 + (intval($year) - 2024);
+        $yearList = [];
+        for ($i = 0; $i < 5; $i++) {
+            $yearList[] = $thisYear - $i;
+        }
 
         // 其他參數
         $finance = $this->getFinance($year, $month);
@@ -55,6 +59,7 @@ class CalenderController extends Controller
             'style' => $style,
             'calender' => $calender,
             'userId' => auth()->user()->id,
+            'yearList' => $yearList
         ];
 
         return view('content.calender', $res);

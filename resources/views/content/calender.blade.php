@@ -8,11 +8,11 @@
 @section('style')
 <style>
     .footer {
-        background-color: {{$style['footer_color']}};
-    }
+    background-color: {{$style['footer_color']}};
+}
     .singleDay:nth-child(odd) {
-        background-color: {{$style['bg_color']}};
-    }
+    background-color: {{$style['bg_color']}};
+}
 </style>
 @endsection
 
@@ -182,8 +182,11 @@
                 <div class="search d-flex">
                     @include("icons.menu")
                     @include("icons.setting")
-                    @include("icons.searchKey")
-                    @include("icons.searchYear")
+                    <select id="conYearSel" class="m-1">
+                        @foreach($yearList as $yearOpt)
+                        <option value="{{ $yearOpt }}">{{ $yearOpt }}</option>
+                        @endforeach
+                    </select>
                     @include("icons.searchMonth")
                     @include("icons.search")
                 </div>
