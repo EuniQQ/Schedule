@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 use Carbon\Carbon;
 use GuzzleHttp\Client;
 use App\Models\Style;
@@ -13,7 +13,7 @@ use App\Models\Calender;
 use App\Models\Income;
 use App\Models\Expense;
 use App\Http\Traits\UploadImgTrait;
-use Illuminate\Http\RedirectResponse;
+
 
 class CalenderController extends Controller
 {
@@ -178,7 +178,8 @@ class CalenderController extends Controller
      */
     public function create(Request $request)
     {
-        $validated = $request->validate([
+        $_data = $request->post();
+        $validator = Validator::make($_data, [
             'user_id' => 'required | integer | exists:App\Models\User,id',
             'date' => 'required | string',
             'birthday_person' => 'string | nullable',
@@ -193,6 +194,12 @@ class CalenderController extends Controller
             'photos_link' => 'url | nullable'
         ]);
 
+        if ($validator->fails()) {
+            $error = $this->ifValidateFails($validator);
+            return Response(['message' => $error], 422);
+        }
+        $validated = $validator->validated();
+
         $validated['sticker'] = isset($validated['sticker']) ? $this->handleImg($request) : null;
         $validated['user_id'] = auth()->user()->id;
 
@@ -200,12 +207,9 @@ class CalenderController extends Controller
             $validated['tag_color'] = null;
         }
 
-        $tagStart = $validated['date'];
-        $tagEnd = $validated['tag_to'];
-        $tagColor = $validated['tag_color'];
-        $this->saveTagColors($tagStart, $tagEnd, $tagColor);
-
         Calender::create($validated);
+        $this->saveTagColors($validated);
+
         return redirect()->route('calender.index');
     }
 
@@ -213,8 +217,11 @@ class CalenderController extends Controller
     /**
      * save days of tag color
      */
-    protected function saveTagColors($tagStart, $tagEnd, $tagColor)
+    protected function saveTagColors($validated)
     {
+        $tagStart = $validated['date'];
+        $tagEnd = $validated['tag_to'];
+        $tagColor = $validated['tag_color'];
         $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
 
         if ($tagEnd !== $tagStart && $interval > 0) {
@@ -262,16 +269,35 @@ class CalenderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $newSchedul = $request->all();
-        unset($newSchedul['_token']);
-        unset($newSchedul['formatted_date']);
-        $newSchedul['sticker'] = isset($validated['sticker']) ?
-            $this->handleImg($request) : null;
+        // $newSchedul = $request->all();
+        $_data = $request->post();
+        $validator = Validator::make($_data, [
+            'user_id' => 'required | integer | exists:App\Models\User,id',
+            'date' => 'required | string',
+            'birthday_person' => 'string | nullable',
+            'is_mc_start' => 'boolean | nullable',
+            'is_mc_end' => 'boolean | nullable',
+            'plan' => 'string | nullable',
+            'plan_time' => 'nullable',
+            'tag_color' => 'string | nullable',
+            'tag_title' => 'string | nullable',
+            'tag_to' => 'date | nullable',
+            'sticker' => 'image | nullable',
+            'photos_link' => 'url | nullable'
+        ]);
 
-        // $this->saveTagColors($tagStart, $tagEnd, $tagColor)
+        if ($validator->fails()) {
+            $error = $this->ifValidateFails($validator);
+            return Response(['message' => $error], 422);
+        }
+        $validated = $validator->validated();
 
-        $res = Calender::where('id', $id)
-            ->update($newSchedul);
+        // unset($_data['_token']);
+        $validated['sticker'] = $this->handleImg($request) ?? null;
+
+        $res = Calender::where('id', $id)->update($validated);
+        $this->saveTagColors($validated);
+
         if ($res >= 1) {
             return redirect()->route('calender.index');
         } else {

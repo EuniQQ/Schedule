@@ -28,12 +28,14 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+    Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
     Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender.index');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
     Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
     Route::post('/calender/{id}', [CalenderController::class, 'update'])->name('calender.update');
-    Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
 });
 
 require __DIR__ . '/auth.php';
