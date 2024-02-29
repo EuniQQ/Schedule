@@ -23,7 +23,7 @@ $(document).ready(function () {
         }
     });
 
-
+    getWeather();
 
     /**
      * 取得apiToken
@@ -49,6 +49,18 @@ $(document).ready(function () {
 
 
 
+    function getWeather() {
+        $.ajax({
+            url:"/api/calender/weather",
+            method: "GET",
+            datatype: "json",
+            success: function (res) {
+                console.log(res);
+            }, error: function (err) {
+
+            }
+        })
+    }
 
     /**
      * 監聽modal表單元素的變更事件
