@@ -196,17 +196,16 @@
     display: flex;
     justify-content: center;
     height: 30%;
-    padding-top: 0.4rem;
-    font-size: smaller;
     font-weight: 800;
-
 }
+
 
 /* sticker */
 .endLayer img {
     border-radius: 50%;
     padding-right: 5px;
 }
+
 
 /* 增加行程model START*/
 .plusIcon {

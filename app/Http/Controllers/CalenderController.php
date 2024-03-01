@@ -179,79 +179,54 @@ class CalenderController extends Controller
     }
 
 
-    public function getWeather()
+    /**
+     * 取得天氣敘述(降雨機率&氣溫)
+     */
+    public function getWeatherDes()
     {
-
         $ch = curl_init();
-        $url = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWB-8CE3FEDC-E7BF-43FA-931F-1AD1B143E0E2&locationName=%E6%B3%B0%E5%B1%B1%E5%8D%80&elementName=&sort=time';
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_ENCODING, '');
-        $result = curl_exec($ch);
-        $decodeResult = json_decode($result);
-        $weathers = $decodeResult->records->locations[0]->location[0]->weatherElement;
 
-        // data group
-        $rainfallGroup = $weathers[0]->time;
-        $desGroup = $weathers[6]->time;
-        $lowestGroup = $weathers[8]->time;
-        $highestGroup = $weathers[12]->time;
-        $dataLength = count($rainfallGroup);
+        $url =  'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWB-8CE3FEDC-E7BF-43FA-931F-1AD1B143E0E2&format=JSON&locationName=%E6%B3%B0%E5%B1%B1%E5%8D%80&elementName=WeatherDescription';
 
-        $res = [];
-        for ($i = 1; $i < $dataLength; $i + 2) {
-            $fullDateTime = $rainfallGroup[$i]->startTime;
-
-            // day
-            $dateParse = carbon::parse($fullDateTime);
-            $day = $dateParse->day;
-
-            // desIntoIcon
-            $des = $desGroup[$i]->elementValue[1]->value;
-            $isSunny = ['01', '24'];
-            $isSunnyWithCloudy = ['02', '03', '25', '26'];
-            $isCloudy = ['04', '05', '06', '07', '27', '28'];
-            $isSunnyWithRain = ['19'];
-            $isCloudyWithRain = ['08', '09', '10', '12', '13', '20', '29', '30', '31', '32'];
-            $isThunderstorm = ['15', '16', '17', '18', '21', '22', '33', '34', '35', '36', '41'];
-            $isSnowing = ['23', '37', '42'];
-            $isRainny = ['11', '14', '38', '39'];
-
-            $urlPrefix = "/storage/img/weather/";
-            if (in_array($des, $isSunny)) {
-                $iconUrl = $urlPrefix . "sun.png";
-            } elseif (in_array($des, $isSunnyWithCloudy)) {
-                $iconUrl = $urlPrefix . "clear-sky.png";
-            } elseif (in_array($des, $isCloudy)) {
-                $iconUrl = $urlPrefix . "cloud.png";
-            } elseif (in_array($des, $isSunnyWithRain)) {
-                $iconUrl = $urlPrefix . "cloudy.png";
-            } elseif (in_array($des, $isCloudyWithRain)) {
-                $iconUrl = $urlPrefix . "rainy-day.png";
-            } elseif (in_array($des, $isThunderstorm)) {
-                $iconUrl = $urlPrefix . "storm.png";
-            } elseif (in_array($des, $isSnowing)) {
-                $iconUrl = $urlPrefix . "snow.png";
-            } elseif (in_array($des, $isRainny)) {
-                $iconUrl = $urlPrefix . "heavy-rain.png";
-            } else {
-                $iconUrl = '';
-            }
-
-            $res[] = [
-                'fullDateTime' => $fullDateTime,
-                'day' => $day,
-                'rain' => $rainfallGroup[$i]->elementValue[0]->value,
-                'lowest' => $lowestGroup[$i]->elementValue[0]->value,
-                'highest' => $highestGroup[$i]->elementValue[0]->value,
-                'img' => $iconUrl,
-            ];
-
-        }
-
-        curl_close($ch);
+        $res = $this->curl($ch, $url);
+        return Response::json($res);
     }
 
+
+    /**
+     * 取得天氣型態(icon)
+     */
+    public function getWeatherType()
+    {
+        $ch = curl_init();
+        $url =  'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWB-8CE3FEDC-E7BF-43FA-931F-1AD1B143E0E2&format=JSON&locationName=%E6%B3%B0%E5%B1%B1%E5%8D%80&elementName=Wx';
+
+        $res = $this->curl($ch, $url);
+        return Response::json($res);
+    }
+
+
+    protected function curl($ch, $url)
+    {
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_ENCODING, '');
+        curl_setopt($ch, CURLOPT_URL, $url);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $decodeResult = json_decode($result);
+        return $decodeResult->records->locations[0]->location[0]->weatherElement[0]->time;
+    }
+
+
+
+    // $ch = curl_init();
+    // // // $url = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWB-8CE3FEDC-E7BF-43FA-931F-1AD1B143E0E2&locationName=%E6%B3%B0%E5%B1%B1%E5%8D%80&elementName=&sort=time';
+    // curl_setopt($ch, CURLOPT_URL, $url);
+    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    // curl_setopt($ch, CURLOPT_ENCODING, '');
+    // $result = curl_exec($ch);
+    // $decodeResult = json_decode($result);
+    // $weathers = $decodeResult->records->locations[0]->location[0]->weatherElement; '30',34',
 
     /**
      * Show the form for creating a new resource.

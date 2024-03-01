@@ -23,7 +23,7 @@ $(document).ready(function () {
         }
     });
 
-    getWeather();
+
 
     /**
      * 取得apiToken
@@ -34,6 +34,8 @@ $(document).ready(function () {
 
         return apiToken
     }
+
+
 
 
     /**
@@ -49,18 +51,145 @@ $(document).ready(function () {
 
 
 
-    function getWeather() {
-        $.ajax({
-            url:"/api/calender/weather",
-            method: "GET",
-            datatype: "json",
-            success: function (res) {
-                console.log(res);
-            }, error: function (err) {
+    getWeatherType();
+    /**
+     * 取得天氣型態api
+     */
+    function getWeatherType() {
 
+        $.ajax({
+            url: "/api/calender/weather/type",
+            method: "GET",
+            success: function (res) {
+                res.forEach(function (val, i) {
+                    if (i % 2 === 0) {
+                        let endTime = res[i].endTime;  //2024-03-01 12:00:00
+                        let day = endTime.slice(0, 10);
+                        let weatherCode = res[i].elementValue[1].value;
+                        chgWeatherCodeToIcon(weatherCode, day);
+                    }
+                });
+                getWeatherDes();
+            }, error: function (err) {
+                console.log(err.responseJSON.message);
             }
         })
     }
+
+
+
+    /**
+     * 根據天氣代號轉換為圖片
+     */
+    function chgWeatherCodeToIcon(weatherCode, day) {
+        const weatherTypes = {
+            isSunny: ['01', '24'],
+            isSunnyWithCloudy: ['02', '03', '25', '26'],
+            isCloudy: ['04', '05', '06', '07', '27', '28'],
+            isSunnyWithRain: ['19'],
+            isCloudyWithRain: ['08', '09', '10', '12', '13', '20', '29', '30',
+                '31', '32'],
+            isThunderstorm: ['15', '16', '17', '18', '21', '22', '33', '34', '35',
+                '36', '41'],
+            isSnowing: ['23', '37', '42'],
+            isRainny: ['11', '14', '38', '39']
+        }
+
+        const typeArr = Object.entries(weatherTypes);
+        const key = typeArr.find(([weatherType, weatherCodes]) => weatherCodes.
+            includes(weatherCode))[0];
+
+        const weatherIcon = {
+            isSunny: "sun.png",
+            isSunnyWithCloudy: "clear-sky.png",
+            isCloudy: "cloud.png",
+            isSunnyWithRain: "cloudy.png",
+            isCloudyWithRain: "rainy-day.png",
+            isThunderstorm: "storm.png",
+            isSnowing: "snow.png",
+            isRainny: "heavy-rain.png"
+        }
+
+        let res = "/storage/img/weather/" + weatherIcon[key];
+        let type = "icon"
+        showWeather(type, day, res);
+    }
+
+
+
+    /**
+     * 取得天氣敘述api
+     */
+    function getWeatherDes() {
+        $.ajax({
+            url: "/api/calender/weather/des",
+            method: "GET",
+            success: function (res) {
+                res.forEach(function (val, i) {
+
+                    if (i % 2 === 0) {
+                        let endTime = res[i].endTime;  //2024-03-01 18:00:00
+                        let day = endTime.slice(0, 10);
+                        let des = res[i].elementValue[0].value;
+
+                        if (i < 7) {
+                            // des ='陰有雨。降雨機率 100%。溫度攝氏11至11度。
+                            let parts = des.split(' ')[1];
+                            let present = parts.split('。')[0];
+                            let tempParts = parts.split('。')[1];
+                            let temperature = tempParts.substring(4).replace("至",
+                                "-").replace("度", "℃");
+                            let res = present + "  " + temperature;
+                            let type = "des";
+                            showWeather(type, day, res);
+
+                        } else {
+                            // des='晴時多雲。溫度攝氏18至30度。稍有寒意至悶熱。
+                            let tempParts = des.split("。")[1];
+                            let temperature = tempParts.substring(4).replace("至",
+                                "-").replace("度", "℃");
+                            let res = temperature;
+                            let type = "des"
+                            showWeather(type, day, res);
+                        }
+                    }
+                });
+            }, error: function (err) {
+                console.log(err.responseJSON.message);
+            }
+        })
+    }
+
+
+
+    /**
+     * 
+     * @param {*} type 資料類型
+     * @param {*} day 資料日期
+     * @param {*} res 天氣資訊
+     */
+    function showWeather(type, day, res) {
+        let parts = day.split('-');
+        let year = parts[0];
+        let month = parts[1];
+        let date = parts[2];
+        let newId = "e" + year + month + date;
+        const endLayer = document.getElementById(newId);
+
+        if (type == 'des') {
+            const p = document.createElement('p');
+            p.textContent = res;
+            p.className = "wthText";
+            endLayer.appendChild(p);
+
+        } else {
+            const img = document.createElement('img');
+            img.src = res;
+            img.className = 'sticker';
+            endLayer.appendChild(img);
+        }
+    }
+
 
     /**
      * 監聽modal表單元素的變更事件
@@ -156,8 +285,8 @@ $(document).ready(function () {
                     alert(res.message);
                     updateDailySchedule(date);
                 },
-                error: function (error) {
-                    console.log(error);
+                error: function (err) {
+                    console.log(err.responseJSON.message);
                 }
             })
         })

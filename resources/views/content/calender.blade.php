@@ -9,10 +9,10 @@
 <style>
     .footer {
     background-color: {{$style['footer_color']}};
-}
+    }
     .singleDay:nth-child(odd) {
     background-color: {{$style['bg_color']}};
-}
+    }
 </style>
 @endsection
 
@@ -277,7 +277,11 @@
                             @if(!empty($data['sticker']))
                             <img class="sticker" src="{{ $data['sticker'] }}" alt="sticker">
                             @endif
-                            <p class="tagText">{{ $data['tag_title']}}</p>
+                            <p class="wthText">{{ $data['tag_title']}}</p>
+                        </div>
+                        @else
+                        <div id="e{{ $data['fullDate'] }}" class="endLayer">
+
                         </div>
                         @endif
                     </div>

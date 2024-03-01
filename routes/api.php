@@ -17,7 +17,8 @@ use App\Http\Controllers\JournalController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/calender/weather',[CalenderController::class,'getWeather'])->name('calender.weather');
+    Route::get('/calender/weather/des', [CalenderController::class, 'getWeatherDes'])->name('calender.weatherDes');
+    Route::get('/calender/weather/type', [CalenderController::class, 'getWeatherType'])->name('calender.weatherType');
     Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);
     Route::get('/journal/photoModal/{id}', [JournalController::class, 'getPhotoDes']);
     Route::get('/journal/search', [JournalController::class, 'search'])->name('journal.search');
