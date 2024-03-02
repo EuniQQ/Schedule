@@ -324,7 +324,7 @@ class CalenderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $newSchedul = $request->all();
+
         $_data = $request->post();
         $validator = Validator::make($_data, [
             'user_id' => 'required | integer | exists:App\Models\User,id',
@@ -348,7 +348,7 @@ class CalenderController extends Controller
         $validated = $validator->validated();
 
         // unset($_data['_token']);
-        $validated['sticker'] = $this->handleImg($request) ?? null;
+        $validated['sticker'] = $request->hasFile('sticker') ? $this->handleImg($request) : null;
 
         $res = Calender::where('id', $id)->update($validated);
         $this->saveTagColors($validated);
