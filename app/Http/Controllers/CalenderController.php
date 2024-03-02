@@ -219,15 +219,6 @@ class CalenderController extends Controller
 
 
 
-    // $ch = curl_init();
-    // // // $url = 'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWB-8CE3FEDC-E7BF-43FA-931F-1AD1B143E0E2&locationName=%E6%B3%B0%E5%B1%B1%E5%8D%80&elementName=&sort=time';
-    // curl_setopt($ch, CURLOPT_URL, $url);
-    // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    // curl_setopt($ch, CURLOPT_ENCODING, '');
-    // $result = curl_exec($ch);
-    // $decodeResult = json_decode($result);
-    // $weathers = $decodeResult->records->locations[0]->location[0]->weatherElement; '30',34',
-
     /**
      * Show the form for creating a new resource.
      */
@@ -280,16 +271,17 @@ class CalenderController extends Controller
         $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
 
         if ($tagEnd !== $tagStart && $interval > 0) {
-
-            for ($i = 1; $i <= $interval; $i++) {
-                $addDate = intval($tagStart) + $i;
-                Calender::updateOrCreate(
-                    ['date' => $addDate, 'user_id' => auth()->user()->id],
-                    ['tag_color' => $tagColor]
-                );
+            // 確認不是黑色，避免誤存
+            if ($validated['tag_color'] !== '#000000') {
+                for ($i = 1; $i <= $interval; $i++) {
+                    $addDate = intval($tagStart) + $i;
+                    Calender::updateOrCreate(
+                        ['date' => $addDate, 'user_id' => auth()->user()->id],
+                        ['tag_color' => $tagColor]
+                    );
+                }
             }
         }
-
         return;
     }
 
