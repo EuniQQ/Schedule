@@ -1,0 +1,303 @@
+{
+  "success": "true",
+  "result": {
+    "resource_id": "F-D0047-071",
+    "fields": [
+      {
+        "id": "contentDescription",
+        "type": "String"
+      },
+      {
+        "id": "datasetDescription",
+        "type": "String"
+      },
+      {
+        "id": "locationsName",
+        "type": "String"
+      },
+      {
+        "id": "dataid",
+        "type": "String"
+      },
+      {
+        "id": "locationName",
+        "type": "String"
+      },
+      {
+        "id": "geocode",
+        "type": "Double"
+      },
+      {
+        "id": "lat",
+        "type": "Double"
+      },
+      {
+        "id": "lon",
+        "type": "Double"
+      },
+      {
+        "id": "elementName",
+        "type": "String"
+      },
+      {
+        "id": "description",
+        "type": "String"
+      },
+      {
+        "id": "startTime",
+        "type": "Timestamp"
+      },
+      {
+        "id": "endTime",
+        "type": "Timestamp"
+      },
+      {
+        "id": "dataTime",
+        "type": "Timestamp"
+      },
+      {
+        "id": "value",
+        "type": "String"
+      },
+      {
+        "id": "measures",
+        "type": "String"
+      }
+    ]
+  },
+  "records": {
+    "locations": [
+      {
+        "datasetDescription": "臺灣各縣市鄉鎮未來1週逐12小時天氣預報",
+        "locationsName": "新北市",
+        "dataid": "D0047-071",
+        "location": [
+          {
+            "locationName": "泰山區",
+            "geocode": "65000160",
+            "lat": "25.061122",
+            "lon": "121.423294",
+            "weatherElement": [
+              {
+                "elementName": "Wx",
+                "description": "天氣現象",
+                "time": [
+                  {
+                    "startTime": "2024-03-03 00:00:00",
+                    "endTime": "2024-03-03 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "陰天",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "07",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-03 06:00:00",
+                    "endTime": "2024-03-03 18:00:00",
+                    "elementValue": [
+                      {
+                        "value": "陰時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "06",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-03 18:00:00",
+                    "endTime": "2024-03-04 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "多雲時晴",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "03",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-04 06:00:00",
+                    "endTime": "2024-03-04 18:00:00",
+                    "elementValue": [
+                      {
+                        "value": "晴時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "02",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-04 18:00:00",
+                    "endTime": "2024-03-05 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "晴時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "02",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-05 06:00:00",
+                    "endTime": "2024-03-05 18:00:00",
+                    "elementValue": [
+                      {
+                        "value": "晴時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "02",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-05 18:00:00",
+                    "endTime": "2024-03-06 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "晴時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "02",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-06 06:00:00",
+                    "endTime": "2024-03-06 18:00:00",
+                    "elementValue": [
+                      {
+                        "value": "陰時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "06",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-06 18:00:00",
+                    "endTime": "2024-03-07 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "陰短暫陣雨",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "11",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-07 06:00:00",
+                    "endTime": "2024-03-07 18:00:00",
+                    "elementValue": [
+                      {
+                        "value": "陰短暫陣雨",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "11",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-07 18:00:00",
+                    "endTime": "2024-03-08 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "04",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-08 06:00:00",
+                    "endTime": "2024-03-08 18:00:00",
+                    "elementValue": [
+                      {
+                        "value": "多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "04",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-08 18:00:00",
+                    "endTime": "2024-03-09 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "晴時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "02",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-09 06:00:00",
+                    "endTime": "2024-03-09 18:00:00",
+                    "elementValue": [
+                      {
+                        "value": "陰時多雲",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "06",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  },
+                  {
+                    "startTime": "2024-03-09 18:00:00",
+                    "endTime": "2024-03-10 06:00:00",
+                    "elementValue": [
+                      {
+                        "value": "多雲時陰",
+                        "measures": "自定義 Wx 文字"
+                      },
+                      {
+                        "value": "05",
+                        "measures": "自定義 Wx 單位"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
