@@ -18,7 +18,7 @@
 
 
         <!-- banner 區 -->
-        <div class="col banner">
+        <div class="col col-12 banner">
             <!-- year -->
             <div class="yearSet d-flex">
                 <div class="years">
@@ -131,6 +131,7 @@
 
         <!-- 主內文區 -->
         <img id="mainImg" src="/storage/img/howstoday.png" data-bs-toggle="modal" data-bs-target="#editModal">
+
         <div id="main" class="main col col-lg-6 col-md-6 col-sm-12">
         </div>
 
@@ -140,11 +141,12 @@
             </div>
         </footer>
 
+    </div>
+</div>
+@endsection
 
-        @endsection
+@section('endJs')
+<script src="/js/journal.js"></script>
+<script src="/js/module.js"></script>
 
-        @section('endJs')
-        <script src="/js/journal.js"></script>
-        <script src="/js/module.js"></script>
-
-        @endsection
+@endsection

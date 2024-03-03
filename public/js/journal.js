@@ -140,7 +140,7 @@ $(document)
     .on("click", ".delMoImgBtn", function (e) {
         let imgId = e.target.getAttribute("data-id");
         let journalId = e.target.getAttribute("data-journalId");
-        console.log(imgId);
+
         $.ajax({
             url: "/api/journal/singleImg/" + imgId,
             type: "POST",
@@ -163,7 +163,7 @@ $(document)
 
     .on("click", "#del", function (e) {
         const id = $("#del").data('id');
-        console.log(id);
+
         $.ajax({
             url: "/api/journal/" + id,
             type: "POST",
@@ -289,6 +289,7 @@ modal.addEventListener('change', function (e) {
 })
 
 
+
 /**
  * 監聽search欄位
  */
@@ -328,15 +329,13 @@ searchKey.addEventListener('keydown', function (e) {
  * 監聽空白頁圖示
  */
 mainImg.addEventListener('mouseover', function (e) {
-    e.target.src = "/storage/img/letsgo.png";
+    e.target.src = "/storage/img/go.png";
 })
 
 mainImg.addEventListener('mouseout', function (e) {
     e.target.src = "/storage/img/howstoday.png";
 })
 
-mainImg.addEventListener('click', function (e) {
-})
 
 
 
