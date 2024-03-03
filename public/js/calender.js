@@ -125,6 +125,7 @@ $(document).ready(function () {
             url: "/api/calender/weather/des",
             method: "GET",
             success: function (res) {
+
                 res.forEach(function (val, i) {
 
                     if (i % 2 === 0) {
@@ -132,7 +133,7 @@ $(document).ready(function () {
                         let day = endTime.slice(0, 10);
                         let des = res[i].elementValue[0].value;
 
-                        if (i < 7) {
+                        if (i < 6) {
                             // des ='陰有雨。降雨機率 100%。溫度攝氏11至11度。
                             let parts = des.split(' ')[1];
                             let present = parts.split('。')[0];

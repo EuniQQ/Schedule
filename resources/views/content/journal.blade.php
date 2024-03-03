@@ -130,6 +130,7 @@
         <!-- Edit Modal END-->
 
         <!-- 主內文區 -->
+        <img id="mainImg" src="/storage/img/howstoday.png" data-bs-toggle="modal" data-bs-target="#editModal">
         <div id="main" class="main col col-lg-6 col-md-6 col-sm-12">
         </div>
 

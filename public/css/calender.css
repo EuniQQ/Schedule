@@ -179,9 +179,25 @@
     padding-left: 0.5rem;
 }
 
-.middleLayer li {
-    font-size: 15px;
-    margin: 0;
+@media(min-width:1025px) {
+    .middleLayer li {
+        font-size: 15px;
+        margin: 0;
+    }
+}
+
+@media(min-width:720px) and (max-width:1024px) {
+    .middleLayer li {
+        font-size: 13px;
+        margin: 0;
+    }
+}
+
+@media(max-width:719px) {
+    .middleLayer li {
+        font-size: 11px;
+        margin: 0;
+    }
 }
 
 .calPlan {
@@ -206,6 +222,21 @@
     padding-right: 5px;
 }
 
+@media(min-width:1025px) {
+    .endLayer p {
+        font-size: 16px;
+        margin-top: 6px;
+    }
+}
+
+@media(min-width:720px) and (max-width:1024px) {
+    .endLayer p {
+        font-size: 13px;
+        margin-top: 3px;
+    }
+}
+
+@media(max-width:719px) {}
 
 /* 增加行程model START*/
 .plusIcon {
@@ -242,6 +273,24 @@
     padding: 20px;
     border: 1px solid #888;
     width: 30%;
+}
+
+@media(min-width:1025px) {
+    .modal-content {
+        width: 30%;
+    }
+}
+
+@media(min-width:720px) and (max-width:1024px) {
+    .modal-content {
+        width: 45%;
+    }
+}
+
+@media(max-width:719px) {
+    .modal-content {
+        width: 60%;
+    }
 }
 
 .modal-body p,

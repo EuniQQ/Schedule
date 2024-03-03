@@ -24,6 +24,8 @@ var jourYearSel = document.getElementById('jourYearSel');
 
 var jourMonthSel = document.getElementById("searchMonth");
 
+var mainImg = document.getElementById("mainImg");
+
 $(document).ready(function () {
 
     $.ajaxSetup({
@@ -40,11 +42,10 @@ $(document).ready(function () {
 
 
 $(document)
-    .on("click", "#addBtn", function (e) {
+    .on("click", "#addBtn,#mainImg", function (e) {
         modalTitle.innerHTML = "新增日記";
         saveAddBtn.style.display = "block";
         saveChgBtn.style.display = "none";
-
     })
 
     .on("click", ".editBtn", function (e) {
@@ -224,9 +225,8 @@ $(document)
 
     .on("click", "#searchIcon", function () {
         let selectedYear = jourYearSel.value;
-        console.log(selectedYear);
         let selectedMonth = jourMonthSel.value;
-        console.log(selectedMonth);
+
         $.ajax({
             url: "/api/journal/" + selectedYear + "/" + selectedMonth,
             method: "GET",
@@ -320,6 +320,22 @@ searchKey.addEventListener('keydown', function (e) {
             getJournals();
         }
     }
+});
+
+
+
+/**
+ * 監聽空白頁圖示
+ */
+mainImg.addEventListener('mouseover', function (e) {
+    e.target.src = "/storage/img/letsgo.png";
+})
+
+mainImg.addEventListener('mouseout', function (e) {
+    e.target.src = "/storage/img/howstoday.png";
+})
+
+mainImg.addEventListener('click', function (e) {
 })
 
 
@@ -366,6 +382,13 @@ function makeYearListOpt(res) {
  * @param res json
  */
 function putInValues(res) {
+
+    if (res.data.length > 0) {
+        mainImg.style = "display:none";
+    } else {
+        mainImg.style = "display:block";
+    }
+
     res.data.forEach(function (item, i) {
 
         // 建立fragment虛擬容器
