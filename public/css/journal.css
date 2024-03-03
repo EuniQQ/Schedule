@@ -413,11 +413,6 @@ input {
 }
 
 
-.save {
-    display: none;
-}
-
-
 .delMoImgBtn {
     margin: 0 auto;
     display: none;
@@ -426,15 +421,16 @@ input {
     z-index: 999;
 }
 
+
 .imgSet:hover .delMoImgBtn {
     display: block;
 
 }
 
+
 .imgSet:hover img {
     opacity: 0.5;
 }
-
 /* edit modal END */
 
 

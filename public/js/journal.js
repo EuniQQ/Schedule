@@ -481,7 +481,7 @@ function putInValues(res) {
  */
 function getEditModelData(journalId) {
     $.ajax({
-        url: "api/journal/" + journalId,
+        url: "/api/journal/" + journalId,
         method: "GET",
         contentType: "json",
         success: function (res) {
