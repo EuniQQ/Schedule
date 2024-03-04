@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\JournalController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
+    Route::get('/monthlyEvent/{year?}', [EventController::class, 'index'])->name('event.index');
 
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 

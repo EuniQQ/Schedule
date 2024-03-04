@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\JournalController;
+use App\Http\Controller\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/journal/search', [JournalController::class, 'search'])->name('journal.search');
     Route::get('/journal/{id}', [JournalController::class, 'edit'])->name('journal.showEdit');
     Route::get('/journal/{year}/{month}', [JournalController::class, 'getJournal'])->name('journal.index');
+    
 
     Route::post('/calender/style/{year}/{month}', [CalenderController::class, 'storeStyle'])->name('calender.styleAdd');
     Route::post('/calender/style/{id}', [CalenderController::class, 'updateStyle'])->name('calender.styleUpdate');
