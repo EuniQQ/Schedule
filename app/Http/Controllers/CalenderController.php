@@ -342,6 +342,10 @@ class CalenderController extends Controller
         // unset($_data['_token']);
         $validated['sticker'] = $request->hasFile('sticker') ? $this->handleImg($request) : null;
 
+        if ($validated['tag_color'] == '#000000') {
+            $validated['tag_color'] = null;
+        }
+        
         $res = Calender::where('id', $id)->update($validated);
         $this->saveTagColors($validated);
 
