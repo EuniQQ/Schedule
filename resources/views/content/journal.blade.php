@@ -8,14 +8,12 @@
 @section('title','每日記事')
 
 @section('content')
+
+<!-- menu 區 -->
+@include('layouts.menu')
+
 <div class="container">
-
-
     <div class="row d-flex content">
-
-        <!-- menu 區 -->
-        @include('layouts.menu')
-
 
         <!-- banner 區 -->
         <div class="col col-12 banner">

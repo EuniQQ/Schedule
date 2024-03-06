@@ -7,12 +7,13 @@
 @section('title','首頁')
 
 @section('content')
+<!-- menu 區 -->
+@include('layouts.menu')
+
 <div class="container">
     <div class="row d-flex content">
-
-        <!-- menu 區 -->
-        @include('layouts.menu')
-
+        
+        
         <!-- 文字區 -->
         <div class="left">
             <div>
