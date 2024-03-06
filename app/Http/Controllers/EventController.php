@@ -21,7 +21,6 @@ class EventController extends Controller
         $userId = auth()->user()->id;
         $records = Calender::where('user_id', $userId)->where('date', 'like', $year . '%')->whereNotNull('tag_title')->select('tag_title', 'date')->orderBy('date')->get();
 
-
         $events = $records->transform(function ($record) {
             return [
                 'month' => substr($record->date, 4, 2),
