@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Routing\Controller as BaseController;
+use Carbon\Carbon;
 
 class Controller extends BaseController
 {
@@ -25,5 +26,22 @@ class Controller extends BaseController
         }
         $errorStr = implode("\r\n", $errorMsgs);
         return $errorStr;
+    }
+
+
+    /**
+     * 取當年度回溯前4年的year list
+     * 用於calender / monthlyEvent的下拉式選單opt
+     */
+    protected function getYearList()
+    {
+        $now = Carbon::now()->locale('zh-tw');
+        $thisYear = $now->year;
+        $yearList = [];
+        for ($i = 0; $i < 5; $i++) {
+            $yearList[] = $thisYear - $i;
+        }
+
+        return $yearList;
     }
 }

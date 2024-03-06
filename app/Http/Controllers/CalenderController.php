@@ -38,10 +38,10 @@ class CalenderController extends Controller
             $year = $thisYear;
         }
 
-        $yearList = [];
-        for ($i = 0; $i < 5; $i++) {
-            $yearList[] = $thisYear - $i;
-        }
+        $yearList = $this->getYearList();
+        
+        
+        
 
         // 其他參數
         $finance = $this->getFinance($year, $month);

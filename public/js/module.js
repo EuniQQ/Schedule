@@ -39,3 +39,17 @@ function previewSelect(e) {
         imgPre.src = "";
     }
 }
+
+
+
+/**
+ * 
+ * @param {*} res get journal/event res
+ */
+function makeYearListOpt(res) {
+    Object.values(res.yearList).forEach(year => {
+        let opt = document.createElement('option');
+        opt.innerHTML = year;
+        yearSel.appendChild(opt);
+    })
+}

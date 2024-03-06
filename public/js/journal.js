@@ -20,7 +20,7 @@ var modalTitle = document.getElementById("editModalLabel");
 
 var modalImgPres = document.getElementsByClassName("photoPre");
 
-var jourYearSel = document.getElementById('jourYearSel');
+var yearSel = document.getElementById('yearSel');
 
 var jourMonthSel = document.getElementById("searchMonth");
 
@@ -224,7 +224,7 @@ $(document)
 
 
     .on("click", "#searchIcon", function () {
-        let selectedYear = jourYearSel.value;
+        let selectedYear = yearSel.value;
         let selectedMonth = jourMonthSel.value;
 
         $.ajax({
@@ -365,15 +365,6 @@ function getJournals() {
     })
 }
 
-
-
-function makeYearListOpt(res) {
-    Object.values(res.yearList).forEach(year => {
-        let opt = document.createElement('option');
-        opt.innerHTML = year;
-        jourYearSel.appendChild(opt);
-    })
-}
 
 
 /**

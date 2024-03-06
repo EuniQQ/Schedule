@@ -45,7 +45,7 @@
                 </div>
                 @include("icons.searchKey")
                 <!-- select year -->
-                <select id="jourYearSel" class="m-1">
+                <select id="yearSel" class="m-1">
                     <!-- <option value=""></option> -->
                 </select>
                 @include("icons.searchMonth")
