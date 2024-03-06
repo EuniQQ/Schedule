@@ -4,7 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\JournalController;
-use App\Http\Controller\EventController;
+use App\Http\Controllers\EventController;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,6 +18,7 @@ use App\Http\Controller\EventController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/event/{year}',[EventController::class,'getEvents'])->name('event.index');
     Route::get('/calender/weather/des', [CalenderController::class, 'getWeatherDes'])->name('calender.weatherDes');
     Route::get('/calender/weather/type', [CalenderController::class, 'getWeatherType'])->name('calender.weatherType');
     Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);

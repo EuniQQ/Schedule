@@ -7,7 +7,7 @@
 .header {
     width: 100%;
     height: 60px;
-    margin: 0;
+    margin: 0 auto;
     padding: 1rem;
 }
 
@@ -15,15 +15,8 @@
 .main {
     width: 100%;
     height: calc(100% - 60px);
-    margin: 0;
 }
 
-
-@media (min-width:1024px) {
-    .main {
-        padding-left: 10%;
-    }
-}
 
 
 .group {
@@ -61,7 +54,7 @@
 .monthGroup {
     display: flex;
     margin: 10px auto;
-    width: 100%;
+    width: 70%;
 }
 
 
@@ -82,6 +75,22 @@
 .group .monthGroup:nth-child(even) .dotLine::after {
     background-color: rgba(225, 226, 178, 1);
 }
+
+
+
+/* 文字內容*/
+.group .monthGroup:nth-child(odd) .tt {
+    margin-left: 2rem;
+    color: rgb(136, 79, 79);
+
+}
+
+
+.group .monthGroup:nth-child(even) .tt {
+    margin-left: 2rem;
+    color: rgb(99, 121, 40);
+}
+
 
 
 .month > p {
@@ -134,17 +143,11 @@
 
 
 .text {
-    margin: 0 0 0 20px;
+    margin-left: 20px;
     padding: 0;
 }
 
 
 .text > div {
     height: 18px;
-}
-
-
-/* 文字內容*/
-.tt {
-    margin-left: 2rem;
 }
