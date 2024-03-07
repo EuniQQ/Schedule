@@ -39,9 +39,6 @@ class CalenderController extends Controller
         }
 
         $yearList = $this->getYearList();
-        
-        
-        
 
         // 其他參數
         $finance = $this->getFinance($year, $month);
@@ -339,18 +336,19 @@ class CalenderController extends Controller
         }
         $validated = $validator->validated();
 
-        // unset($_data['_token']);
-        $validated['sticker'] = $request->hasFile('sticker') ? $this->handleImg($request) : null;
+        if ($request->hasFile('sticker')) {
+            $validated['sticker'] =  $this->handleImg($request);
+        }
 
         if ($validated['tag_color'] == '#000000') {
             $validated['tag_color'] = null;
         }
-        
+
         $res = Calender::where('id', $id)->update($validated);
         $this->saveTagColors($validated);
 
         if ($res >= 1) {
-            return redirect()->route('calender.index');
+            return back();
         } else {
             abort(500, '更新失敗');
         }
