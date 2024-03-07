@@ -24,7 +24,7 @@
 
 
         <!-- 左半邊 -->
-        <div class="sideBar py-1 ">
+        <div class="sideBar py-1">
             @if (isset($style['main_img']) && !is_null($style['main_img']))
             <img id="mainImg" src="{{ asset($style['main_img']) }}" alt="">
             @else
@@ -312,5 +312,4 @@
     @section('endJs')
     <script src="/js/calender.js"></script>
     <script src="/js/calStyleSetting.js"></script>
-    <!-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> -->
     @endsection

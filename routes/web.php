@@ -18,9 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [HomeController::class, 'index'])->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -29,7 +27,6 @@ Route::get('/dashboard', function () {
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/home', [HomeController::class, 'index'])->name('home');
     Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
     Route::get('/monthlyEvent/{year?}', [EventController::class, 'index'])->name('event.index');
@@ -38,6 +35,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
     Route::post('/calender/{id}', [CalenderController::class, 'update'])->name('calender.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 require __DIR__ . '/auth.php';

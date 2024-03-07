@@ -26,8 +26,10 @@
         <div>·&nbsp;收入</div>
         <div>·&nbsp;支出</div>
         <div>·&nbsp;年度結餘</div>
-        <div class="type">照&nbsp;&nbsp;片</div>
-        <div>設&nbsp;&nbsp;定</div>
+        <div class="type"></div>
+        <div>
+            <a href="{{ route('profile.edit') }}">設&nbsp;&nbsp;定</a>
+        </div>
         <form method="POST" action="{{ route('logout') }}" class="logout">
             @csrf
             <button button type="submit" class="removeBtnSty">
