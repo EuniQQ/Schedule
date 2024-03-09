@@ -14,8 +14,7 @@ class Calender extends Model
     protected $fillable = [
         'date',
         'birthday_person',
-        'mc_start',
-        'mc_end',
+        'mc',
         'plan',
         'plan_time',
         'tag_color',

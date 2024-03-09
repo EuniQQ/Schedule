@@ -132,8 +132,7 @@ class CalenderController extends Controller
                 'isHoliday' => '',
                 'id' => '',
                 'fullDate' => '',
-                'is_mc_start' => '',
-                'is_mc_end' => ''
+                'mc' => '',
             ];
         }
 
@@ -159,8 +158,7 @@ class CalenderController extends Controller
                     'fullDate' => $cdnCal['fullDate'],
                     'id' => '',
                     'birthday_person' => '',
-                    'is_mc_start' => '',
-                    'is_mc_end' => '',
+                    'mc' => '',
                     'tag_color' => '',
                     'tag_title' => '',
                     'tag_from' => '',
@@ -221,35 +219,35 @@ class CalenderController extends Controller
      */
     public function create(Request $request)
     {
+        // dd($request->all());
         $_data = $request->post();
         $validator = Validator::make($_data, [
             'user_id' => 'required | integer | exists:App\Models\User,id',
             'date' => 'required | string',
             'birthday_person' => 'string | nullable',
-            'is_mc_start' => 'boolean | nullable',
-            'is_mc_end' => 'boolean | nullable',
+            'mc' => 'nullable',
             'plan' => 'string | nullable',
             'plan_time' => 'nullable',
-            'tag_color' => 'string | nullable',
+            'tag_color' => 'string | required_with:tag_title',
             'tag_title' => 'string | nullable',
-            'tag_to' => 'date | nullable',
+            'tag_to' => 'date | nullable | required_with:tag_title',
             'sticker' => 'image | nullable',
             'photos_link' => 'url | nullable'
         ]);
 
         if ($validator->fails()) {
-            $error = $this->ifValidateFails($validator);
-            return Response(['message' => $error], 422);
+            // $errors = $this->ifValidateFails($validator);
+            return back()->withErrors($validator)->withInput();
         }
         $validated = $validator->validated();
 
-        $validated['sticker'] = isset($validated['sticker']) ? $this->handleImg($request) : null;
+        $validated['sticker'] = $request->has('sticker') ? $this->handleImg($request) : null;
         $validated['user_id'] = auth()->user()->id;
 
         if ($validated['tag_color'] == '#000000') {
             $validated['tag_color'] = null;
         }
-
+        // dd($validated);
         Calender::create($validated);
         $this->saveTagColors($validated);
 
@@ -267,7 +265,7 @@ class CalenderController extends Controller
         $tagColor = $validated['tag_color'];
         $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
 
-        if ($tagEnd !== $tagStart && $interval > 0) {
+        if ($tagEnd !== null && $tagEnd !== $tagStart && $interval > 0) {
             // 確認不是黑色，避免誤存
             if ($validated['tag_color'] !== '#000000') {
                 for ($i = 1; $i <= $interval; $i++) {
@@ -319,8 +317,7 @@ class CalenderController extends Controller
             'user_id' => 'required | integer | exists:App\Models\User,id',
             'date' => 'required | string',
             'birthday_person' => 'string | nullable',
-            'is_mc_start' => 'boolean | nullable',
-            'is_mc_end' => 'boolean | nullable',
+            'mc' => ' nullable',
             'plan' => 'string | nullable',
             'plan_time' => 'nullable',
             'tag_color' => 'string | nullable',
