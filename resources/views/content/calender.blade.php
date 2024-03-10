@@ -115,7 +115,7 @@
                                 <img id="stickerPre" src="#" alt=""><br>
                                 <label for="photos_link">Images Link :</ label>
                                     <input type="text" name="photos_link"><br>
-                                    <input type="reset">
+                                    <input id="modalReset" type="reset">
                                     <div class="modal-footer">
                                         <button type="button" class="closeModal btn btn-secondary">Close</button>
                                         <button type="submit" class="btn btn-primary" id="addModalSubmit" data-id="">save</button>

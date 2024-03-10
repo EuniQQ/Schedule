@@ -316,6 +316,16 @@ input {
     display: none;
 }
 
+.clearPlanTime {
+    font-size:x-small;
+    border-radius: 5%;
+}
+
+.error{
+    background-color: rgb(224, 72, 52);
+    color:white;
+    border-radius: 3px;;
+}
 /* 增加行程model END */
 
 

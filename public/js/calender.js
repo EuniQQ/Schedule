@@ -5,6 +5,8 @@ var calender = document.getElementsByClassName('calender');
 var stickerPre = document.getElementById("stickerPre");
 var mondalForm = document.getElementById("modalForm");
 var modalTitle = document.getElementById("addModalLabel");
+var mcStartInput = document.getElementById('mcStart');
+var mcEndInput = document.getElementById('mcEnd');
 var saveBtn = document.getElementById("addModalSubmit");
 var saveChgBtn = document.getElementById("editModalSubmit");
 var delBtn = document.getElementById("delModalSubmit");
@@ -212,6 +214,20 @@ $(document).ready(function () {
         }
     })
 
+    mcStartInput.addEventListener('click', function (e) {
+        if (e.target.checked) {
+            e.target.checked = false;
+        }
+    });
+
+    mcEndInput.addEventListener('click', function (e) {
+        if (e.target.checked) {
+            e.target.checked = false;
+        }
+    });
+
+
+
 
     /**
      * 點擊modal以外處，關閉modal
@@ -308,6 +324,14 @@ $(document).ready(function () {
             window.location = url;
         })
 
+        .on("click", "#clearPlanTime", function () {
+            $("#planTime").val('');
+        })
+
+        .on("click", "#modalReset", function (e) {
+            $("#stickerPre").prop('src', '');
+        })
+
 })
 
 
@@ -358,8 +382,6 @@ function getModalContent(calenderId) {
         success: function (res) {
             $("#addModal input[name='birthday_person']").val(res.
                 birthday_person);
-            $("#addModal input[name='is_mc_start']").val(res.is_mc_start);
-            $("#addModal input[name='is_mc_end']").val(res.is_mc_end);
             $("#addModal input[name='plan_time']").val(res.plan_time);
             $("#addModal input[name='plan']").val(res.plan);
             $("#addModal input[name='tag_from']").val(res.tag_from);
@@ -369,6 +391,14 @@ function getModalContent(calenderId) {
             $("#addModal input[name='photos_link']").val(res.photos_link);
             $("#stickerPre").attr('src', res.sticker);
             $("#stickerPre").data('id', res.id);
+
+            if (res.mc == 1) {
+                $("#mcStart").prop('checked', true)
+            }
+
+            if (res.mc == 2) {
+                $("#mcEnd").prop('checked', true)
+            }
         },
         error: function (error) {
             alert(error);
@@ -376,3 +406,7 @@ function getModalContent(calenderId) {
     })
 }
 
+
+function clearInputTime() {
+    document.getElementById('planTime').value = ' ';
+}

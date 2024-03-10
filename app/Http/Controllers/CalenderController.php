@@ -313,6 +313,7 @@ class CalenderController extends Controller
     {
 
         $_data = $request->post();
+
         $validator = Validator::make($_data, [
             'user_id' => 'required | integer | exists:App\Models\User,id',
             'date' => 'required | string',
@@ -338,9 +339,13 @@ class CalenderController extends Controller
         }
 
         if ($validated['tag_color'] == '#000000') {
-            $validated['tag_color'] = null;
+            unset($validated['tag_color']);
         }
 
+        if (!isset($validated['mc'])) {
+            $validated['mc'] = null;
+        }
+        
         $res = Calender::where('id', $id)->update($validated);
         $this->saveTagColors($validated);
 
