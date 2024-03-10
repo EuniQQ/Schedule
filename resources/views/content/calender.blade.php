@@ -71,20 +71,9 @@
                             <h5 class="modal-title" id="addModalLabel"></h5>
                             <span class="closeModal">&times;</span>
                         </div>
-                        <div class="modal-body">
-                            @if($errors->any())
-                            <div class="error">
-                                <ul>
-                                    @foreach($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                            @endif
-
-                            <form id="modalForm" action="" enctype="multipart/form-data" method="post">
-                                @csrf
-                                <input type="hidden" name="date"><!-- yyyymmdd -->
+                        <div id="modalBody" class="modal-body">
+                            <form id="modalForm">
+                                <input id="modalDateInp" type="hidden" name="date"><!-- yyyymmdd -->
                                 <input type="hidden" name="id">
                                 <input type="hidden" name="user_id" value="{{ $userId }}">
                                 <p>【 WHO'S BIRTHDAY 】</p>
@@ -98,7 +87,7 @@
                                 <p>【 PLAN 】</p>
                                 <label for="plan_time">Time :</label>
                                 <input type="time" name="plan_time" id="planTime">
-                                <button id="clearPlanTime">清除</button><br>
+                                <button id="clearPlanTime" class="btn btn-outline-secondary btn-sm">清除</button><br>
                                 <label for="content">Content :</label>
                                 <input type="text" id="content" name="plan"><br>
                                 <p>【 ADD TAG 】</p>
@@ -115,12 +104,12 @@
                                 <img id="stickerPre" src="#" alt=""><br>
                                 <label for="photos_link">Images Link :</ label>
                                     <input type="text" name="photos_link"><br>
-                                    <input id="modalReset" type="reset">
                                     <div class="modal-footer">
-                                        <button type="button" class="closeModal btn btn-secondary">Close</button>
-                                        <button type="submit" class="btn btn-primary" id="addModalSubmit" data-id="">save</button>
-                                        <button type="submit" class="btn btn-warning" id="editModalSubmit" data-id="">save</button>
-                                        <button type="button" class="btn btn-danger" id="delModalSubmit" data-id="">del</button>
+                                        <button id="modalReset" type="reset" class="btn btn-outline-secondary  btn-sm">Reset</button>
+                                        <button type="button" class="btn btn-primary  btn-sm" id="addModalSubmit" data-id="">Save</button>
+                                        <button type="button" class="btn btn-warning  btn-sm" id="editModalSubmit" data-id="">Save</button>
+                                        <button type="button" class="btn btn-danger  btn-sm" id="delModalSubmit" data-id="">Del</button>
+                                        <button type="button" class="closeModal btn btn-secondary btn-sm">Close</button>
                                     </div>
                             </form>
                         </div>
@@ -327,4 +316,5 @@
         @section('endJs')
         <script src="/js/calender.js"></script>
         <script src="/js/calStyleSetting.js"></script>
+        <script src="/js/module.js"></script>
         @endsection

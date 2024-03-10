@@ -18,7 +18,8 @@ use App\Http\Controllers\EventController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/event/{year}',[EventController::class,'getEvents'])->name('event.index');
+    Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
+    Route::get('/event/{year}', [EventController::class, 'getEvents'])->name('event.index');
     Route::get('/calender/weather/des', [CalenderController::class, 'getWeatherDes'])->name('calender.weatherDes');
     Route::get('/calender/weather/type', [CalenderController::class, 'getWeatherType'])->name('calender.weatherType');
     Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);
@@ -26,7 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/journal/search', [JournalController::class, 'search'])->name('journal.search');
     Route::get('/journal/{id}', [JournalController::class, 'edit'])->name('journal.showEdit');
     Route::get('/journal/{year}/{month}', [JournalController::class, 'getJournal'])->name('journal.index');
-    
+
 
     Route::post('/calender/style/{year}/{month}', [CalenderController::class, 'storeStyle'])->name('calender.styleAdd');
     Route::post('/calender/style/{id}', [CalenderController::class, 'updateStyle'])->name('calender.styleUpdate');

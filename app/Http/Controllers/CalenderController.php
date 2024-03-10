@@ -219,10 +219,9 @@ class CalenderController extends Controller
      */
     public function create(Request $request)
     {
-        // dd($request->all());
         $_data = $request->post();
+
         $validator = Validator::make($_data, [
-            'user_id' => 'required | integer | exists:App\Models\User,id',
             'date' => 'required | string',
             'birthday_person' => 'string | nullable',
             'mc' => 'nullable',
@@ -233,50 +232,53 @@ class CalenderController extends Controller
             'tag_to' => 'date | nullable | required_with:tag_title',
             'sticker' => 'image | nullable',
             'photos_link' => 'url | nullable'
-        ]);
+        ], $this->message());
 
         if ($validator->fails()) {
-            // $errors = $this->ifValidateFails($validator);
-            return back()->withErrors($validator)->withInput();
+            $errors = $this->ifValidateFails($validator);
+            return Response(['message' => $errors], 422);
         }
         $validated = $validator->validated();
 
         $validated['sticker'] = $request->has('sticker') ? $this->handleImg($request) : null;
         $validated['user_id'] = auth()->user()->id;
 
-        if ($validated['tag_color'] == '#000000') {
+        // 確認不是黑色，避免誤存
+        if (isset($validated['tag_color']) && $validated['tag_color'] == '#000000') {
             $validated['tag_color'] = null;
         }
-        // dd($validated);
-        Calender::create($validated);
-        $this->saveTagColors($validated);
 
-        return redirect()->route('calender.index');
+        Calender::create($validated);
+
+        if (isset($validated['tag_title'])) {
+            $tagStart = $validated['date'];
+            $tagEnd = isset($validated['tag_to']) ? $validated['tag_to'] : null;
+            $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] : $tagStart;
+            $interval = carbon::parse($tagStart)->diffInDays($tagEnd) ?? null;
+            if ($interval > 0) {
+                $this->saveTagColors($tagStart, $tagColor, $interval);
+            }
+        }
+
+        return redirect()->back();
     }
 
 
     /**
      * save days of tag color
      */
-    protected function saveTagColors($validated)
+    protected function saveTagColors($tagStart, $tagColor, $interval)
     {
-        $tagStart = $validated['date'];
-        $tagEnd = $validated['tag_to'];
-        $tagColor = $validated['tag_color'];
-        $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
-
-        if ($tagEnd !== null && $tagEnd !== $tagStart && $interval > 0) {
-            // 確認不是黑色，避免誤存
-            if ($validated['tag_color'] !== '#000000') {
-                for ($i = 1; $i <= $interval; $i++) {
-                    $addDate = intval($tagStart) + $i;
-                    Calender::updateOrCreate(
-                        ['date' => $addDate, 'user_id' => auth()->user()->id],
-                        ['tag_color' => $tagColor]
-                    );
-                }
+        if ($tagColor !== '#000000') {
+            for ($i = 1; $i <= $interval; $i++) {
+                $addDate = intval($tagStart) + $i;
+                Calender::updateOrCreate(
+                    ['date' => $addDate, 'user_id' => auth()->user()->id],
+                    ['tag_color' => $tagColor]
+                );
             }
         }
+
         return;
     }
 
@@ -345,7 +347,7 @@ class CalenderController extends Controller
         if (!isset($validated['mc'])) {
             $validated['mc'] = null;
         }
-        
+
         $res = Calender::where('id', $id)->update($validated);
         $this->saveTagColors($validated);
 
@@ -468,5 +470,19 @@ class CalenderController extends Controller
         }
 
         return $res;
+    }
+
+
+
+    protected function message()
+    {
+        return [
+            'date.required' => 'date 為必填',
+            'string' => ':attribute 必須為字串',
+            'required_with' => '若設定tag title，:attribute 為必填',
+            'tag_to.date' => 'tag_to 必須為日期格式',
+            'sticker.image' => 'sticker 必須為圖片檔',
+            'photos_link.url' => 'photos_link 必須為正確網址格式'
+        ];
     }
 }

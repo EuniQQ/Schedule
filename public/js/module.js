@@ -53,3 +53,23 @@ function makeYearListOpt(res) {
         yearSel.appendChild(opt);
     })
 }
+
+
+/**
+ * 顯示驗證失敗錯誤訊息
+ * @param err =error message
+ */
+function showErrMsgFromModal(err) {
+    let errMessage = err.responseJSON.message;
+    let messages = errMessage.split('\r');  // 將err照換行符分成多行
+    const modalBody = document.getElementById('modalBody');
+    let errGroup = document.createElement('div');
+    errGroup.id = 'errGroup';
+    messages.forEach(message => {
+        let showErr = document.createElement('div');
+        showErr.textContent = message;
+        showErr.className = "alert alert-danger";
+        errGroup.appendChild(showErr);
+    })
+    modalBody.insertBefore(errGroup, modalBody.firstChild);
+}

@@ -33,8 +33,7 @@ Route::middleware('auth')->group(function () {
 
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
-    Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
-    Route::post('/calender/{id}', [CalenderController::class, 'update'])->name('calender.update');
+    // Route::post('/calender/{id}', [CalenderController::class, 'update'])->name('calender.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 

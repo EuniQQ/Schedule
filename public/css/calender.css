@@ -224,7 +224,7 @@
 
 @media(min-width:1025px) {
     .endLayer p {
-        font-size: 16px;
+        font-size: 14px;
         margin-top: 6px;
     }
 }
@@ -317,15 +317,16 @@ input {
 }
 
 .clearPlanTime {
-    font-size:x-small;
+    font-size: x-small;
     border-radius: 5%;
 }
 
-.error{
-    background-color: rgb(224, 72, 52);
-    color:white;
-    border-radius: 3px;;
+/* modal error msg*/
+.alert {
+    padding-left:.5rem;
+    margin-top:.1rem;
 }
+
 /* 增加行程model END */
 
 

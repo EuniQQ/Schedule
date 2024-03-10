@@ -7,11 +7,12 @@ var mondalForm = document.getElementById("modalForm");
 var modalTitle = document.getElementById("addModalLabel");
 var mcStartInput = document.getElementById('mcStart');
 var mcEndInput = document.getElementById('mcEnd');
-var saveBtn = document.getElementById("addModalSubmit");
+var saveAddBtn = document.getElementById("addModalSubmit");
 var saveChgBtn = document.getElementById("editModalSubmit");
 var delBtn = document.getElementById("delModalSubmit");
 var stickerInp = document.getElementById("stickerInp");
 var tagColorInp = document.querySelector("#addModal input[name='tag_color']")
+var dateInp = document.getElementById("modalDateInp");
 var dayNum = document.getElementsByClassName('day');
 
 
@@ -158,7 +159,7 @@ $(document).ready(function () {
                     }
                 });
             }, error: function (err) {
-                console.log(err.responseJSON.message);
+                // console.log(err.responseJSON.message);
             }
         })
     }
@@ -194,25 +195,26 @@ $(document).ready(function () {
     }
 
 
+
     /**
      * 監聽modal表單元素的變更事件
      */
-    let changes = {};
+    var changes = new FormData();
     addModal.addEventListener('change', function (e) {
         const target = e.target;
-        const id = saveChgBtn.getAttribute('data-id');
-        if (target.tagName === 'INPUT') {
+        const date = dateInp.value;
+        changes.append('date', date);
+        if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
             if (target.type === 'file') {
-                const file = target.files[0];
-                const formData = new FormData();
-                formData.append('sticker', file);
-                changes['sticker'] = formData;
+                changes.append(target.name, target.files[0]);
             } else {
-                changes[target.name] = target.value;
+                changes.append(target.name, target.value);
             }
-            console.log(target.name + " =" + changes[target.name]);
         }
     })
+
+
+
 
     mcStartInput.addEventListener('click', function (e) {
         if (e.target.checked) {
@@ -256,24 +258,51 @@ $(document).ready(function () {
             const plusIconId = e.target.id;
             const calenderId = e.target.getAttribute('data-id');
             const formattedDate = formatDate(plusIconId);
-            console.log(formattedDate);
+
             $("#addModal input[name='date']").val(plusIconId);
             $("#addModal input[name='id']").val(calenderId);
             $("#addModal input[name='tag_from']").val(formattedDate);
+
             if (calenderId === '') {
                 modalTitle.innerText = "新增行程";
                 saveChgBtn.style.display = "none";
-                saveBtn.style.display = "block";
-                mondalForm.action = "/calender";
+                saveAddBtn.style.display = "block";
+                saveAddBtn.setAttribute('data-date', plusIconId);
             } else {
                 modalTitle.innerText = "修改行程";
                 getModalContent(calenderId);
-                saveBtn.style.display = "none";
+                saveAddBtn.style.display = "none";
                 saveChgBtn.style.display = "block";
                 saveChgBtn.setAttribute('data-id', calenderId);
                 delBtn.setAttribute('data-id', calenderId);
-                mondalForm.action = "/calender/" + calenderId;
             }
+        })
+
+
+        .on("click", "#addModalSubmit", function (e) {
+            let errGroup = document.getElementById('errGroup');
+            if (errGroup !== null) {
+                errGroup.remove();
+                console.log(errGroup);
+            }
+
+            $.ajax({
+                url: "/api/calender",
+                method: "POST",
+                data: changes,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    $("#addModal").hide();
+                    $(".modal-backdrop").remove();
+                    alert("新增成功");
+                    changes = new FormData();
+                },
+                error: function (err) {
+                    showErrMsgFromModal(err);
+                }
+            })
+
         })
 
         /**
