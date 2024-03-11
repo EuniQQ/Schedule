@@ -308,7 +308,6 @@ $(document).ready(function () {
         })
 
 
-
         .on("click", "#editModalSubmit", function (e) {
             let id = this.getAttribute('data-id');
             let errGroup = document.getElementById('errGroup');
@@ -359,14 +358,24 @@ $(document).ready(function () {
         })
 
 
-
-
         /**
          * 關閉modal
          */
         .on("click", ".closeModal", function (e) {
             addModal.style.display = "none";
+            $("#modalDateInp").val('');
+            $("#bthdGuy").val('');
+            $("#addModal input[name='mc']:checked").val('');
+            $("#planTime").val('');
+            $("#plan").val('');
+            $("#tagTo").val('');
+            $("#tagTitle").val('');
+            $("#tagColor").val('');
+            $("#stickerInp")[0].files[0] = null;
+            $("#stickerPre").prop('src', '');
+            $("#photosLink").val('');
         })
+
 
         /**
          * 刪除單日行程

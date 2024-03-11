@@ -75,31 +75,30 @@
                             <form id="modalForm">
                                 <input id="modalDateInp" type="hidden" name="date"><!-- yyyymmdd -->
                                 <input type="hidden" name="id">
-                                <input type="hidden" name="user_id" value="{{ $userId }}">
                                 <p>【 WHO'S BIRTHDAY 】</p>
                                 <label for="bthdGuy" class="my-2">Name :</label>
                                 <input type="text" id="bthdGuy" name="birthday_person" class="my-2"><br>
                                 <p>【 MC 】</p>
                                 <input id="mcStart" type="radio" value=1 name="mc">
-                                <label for="mcStart">start&nbsp;&nbsp;</label>
+                                <label >start&nbsp;&nbsp;</label>
                                 <input id="mcEnd" type="radio" value=2 name="mc">
-                                <label for="mcEnd">end</label><br>
+                                <label >end</label><br>
                                 <p>【 PLAN 】</p>
-                                <label for="planTime">Time :</label>
+                                <label >Time :</label>
                                 <input type="time" name="plan_time" id="planTime">
                                 <button id="clearPlanTime" class="btn btn-outline-secondary btn-sm">清除</button><br>
-                                <label for="plan">Content :</label>
+                                <label >Content :</label>
                                 <input type="text" id="plan" name="plan"><br>
                                 <p>【 ADD TAG 】</p>
-                                <label for="tag_from">From :</label>
+                                <label >From :</label>
                                 <input type="date" name="tag_from" disabled><br>
-                                <label for="tag_to">To :</label>
+                                <label >To :</label>
                                 <input type="date" name="tag_to" id="tagTo"><br>
-                                <label for="tagTitle">Tag Title :</label>
+                                <label >Tag Title :</label>
                                 <input type="text" name="tag_title" id="tagTitle"><br>
-                                <label for="tag_color">Tag Color :</label>
+                                <label >Tag Color :</label>
                                 <input type="color" name="tag_color" id="tagColor"><br>
-                                <label for="sticker">Sticker :</label>
+                                <label >Sticker :</label>
                                 <input type="file" id="stickerInp" name="sticker" accept="image/*">
                                 <div class="stickerPreGroup">
                                     <img id="stickerPre" src="#">
