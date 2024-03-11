@@ -251,35 +251,10 @@ class CalenderController extends Controller
         Calender::create($validated);
 
         if (isset($validated['tag_title'])) {
-            $tagStart = $validated['date'];
-            $tagEnd = isset($validated['tag_to']) ? $validated['tag_to'] : null;
-            $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] : $tagStart;
-            $interval = carbon::parse($tagStart)->diffInDays($tagEnd) ?? null;
-            if ($interval > 0) {
-                $this->saveTagColors($tagStart, $tagColor, $interval);
-            }
+            $this->saveTagColors($validated);
         }
 
         return redirect()->back();
-    }
-
-
-    /**
-     * save days of tag color
-     */
-    protected function saveTagColors($tagStart, $tagColor, $interval)
-    {
-        if ($tagColor !== '#000000') {
-            for ($i = 1; $i <= $interval; $i++) {
-                $addDate = intval($tagStart) + $i;
-                Calender::updateOrCreate(
-                    ['date' => $addDate, 'user_id' => auth()->user()->id],
-                    ['tag_color' => $tagColor]
-                );
-            }
-        }
-
-        return;
     }
 
 
@@ -313,12 +288,9 @@ class CalenderController extends Controller
      */
     public function update(Request $request, string $id)
     {
-
         $_data = $request->post();
-
         $validator = Validator::make($_data, [
-            'user_id' => 'required | integer | exists:App\Models\User,id',
-            'date' => 'required | string',
+            'date' => 'required',
             'birthday_person' => 'string | nullable',
             'mc' => ' nullable',
             'plan' => 'string | nullable',
@@ -326,37 +298,73 @@ class CalenderController extends Controller
             'tag_color' => 'string | nullable',
             'tag_title' => 'string | nullable',
             'tag_to' => 'date | nullable',
-            'sticker' => 'image | nullable',
+            'sticker' => 'nullable',
+            'sticker_pre' => 'nullable',
             'photos_link' => 'url | nullable'
-        ]);
+        ], $this->message());
 
         if ($validator->fails()) {
             $error = $this->ifValidateFails($validator);
             return Response(['message' => $error], 422);
         }
+
         $validated = $validator->validated();
+        $validated['user_id'] = auth()->user()->id;
+
+        $record = Calender::where('id', $id)->first();
 
         if ($request->hasFile('sticker')) {
             $validated['sticker'] =  $this->handleImg($request);
-        }
+        } else {
+            if (!is_null($record->sticker) && !is_null($validated['sticker_pre'])) {
+                $validated['sticker'] = $record->sticker;
+            } else {
+                $validated['sticker'] = NULL;
+            }
+        };
 
-        if ($validated['tag_color'] == '#000000') {
-            unset($validated['tag_color']);
-        }
+        if (isset($validated['tag_color']) && $validated['tag_color'] == '#000000') {
+            $validated['tag_color'] = NULL;
+        };
 
         if (!isset($validated['mc'])) {
-            $validated['mc'] = null;
-        }
+            $validated['mc'] = 0;
+        };
 
-        $res = Calender::where('id', $id)->update($validated);
+        $res = $record->update($validated);
         $this->saveTagColors($validated);
 
         if ($res >= 1) {
             return back();
         } else {
             abort(500, '更新失敗');
-        }
+        };
     }
+
+
+    /**
+     * save days of tag color
+     */
+    protected function saveTagColors($validated)
+    {
+        $tagStart = $validated['date'];
+        $tagEnd = isset($validated['tag_to']) ? $validated['tag_to'] : null;
+        $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] :
+            $tagStart;
+        $interval = carbon::parse($tagStart)->diffInDays($tagEnd) ?? null;
+        if ($interval > 0 && $tagColor !== '#000000') {
+            for ($i = 1; $i <= $interval; $i++) {
+                $addDate = intval($tagStart) + $i;
+                Calender::updateOrCreate(
+                    ['date' => $addDate, 'user_id' => auth()->user()->id],
+                    ['tag_color' => $tagColor]
+                );
+            }
+        }
+        return;
+    }
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -14,6 +14,7 @@ var stickerInp = document.getElementById("stickerInp");
 var tagColorInp = document.querySelector("#addModal input[name='tag_color']")
 var dateInp = document.getElementById("modalDateInp");
 var dayNum = document.getElementsByClassName('day');
+var sticker_pre = $("#stickerPre").prop('src');
 
 
 $(document).ready(function () {
@@ -197,7 +198,7 @@ $(document).ready(function () {
 
 
     /**
-     * 監聽modal表單元素的變更事件
+     * 監聽modal表單元素的變更事件(用於新增)
      */
     var changes = new FormData();
     addModal.addEventListener('change', function (e) {
@@ -208,6 +209,8 @@ $(document).ready(function () {
             if (target.type === 'file') {
                 changes.append(target.name, target.files[0]);
             } else {
+                // 就算欄位值是空字串也轉為null存進FormData
+                // const value = target.value.trim() === '' ? null : target.value;
                 changes.append(target.name, target.value);
             }
         }
@@ -216,17 +219,17 @@ $(document).ready(function () {
 
 
 
-    mcStartInput.addEventListener('click', function (e) {
-        if (e.target.checked) {
-            e.target.checked = false;
-        }
-    });
+    // mcStartInput.addEventListener('click', function (e) {
+    // if (e.target.checked) {
+    // e.target.checked = false;
+    // }
+    // });
 
-    mcEndInput.addEventListener('click', function (e) {
-        if (e.target.checked) {
-            e.target.checked = false;
-        }
-    });
+    // mcEndInput.addEventListener('click', function (e) {
+    // if (e.target.checked) {
+    // e.target.checked = false;
+    // }
+    // });
 
 
 
@@ -267,7 +270,7 @@ $(document).ready(function () {
                 modalTitle.innerText = "新增行程";
                 saveChgBtn.style.display = "none";
                 saveAddBtn.style.display = "block";
-                saveAddBtn.setAttribute('data-date', plusIconId);
+
             } else {
                 modalTitle.innerText = "修改行程";
                 getModalContent(calenderId);
@@ -275,15 +278,15 @@ $(document).ready(function () {
                 saveChgBtn.style.display = "block";
                 saveChgBtn.setAttribute('data-id', calenderId);
                 delBtn.setAttribute('data-id', calenderId);
+                saveChgBtn.setAttribute('data-date', plusIconId);
             }
         })
 
 
-        .on("click", "#addModalSubmit", function (e) {
+        .on("click", "#addModalSubmit", function () {
             let errGroup = document.getElementById('errGroup');
             if (errGroup !== null) {
                 errGroup.remove();
-                console.log(errGroup);
             }
 
             $.ajax({
@@ -302,8 +305,61 @@ $(document).ready(function () {
                     showErrMsgFromModal(err);
                 }
             })
-
         })
+
+
+
+        .on("click", "#editModalSubmit", function (e) {
+            let id = this.getAttribute('data-id');
+            let errGroup = document.getElementById('errGroup');
+            if (errGroup !== null) {
+                errGroup.remove();
+            }
+
+            let date = $("#modalDateInp").val();
+            let birthday_person = $("#bthdGuy").val();
+            let mc = $("#addModal input[name='mc']:checked").val();
+            let plan_time = $("#planTime").val();
+            let plan = $("#plan").val();
+            let tag_to = $("#tagTo").val();
+            let tag_title = $("#tagTitle").val();
+            let tag_color = $("#tagColor").val();
+            let sticker = $("#stickerInp")[0].files[0] !== undefined ? $("#stickerInp")[0].files[0] : null;
+            let photos_link = $("#photosLink").val();
+
+            const data = new FormData;
+            data.append('date', date);
+            data.append('birthday_person', birthday_person);
+            data.append('mc', mc);
+            data.append('plan_time', plan_time);
+            data.append('plan', plan);
+            data.append('tag_to', tag_to);
+            data.append('tag_title', tag_title);
+            data.append('tag_color', tag_color);
+            data.append('sticker', sticker);
+            data.append('sticker_pre', sticker_pre);
+            data.append('photos_link', photos_link);
+
+            $.ajax({
+                url: "/api/calender/" + id,
+                type: "POST",
+                data: data,
+                processData: false,
+                contentType: false,
+                success: function (res) {
+                    $("#addModal").hide();
+                    $(".modal-backdrop").remove();
+                    alert("更新成功");
+                    changes = new FormData();
+                },
+                error: function (err) {
+                    showErrMsgFromModal(err);
+                }
+            })
+        })
+
+
+
 
         /**
          * 關閉modal
@@ -355,6 +411,11 @@ $(document).ready(function () {
 
         .on("click", "#clearPlanTime", function () {
             $("#planTime").val('');
+        })
+
+        .on("click", "#clearStickerBtn", function (e) {
+            $("#stickerPre").prop('src', '');
+            sticker_pre = ''; // 全域變數用於upate api
         })
 
         .on("click", "#modalReset", function (e) {

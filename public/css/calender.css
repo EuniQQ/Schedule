@@ -311,20 +311,20 @@ input {
     border: 1px dashed gray;
 }
 
+.stickerPreGroup {
+    display: flex;
+    align-items: flex-end;
+}
+
 #addModalSubmit,
 #editModalSubmit {
     display: none;
 }
 
-.clearPlanTime {
-    font-size: x-small;
-    border-radius: 5%;
-}
-
 /* modal error msg*/
 .alert {
-    padding-left:.5rem;
-    margin-top:.1rem;
+    padding-left: .5rem;
+    margin-top: .1rem;
 }
 
 /* 增加行程model END */

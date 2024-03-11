@@ -18,7 +18,6 @@ use App\Http\Controllers\EventController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
     Route::get('/event/{year}', [EventController::class, 'getEvents'])->name('event.index');
     Route::get('/calender/weather/des', [CalenderController::class, 'getWeatherDes'])->name('calender.weatherDes');
     Route::get('/calender/weather/type', [CalenderController::class, 'getWeatherType'])->name('calender.weatherType');
@@ -29,10 +28,13 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/journal/{year}/{month}', [JournalController::class, 'getJournal'])->name('journal.index');
 
 
+    Route::post('/calender', [CalenderController::class, 'create'])->name('calender.create');
+    Route::post('/calender/{id}', [CalenderController::class, 'update'])->name('calender.update');
     Route::post('/calender/style/{year}/{month}', [CalenderController::class, 'storeStyle'])->name('calender.styleAdd');
     Route::post('/calender/style/{id}', [CalenderController::class, 'updateStyle'])->name('calender.styleUpdate');
     Route::post('/journal', [JournalController::class, 'create'])->name('journal.create');
     Route::post('/journal/{id}', [JournalController::class, 'update']);
+
 
     Route::delete('/calender/style/{id}', [CalenderController::class, 'destroyStyle'])->name('calender.styleDelete');
     Route::delete('/daylySchedule/{id}', [CalenderController::class, 'destroy'])->name('calender.destroy');

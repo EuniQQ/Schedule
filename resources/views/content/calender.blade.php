@@ -77,34 +77,37 @@
                                 <input type="hidden" name="id">
                                 <input type="hidden" name="user_id" value="{{ $userId }}">
                                 <p>【 WHO'S BIRTHDAY 】</p>
-                                <label for="name" class="my-2">Name :</label>
-                                <input type="text" id="name" name="birthday_person" class="my-2"><br>
+                                <label for="bthdGuy" class="my-2">Name :</label>
+                                <input type="text" id="bthdGuy" name="birthday_person" class="my-2"><br>
                                 <p>【 MC 】</p>
                                 <input id="mcStart" type="radio" value=1 name="mc">
                                 <label for="mcStart">start&nbsp;&nbsp;</label>
                                 <input id="mcEnd" type="radio" value=2 name="mc">
                                 <label for="mcEnd">end</label><br>
                                 <p>【 PLAN 】</p>
-                                <label for="plan_time">Time :</label>
+                                <label for="planTime">Time :</label>
                                 <input type="time" name="plan_time" id="planTime">
                                 <button id="clearPlanTime" class="btn btn-outline-secondary btn-sm">清除</button><br>
-                                <label for="content">Content :</label>
-                                <input type="text" id="content" name="plan"><br>
+                                <label for="plan">Content :</label>
+                                <input type="text" id="plan" name="plan"><br>
                                 <p>【 ADD TAG 】</p>
                                 <label for="tag_from">From :</label>
                                 <input type="date" name="tag_from" disabled><br>
                                 <label for="tag_to">To :</label>
-                                <input type="date" name="tag_to"><br>
+                                <input type="date" name="tag_to" id="tagTo"><br>
                                 <label for="tagTitle">Tag Title :</label>
-                                <input type="text" name="tag_title"><br>
+                                <input type="text" name="tag_title" id="tagTitle"><br>
                                 <label for="tag_color">Tag Color :</label>
-                                <input type="color" name="tag_color"><br>
+                                <input type="color" name="tag_color" id="tagColor"><br>
                                 <label for="sticker">Sticker :</label>
                                 <input type="file" id="stickerInp" name="sticker" accept="image/*">
-                                <img id="stickerPre" src="#" alt=""><br>
+                                <div class="stickerPreGroup">
+                                    <img id="stickerPre" src="#">
+                                    <input type="button" value="刪除" id="clearStickerBtn" class="btn btn-outline-danger btn btn-sm"><br>
+                                </div>
                                 <label for="photos_link">Images Link :</ label>
-                                    <input type="text" name="photos_link"><br>
-                                    <div class="modal-footer">
+                                    <input type="text" name="photos_link" id="photosLink"><br>
+                                    <div class="modal-footer mt-3">
                                         <button id="modalReset" type="reset" class="btn btn-outline-secondary  btn-sm">Reset</button>
                                         <button type="button" class="btn btn-primary  btn-sm" id="addModalSubmit" data-id="">Save</button>
                                         <button type="button" class="btn btn-warning  btn-sm" id="editModalSubmit" data-id="">Save</button>
