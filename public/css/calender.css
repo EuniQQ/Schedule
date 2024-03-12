@@ -51,6 +51,20 @@
     margin: 0 auto
 }
 
+#headerImg {
+    margin-left: 1rem;
+}
+
+#footerImg {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+}
+
+
 /* 財報 */
 .finance {
     display: flex;
@@ -142,7 +156,7 @@
 }
 
 .day {
-    margin: 0 1rem 0 0.5rem;
+    margin: 0 0.5rem;
     font-size: smaller;
     font-weight: 800;
 }
@@ -166,6 +180,7 @@
 .firstLayer {
     height: 30%;
     padding: 0.2rem 0.5rem;
+    display: flex;
 }
 
 .bthd {
@@ -243,10 +258,12 @@
     margin: 0 auto;
     z-index: 999;
     display: none;
-    transform: translate(25%, 50%);
+    /* transform: translate(70%, 50%); */
     position: relative;
-    left: 15%;
+    left: 35%;
     top: 20%;
+    color: #b1afaf;
+
 }
 
 .singleDay:hover .plusIcon {
@@ -354,16 +371,6 @@ input {
     color: aliceblue;
     text-decoration: none;
 }
-
-.footerImg {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto;
-    position: absolute;
-    bottom: 30px;
-    left: 50px;
-}
-
 
 /* setting style offcanvas */
 .imgSet {

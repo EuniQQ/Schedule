@@ -1,20 +1,46 @@
-var addModal = document.getElementById('addModal');
-var openModalBtn = document.getElementsByClassName('plusIcon');
-var closeBtn = document.getElementsByClassName('btn-close');
+// calender
+var calMain = document.getElementById('calMain');
 var calender = document.getElementsByClassName('calender');
-var stickerPre = document.getElementById("stickerPre");
-var mondalForm = document.getElementById("modalForm");
-var modalTitle = document.getElementById("addModalLabel");
+var dayNum = document.getElementsByClassName('day');
+// modal
+var addModal = document.getElementById('addModal');
+var stickerInp = document.getElementById('stickerInp');
+var stickerPre = document.getElementById('stickerPre');
+var stickerPreSrc = stickerPre.getAttribute('src');
+var mondalForm = document.getElementById('modalForm');
+var modalTitle = document.getElementById('addModalLabel');
+var dateInp = document.getElementById('modalDateInp');
+var tagColorInp = document.querySelector('#addModal input[name="tag_color"]')
 var mcStartInput = document.getElementById('mcStart');
 var mcEndInput = document.getElementById('mcEnd');
-var saveAddBtn = document.getElementById("addModalSubmit");
-var saveChgBtn = document.getElementById("editModalSubmit");
+var openModalBtn = document.getElementsByClassName('plusIcon');
+var closeBtn = document.getElementsByClassName('btn-close');
+var saveAddBtn = document.getElementById('addModalSubmit');
+var saveChgBtn = document.getElementById('editModalSubmit');
 var delBtn = document.getElementById("delModalSubmit");
-var stickerInp = document.getElementById("stickerInp");
-var tagColorInp = document.querySelector("#addModal input[name='tag_color']")
-var dateInp = document.getElementById("modalDateInp");
-var dayNum = document.getElementsByClassName('day');
-var sticker_pre = $("#stickerPre").prop('src');
+// header
+var searchYear = document.getElementById('yearSel');
+var searchMon = document.getElementById('searchMonth');
+// left side 
+var WesternYear = document.getElementById('calWesYear');
+var hebrewYear = document.getElementById('calHebrewYear');
+var calIncome = document.getElementById('calIncome');
+var calExp = document.getElementById('calExp');
+var calBal = document.getElementById('calBal');
+// offCAnvas
+var mainImgPre = document.getElementById('mainImgPre');
+var headerImgPre = document.getElementById('headerImgPre');
+var footerImgPre = document.getElementById('footerImgPre');
+var calColorInp = document.getElementById('calColorInp');
+var ftColorInp = document.getElementById('ftColorInp');
+var offcanvasSmt = document.getElementById('offcanvasSmt');
+// else
+var footer = document.getElementById('footer');
+var sideBar = document.getElementById('sideBar');
+var headerMonth = document.getElementById('headerMonth');
+var iconSec = document.getElementById('iconSec');
+var monthSec = document.getElementById('monthSec');
+
 
 
 $(document).ready(function () {
@@ -26,6 +52,8 @@ $(document).ready(function () {
             'Authorization': 'Bearer' + getApiToken()
         }
     });
+
+    getCalender();
 
 
 
@@ -196,6 +224,212 @@ $(document).ready(function () {
     }
 
 
+    function getCalender() {
+        $.ajax({
+            url: "/api/calender",
+            method: "GET",
+            dataType: "json",
+            success: function (res) {
+                console.log(res);
+                createCalenderElements(res);
+                createDecorateImgs(res);
+                putInValues(res);
+                settingStyle(res);
+                makeYearListOpt(res);
+            }, error: function (err) {
+
+            }
+        })
+    }
+
+
+    function createCalenderElements(res) {
+
+        let fragment = document.createDocumentFragment();
+        res.calender.forEach(function (item, i) {
+            // 單一格子
+            let singleDay = document.createElement('div');
+            singleDay.id = "i" + item.fullDate;
+            singleDay.className = 'singleDay';
+            singleDay.setAttribute('data-id', item.id);
+            if (res.month == res.thisMonth && item.date == res.today) {
+                singleDay.classList.add('todayBg');
+            }
+            // first layer START
+            let FirLayer = document.createElement('div');
+            FirLayer.className = 'firstLayer';
+            // first layer : date num
+            let dayNum = document.createElement('p');
+            dayNum.className = 'day';
+            if (item.mc == 1 || item.mc == 2) {
+                dayNum.classList.add('mc');
+            }
+            if (item.week == '六') {
+                dayNum.classList.add('sat');
+            }
+            if (item.week !== '六' && (item.week == '日' || item.isHoliday == true)) {
+                dayNum.classList.add('sun');
+            }
+            dayNum.textContent = item.date;
+            FirLayer.appendChild(dayNum);
+
+            // first layer : bthd person
+            let bthdSet = document.createElement('div');
+            bthdSet.classList.add('bthdSet', 'd-flex');
+            let isBthdPersonExist = Object.keys(item).includes('birthday_person');
+            if (isBthdPersonExist == true) {
+                if (!!item.birthday_person) {
+                    bthdSet.innerHTML = '<i class="fa-solid fa-cake-candles" style="color:#c200bb">&nbsp;</i>';
+                    let bthdPerson = document.createElement('span');
+                    bthdPerson.className = 'bthd';
+                    bthdPerson.innerText = item.birthday_person;
+                    bthdSet.appendChild(bthdPerson);
+                }
+            }
+            FirLayer.appendChild(bthdSet);
+            singleDay.appendChild(FirLayer);
+            // first layer END
+
+            // middle layer START
+            let midLayer = document.createElement('div');
+            midLayer.className = 'middleLayer';
+
+            // middle layer : hover plusIcon
+            if (item.date) {
+                let plusIcon = document.createElement('i');
+                plusIcon.id = item.fullDate;
+                plusIcon.classList.add('plusIcon', 'fa-solid', 'fa-circle-plus', 'fa-2xl');
+                plusIcon.setAttribute('src', '/storage/img/plus_icon.svg');
+                plusIcon.setAttribute('data-id', item.id);
+                midLayer.appendChild(plusIcon);
+            }
+
+            // middle layer : description
+            let isDesExist = Object.keys(item).includes('description');
+            if (isDesExist == true && item.description) {
+                let calDes = document.createElement('li');
+                calDes.className = 'calDes';
+                calDes.innerText = item.description;
+                midLayer.appendChild(calDes);
+            }
+
+            // middle layer : plan
+            let isPlanExist = Object.keys(item).includes('plan');
+            if (isPlanExist == true && item.plan) {
+                let calPlan = document.createElement('li');
+                calPlan.className = 'calPlan';
+                calPlan.innerText = item.plan;
+                midLayer.appendChild(calPlan);
+            }
+            singleDay.appendChild(midLayer);
+            // middle layer END
+
+            // end layer START
+            let endLayer = document.createElement('div');
+            endLayer.className = 'endLayer';
+            endLayer.id = 'e' + item.fullDate;
+
+            let isTagExist = Object.keys(item).includes('tag_title');
+            if (isTagExist == true && item.tag_title) {
+                endLayer.style.backgroundColor = item.tag_color;
+
+                if (!!item.sticker) {
+                    let sticker = document.createElement('img');
+                    sticker.className = 'sticker';
+                    sticker.setAttribute('src', item.sticker);
+                    endLayer.appendChild(sticker);
+                }
+
+                let tagTitle = document.createElement('p');
+                tagTitle.className = 'wthText';
+                tagTitle.textContent = item.tag_title;
+                endLayer.appendChild(tagTitle);
+            }
+            singleDay.appendChild(endLayer);
+            // end layer END
+
+            fragment.appendChild(singleDay);
+        })
+        calMain.appendChild(fragment);
+    }
+
+
+    function createDecorateImgs(res) {
+        // main img
+        let mainImg = document.createElement('img');
+        mainImg.id = 'mainImg';
+        if (!!res.style.main_img) {
+            mainImg.setAttribute('src', res.style.main_img);
+        } else {
+            mainImg.setAttribute('src', '{{ asset("storage/img/QQsticker.png") }}');
+        }
+        sideBar.insertBefore(mainImg, sideBar.firstChild);
+
+        // header img
+        if (!!res.style.header_img) {
+            let headerImg = document.createElement('img');
+            headerImg.setAttribute('src', res.style.header_img);
+            headerImg.id = 'headerImg';
+            console.log(headerImg);
+            monthSec.insertBefore(headerImg, iconSec);
+        }
+
+        // footer img
+        if (!!res.style.footer_img) {
+            let footerImg = document.createElement('img');
+            footerImg.setAttribute('src', res.style.footer_img);
+            footerImg.id = 'footerImg';
+            sideBar.appendChild(footerImg);
+        }
+    }
+
+
+    function putInValues(res) {
+        // left side 
+        WesternYear.textContent = res.year;
+        hebrewYear.textContent = res.hebrewYear;
+        calIncome.textContent = res.income;
+        calExp.textContent = res.expense;
+        calBal.textContent = res.balance;
+
+        // offCAnvas
+        mainImgPre.setAttribute('src', res.style.main_img);
+        headerImgPre.setAttribute('src', res.style.header_img);
+        footerImgPre.setAttribute('src', res.style.footer_img);
+        offcanvasSmt.setAttribute('data-year', res.year);
+        offcanvasSmt.setAttribute('data-month', res.month);
+        offcanvasSmt.setAttribute('data-userId', res.userId);
+        offcanvasSmt.setAttribute('data-id', res.style.id);
+        calColorInp.value = res.style.bg_color;
+        ftColorInp.value = res.style.footer_color;
+
+        // month
+        headerMonth.textContent = res.month;
+
+        // footer month link
+        const footerAtags = document.getElementsByClassName('footerAtag');
+        Array.from(footerAtags).forEach(function (tag, i) {
+            let month = (i + 1) < 10 ? '0' + (i + 1) : (i + 1);
+            let href = '/calender/' + res.year + '/' + month;
+            tag.setAttribute('href', href);
+        });
+    }
+
+    /**
+     * 設定畫面視覺色
+     * @param {*} res = get calender api res
+     */
+    function settingStyle(res) {
+        footer.style.backgroundColor = res.style.footer_color;
+
+        // calender background color
+        let rule = '.singleDay:nth-child(odd) {background-color :' +
+            res.style.bg_color + ';}';
+        let styleElement = document.createElement('style');
+        styleElement.textContent = rule;
+        document.head.appendChild(styleElement);
+    }
+
 
     /**
      * 監聽modal表單元素的變更事件(用於新增)
@@ -215,22 +449,6 @@ $(document).ready(function () {
             }
         }
     })
-
-
-
-
-    // mcStartInput.addEventListener('click', function (e) {
-    // if (e.target.checked) {
-    // e.target.checked = false;
-    // }
-    // });
-
-    // mcEndInput.addEventListener('click', function (e) {
-    // if (e.target.checked) {
-    // e.target.checked = false;
-    // }
-    // });
-
 
 
 
@@ -336,7 +554,7 @@ $(document).ready(function () {
             data.append('tag_title', tag_title);
             data.append('tag_color', tag_color);
             data.append('sticker', sticker);
-            data.append('sticker_pre', sticker_pre);
+            data.append('sticker_pre', stickerPreSrc);
             data.append('photos_link', photos_link);
 
             $.ajax({
@@ -406,10 +624,6 @@ $(document).ready(function () {
          * 搜尋特定日期
          */
         .on("click", "#searchIcon", function () {
-            const searchYear = document.getElementById
-                ('conYearSel');
-            const searchMon = document.getElementById
-                ('searchMonth');
             let year = searchYear.value;
             console.log(year);
             let month = searchMon.value;
@@ -424,7 +638,7 @@ $(document).ready(function () {
 
         .on("click", "#clearStickerBtn", function (e) {
             $("#stickerPre").prop('src', '');
-            sticker_pre = ''; // 全域變數用於upate api
+            stickerPreSrc = ''; // 全域變數用於upate api
         })
 
         .on("click", "#modalReset", function (e) {

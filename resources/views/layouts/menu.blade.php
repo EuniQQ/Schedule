@@ -11,7 +11,7 @@
         <div class="type">日&nbsp;&nbsp;誌</div>
 
         <div>
-            <a href="{{ route('calender.index') }}">·&nbsp;當月月曆</a>
+            <a href="{{ route('calender') }}">·&nbsp;當月月曆</a>
         </div>
 
         <div>

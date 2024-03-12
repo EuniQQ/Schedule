@@ -26,8 +26,11 @@ Route::get('/dashboard', function () {
 
 
 Route::middleware('auth')->group(function () {
+    Route::get('/calender/{year?}/{month?}', function () {
+        return view('content.calender');
+    })->name('calender');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
     Route::get('/monthlyEvent/{year?}', [EventController::class, 'index'])->name('event.index');
 

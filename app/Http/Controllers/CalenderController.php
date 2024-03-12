@@ -59,7 +59,7 @@ class CalenderController extends Controller
             'yearList' => $yearList
         ];
 
-        return view('content.calender', $res);
+        return Response::json($res);
     }
 
 
