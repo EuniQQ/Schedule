@@ -549,38 +549,49 @@ $(document).ready(function () {
             let tag_to = $("#tagTo").val();
             let tag_title = $("#tagTitle").val();
             let tag_color = $("#tagColor").val();
-            let sticker = $("#stickerInp")[0].files[0] !== undefined ? $("#stickerInp")[0].files[0] : null;
+            let sticker = $("#stickerInp")[0].files[0] !== undefined ? $
+                ("#stickerInp")[0].files[0] : '';
             let photos_link = $("#photosLink").val();
 
-            const data = new FormData;
-            data.append('date', date);
-            data.append('birthday_person', birthday_person);
-            data.append('mc', mc);
-            data.append('plan_time', plan_time);
-            data.append('plan', plan);
-            data.append('tag_to', tag_to);
-            data.append('tag_title', tag_title);
-            data.append('tag_color', tag_color);
-            data.append('sticker', sticker);
-            data.append('sticker_pre', stickerPreSrc);
-            data.append('photos_link', photos_link);
+            // 判斷欄位是否為全空
+            let isAllFalse = [
+                birthday_person, mc, plan_time, plan, tag_to, tag_title,
+                sticker, photos_link
+            ].every(field => field === undefined || field === '');
 
-            $.ajax({
-                url: "/api/calender/" + id,
-                type: "POST",
-                data: data,
-                processData: false,
-                contentType: false,
-                success: function (res) {
-                    $("#addModal").hide();
-                    $(".modal-backdrop").remove();
-                    alert("更新成功");
-                    changes = new FormData();
-                },
-                error: function (err) {
-                    showErrMsgFromModal(err);
-                }
-            })
+            if (isAllFalse === true) {
+                alert('請填入表單資料或直接刪除');
+
+            } else {
+                const data = new FormData;
+                data.append('date', date);
+                data.append('birthday_person', birthday_person);
+                data.append('mc', mc);
+                data.append('plan_time', plan_time);
+                data.append('plan', plan);
+                data.append('tag_to', tag_to);
+                data.append('tag_title', tag_title);
+                data.append('tag_color', tag_color);
+                data.append('sticker', sticker);
+                data.append('sticker_pre', stickerPreSrc);
+                data.append('photos_link', photos_link);
+                $.ajax({
+                    url: "/api/calender/" + id,
+                    type: "POST",
+                    data: data,
+                    processData: false,
+                    contentType: false,
+                    success: function (res) {
+                        $("#addModal").hide();
+                        $(".modal-backdrop").remove();
+                        alert("更新成功");
+                        changes = new FormData();
+                    },
+                    error: function (err) {
+                        showErrMsgFromModal(err);
+                    }
+                })
+            }
         })
 
 
