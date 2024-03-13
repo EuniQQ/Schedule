@@ -337,17 +337,18 @@ $(document).ready(function () {
             endLayer.className = 'endLayer';
             endLayer.id = 'e' + item.fullDate;
 
-            let isTagExist = Object.keys(item).includes('tag_title');
-            if (isTagExist == true && item.tag_title) {
+            if (!!item.tag_color) {
                 endLayer.style.backgroundColor = item.tag_color;
+            }
 
-                if (!!item.sticker) {
-                    let sticker = document.createElement('img');
-                    sticker.className = 'sticker';
-                    sticker.setAttribute('src', item.sticker);
-                    endLayer.appendChild(sticker);
-                }
+            if (!!item.sticker) {
+                let sticker = document.createElement('img');
+                sticker.className = 'sticker';
+                sticker.setAttribute('src', item.sticker);
+                endLayer.appendChild(sticker);
+            }
 
+            if (!!item.tag_title) {
                 let tagTitle = document.createElement('p');
                 tagTitle.className = 'wthText';
                 tagTitle.textContent = item.tag_title;
