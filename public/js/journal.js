@@ -84,17 +84,7 @@ $(document)
                 getJournals();
             },
             error: function (err) {
-                let errMessage = err.responseJSON.message;
-                let messages = errMessage.split('\n');  // 將err照換行符分成多
-                行
-                const modalBody = document.getElementById('modalBody');
-
-                messages.forEach(message => {
-                    let showErr = document.createElement('div');
-                    showErr.textContent = errMessage;
-                    showErr.className = "alert alert-danger";
-                    modalBody.insertBefore(showErr, modalBody.firstChild);
-                })
+                showErrMsgFromModal(err);
             }
         })
         changes = new FormData();
