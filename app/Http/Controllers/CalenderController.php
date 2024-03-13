@@ -426,6 +426,11 @@ class CalenderController extends Controller
             if (is_null($schedule)) {
                 abort(404, 'Not found');
             }
+
+            if ($schedule->sticker) {
+                $path = $schedule->sticker;
+                $this->delImgFromFolder($path);
+            }
             $message = $schedule->delete() == true ? "刪除成功" : "刪除失敗";
             return Response::json(['message' => $message]);
         } else {
@@ -489,8 +494,19 @@ class CalenderController extends Controller
     {
         $request = $request->all();
         $style = Style::find($id);
+
         if ($style) {
             if (auth()->user()->id == $style->user_id) {
+
+                $imgArr = ['main_img', 'header_img', 'footer_img'];
+                for ($i = 0; $i < 3; $i++) {
+                    $imgType = $imgArr[$i];
+                    if ($style->$imgType) {
+                        $path = $style->$imgType;
+                        $this->delImgFromFolder($path);
+                    }
+                }
+
                 $res = $style->delete();
             } else {
                 abort(403, "權限不足，無法刪除");

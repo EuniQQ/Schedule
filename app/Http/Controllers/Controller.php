@@ -44,4 +44,16 @@ class Controller extends BaseController
 
         return $yearList;
     }
+
+
+    /**
+     * 從所在資料夾刪除圖片
+     */
+    protected function delImgFromFolder($path)
+    {
+        // 取得完整圖片路徑
+        $fullPath = public_path($path);
+        unlink($fullPath);
+        return;
+    }
 }

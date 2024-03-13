@@ -26,11 +26,14 @@ body {
     border: none;
 }
 
-/* 送出/重置鍵 click效果*/
+/* 送出/重置鍵 click效果 START*/
+
+/* 重置鍵 */
 .warBtn {
     box-shadow: 0 5px #8f8f8f;
 }
 
+/* 送出鍵 */
 .secBtn {
     box-shadow: 0 5px #acacac;
 }
@@ -44,3 +47,4 @@ body {
     box-shadow: 0 2px #867307;
     transform: translateY(2px);
 }
+/* 送出/重置鍵 click效果 END*/

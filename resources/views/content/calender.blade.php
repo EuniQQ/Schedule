@@ -143,9 +143,9 @@
                     </div>
 
                     <div class="d-index text-center mt-4">
-                        <button id="resetStyleBtn" type="reset" class="secBtn btn btn-secondary px-2 mx-1">重置
+                        <button id="resetStyleBtn" type="reset" class=" btn btn-secondary px-2 mx-1" data-id="">重置
                         </button>
-                        <button id="offcanvasSmt" type="button" class="warBtn btn btn-warning px-2 mx-1" data-year="" data-month="" data-userId="" data-id="">送出</button>
+                        <button id="offcanvasSmt" type="button" class=" btn btn-warning px-2 mx-1" data-year="" data-month="" data-userId="" data-id="">送出</button>
                     </div>
                 </div>
             </div>
@@ -155,7 +155,7 @@
             <!-- month -->
             <div id="monthSec" class="month d-flex">
                 <p id="headerMonth"></p>
-                
+
                 <!-- header img -->
 
                 <!-- icon 區-->

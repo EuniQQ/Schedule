@@ -34,6 +34,7 @@ var footerImgPre = document.getElementById('footerImgPre');
 var calColorInp = document.getElementById('calColorInp');
 var ftColorInp = document.getElementById('ftColorInp');
 var offcanvasSmt = document.getElementById('offcanvasSmt');
+resetStyleBtn = document.getElementById('resetStyleBtn');
 // else
 var footer = document.getElementById('footer');
 var sideBar = document.getElementById('sideBar');
@@ -333,23 +334,25 @@ $(document).ready(function () {
         let date = parts[2];
         let newId = "e" + year + month + date;
         const endLayer = document.getElementById(newId);
-        const childElements = endLayer.children;
-        if (type == 'des') {
-            const p = document.createElement('p');
-            p.textContent = res;
-            p.className = "wthText";
-            endLayer.appendChild(p);
+        if (!!endLayer) {
+            const childElements = endLayer.children;
+            if (type == 'des') {
+                const p = document.createElement('p');
+                p.textContent = res;
+                p.className = "wthText";
+                endLayer.appendChild(p);
 
-        } else {
-            const img = document.createElement('img');
-            img.src = res;
-            img.className = 'sticker';
-            if (childElements.length > 0) {
-                Array.from(childElements).forEach(el => {
-                    el.style.display = 'none';
-                })
+            } else {
+                const img = document.createElement('img');
+                img.src = res;
+                img.className = 'sticker';
+                if (childElements.length > 0) {
+                    Array.from(childElements).forEach(el => {
+                        el.style.display = 'none';
+                    })
+                }
+                endLayer.appendChild(img);
             }
-            endLayer.appendChild(img);
         }
     }
 
@@ -384,6 +387,10 @@ $(document).ready(function () {
     }
 
 
+    /**
+     * getCalender API 賦值
+     * @param {*} res getCalender API res
+     */
     function putInValues(res) {
         // left side 
         WesternYear.textContent = res.year;
@@ -400,6 +407,7 @@ $(document).ready(function () {
         offcanvasSmt.setAttribute('data-month', res.month);
         offcanvasSmt.setAttribute('data-userId', res.userId);
         offcanvasSmt.setAttribute('data-id', res.style.id);
+        resetStyleBtn.setAttribute('data-id', res.style.id);
         calColorInp.value = res.style.bg_color;
         ftColorInp.value = res.style.footer_color;
 
@@ -415,6 +423,8 @@ $(document).ready(function () {
         });
     }
 
+
+
     /**
      * 設定畫面視覺色
      * @param {*} res = get calender api res
@@ -429,6 +439,7 @@ $(document).ready(function () {
         styleElement.textContent = rule;
         document.head.appendChild(styleElement);
     }
+
 
 
     /**
