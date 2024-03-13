@@ -225,9 +225,17 @@ $(document).ready(function () {
 
 
     function getCalender() {
+        let currentUrl = window.location.href;
+        let thisYear = getDay().thisYear;
+        let thisMonth = getDay().thisMonth;
+        let splittedUrl = currentUrl.split('/');
+        let year = splittedUrl[4];
+        let month = splittedUrl[5];
+        let argYear = year ? year : thisYear;
+        let argMonth = month ? month : thisMonth;
 
         $.ajax({
-            url: "/api/calender",
+            url: "/api/calender/" + argYear + '/' + argMonth,
             method: "GET",
             dataType: "json",
             success: function (res) {
@@ -361,7 +369,7 @@ $(document).ready(function () {
         if (!!res.style.main_img) {
             mainImg.setAttribute('src', res.style.main_img);
         } else {
-            mainImg.setAttribute('src', '{{ asset("storage/img/QQsticker.png") }}');
+            mainImg.setAttribute('src', '/storage/img/QQsticker.png');
         }
         sideBar.insertBefore(mainImg, sideBar.firstChild);
 

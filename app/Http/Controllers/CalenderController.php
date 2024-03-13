@@ -29,21 +29,13 @@ class CalenderController extends Controller
         $hebrewYear = 5783 + (intval($year) - 2024);
         $thisMonth = $now->month;
         $today = $now->format("d");
-        // 月份改成有前導0
-        $formatMonth = !is_null($month) ? $month : $now->format('m');
-        if (is_null($year) && is_null($month)) {
-            $year = $thisYear;
-            $month = $thisMonth;
-        } elseif (is_null($year) && !is_null($month)) {
-            $year = $thisYear;
-        }
 
         $yearList = $this->getYearList();
 
         // 其他參數
         $finance = $this->getFinance($year, $month);
         $style =  $this->getStyle($year, $month) ?? " ";
-        $calender = $this->getCalender($year, $formatMonth);
+        $calender = $this->getCalender($year, $month);
         $res = [
             'year' => $year,
             'hebrewYear' => $hebrewYear,
