@@ -243,7 +243,8 @@ class CalenderController extends Controller
         Calender::create($validated);
 
         if (isset($validated['tag_title'])) {
-            $this->saveTagColors($validated);
+            $originalTagTo = null;
+            $this->saveTagColors($validated, $originalTagTo);
         }
 
         return redirect()->back();
@@ -323,8 +324,9 @@ class CalenderController extends Controller
             $validated['mc'] = 0;
         };
 
+        $originalTagTo = $record->tag_to;
+        $this->saveTagColors($validated, $originalTagTo);
         $res = $record->update($validated);
-        $this->saveTagColors($validated);
 
         if ($res >= 1) {
             return back();
@@ -337,13 +339,47 @@ class CalenderController extends Controller
     /**
      * save days of tag color
      */
-    protected function saveTagColors($validated)
+    protected function saveTagColors($validated, $originalTagTo)
     {
+        $userId = auth()->user()->id;
+        $formatOriTagto = carbon::parse($originalTagTo)->format('Ymd');
         $tagStart = $validated['date'];
         $tagEnd = isset($validated['tag_to']) ? $validated['tag_to'] : null;
-        $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] :
-            $tagStart;
+        $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] : $tagStart;
         $interval = carbon::parse($tagStart)->diffInDays($tagEnd) ?? null;
+        $updateInterval = carbon::parse($formatOriTagto)->diffInDays($tagEnd, false) ?? null;
+
+        if ($formatOriTagto && $updateInterval < 0) {
+            // 修改(天數減少)
+            $this->createTagColors($interval, $tagStart, $tagColor);
+            for ($i = 0; $i > $updateInterval; $i--) {
+                $reverseDate = intval($formatOriTagto) + $i;
+                $reserseData = Calender::where('user_id', $userId)->where('date', $reverseDate)->first();
+                if (
+                    $reserseData->birthday_person == null &&
+                    $reserseData->plan == null &&
+                    $reserseData->plan_time == null &&
+                    $reserseData->tag_title == null &&
+                    $reserseData->tag_to == null &&
+                    $reserseData->sticker == null &&
+                    $reserseData->photos_link == null &&
+                    $reserseData->mc == 0
+                ) {
+                    $reserseData->delete();
+                } else {
+                    $reserseData->update([$reserseData->tag_color = null]);
+                }
+            }
+        }
+        // 新增 or 修改(天數增加)
+        $this->createTagColors($interval, $tagStart, $tagColor);
+
+        return;
+    }
+
+
+    protected function createTagColors($interval, $tagStart, $tagColor)
+    {
         if ($interval > 0 && $tagColor !== '#000000') {
             for ($i = 1; $i <= $interval; $i++) {
                 $addDate = intval($tagStart) + $i;
@@ -355,8 +391,6 @@ class CalenderController extends Controller
         }
         return;
     }
-
-
 
     /**
      * Remove the specified resource from storage.
