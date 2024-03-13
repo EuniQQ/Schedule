@@ -155,10 +155,6 @@
     text-align: center;
 }
 
-.todayBg {
-    background-color: rgba(255, 238, 150, 1)
-}
-
 .day {
     margin: 0 0.5rem;
     font-size: smaller;
@@ -200,21 +196,21 @@
 
 @media(min-width:1025px) {
     .middleLayer li {
-        font-size: 15px;
+        font-size: 14px;
         margin: 0;
     }
 }
 
 @media(min-width:720px) and (max-width:1024px) {
     .middleLayer li {
-        font-size: 13px;
+        font-size: 12px;
         margin: 0;
     }
 }
 
 @media(max-width:719px) {
     .middleLayer li {
-        font-size: 11px;
+        font-size: 10px;
         margin: 0;
     }
 }
@@ -250,12 +246,17 @@
 
 @media(min-width:720px) and (max-width:1024px) {
     .endLayer p {
-        font-size: 13px;
+        font-size: 12px;
         margin-top: 3px;
     }
 }
 
-@media(max-width:719px) {}
+@media(max-width:719px) {
+    .endLayer p {
+        font-size: 10px;
+        /* margin-top: 1px; */
+    }
+}
 
 /* 增加行程model START*/
 .plusIcon {

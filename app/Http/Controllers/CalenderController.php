@@ -19,6 +19,7 @@ class CalenderController extends Controller
 {
     use UploadImgTrait;
 
+
     /**
      * Display a listing of the resource.
      */
@@ -36,6 +37,8 @@ class CalenderController extends Controller
         $finance = $this->getFinance($year, $month);
         $style =  $this->getStyle($year, $month) ?? " ";
         $calender = $this->getCalender($year, $month);
+        $weatherDes = $this->getWeatherDes();
+        $weatherType = $this->getWeatherType();
         $res = [
             'year' => $year,
             'hebrewYear' => $hebrewYear,
@@ -48,11 +51,14 @@ class CalenderController extends Controller
             'style' => $style,
             'calender' => $calender,
             'userId' => auth()->user()->id,
-            'yearList' => $yearList
+            'yearList' => $yearList,
+            'weatherDes' => $weatherDes,
+            'weatherType' => $weatherType
         ];
 
         return Response::json($res);
     }
+
 
 
     /* 取得財務 */
@@ -73,6 +79,7 @@ class CalenderController extends Controller
     }
 
 
+
     /* 取得視覺 */
     protected function getStyle($year, $month)
     {
@@ -87,6 +94,7 @@ class CalenderController extends Controller
         }
         return $styles;
     }
+
 
 
     /* 取得月曆 */
@@ -166,6 +174,7 @@ class CalenderController extends Controller
     }
 
 
+
     /**
      * 取得天氣敘述(降雨機率&氣溫)
      */
@@ -176,8 +185,9 @@ class CalenderController extends Controller
         $url =  'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWB-8CE3FEDC-E7BF-43FA-931F-1AD1B143E0E2&format=JSON&locationName=%E6%B3%B0%E5%B1%B1%E5%8D%80&elementName=WeatherDescription';
 
         $res = $this->curl($ch, $url);
-        return Response::json($res);
+        return $res;
     }
+
 
 
     /**
@@ -189,10 +199,14 @@ class CalenderController extends Controller
         $url =  'https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-D0047-071?Authorization=CWB-8CE3FEDC-E7BF-43FA-931F-1AD1B143E0E2&format=JSON&locationName=%E6%B3%B0%E5%B1%B1%E5%8D%80&elementName=Wx';
 
         $res = $this->curl($ch, $url);
-        return Response::json($res);
+        return $res;
     }
 
 
+
+    /**
+     * 打氣象局api
+     */
     protected function curl($ch, $url)
     {
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -260,6 +274,8 @@ class CalenderController extends Controller
         //
     }
 
+
+
     /**
      * Display the specified resource.
      */
@@ -269,12 +285,16 @@ class CalenderController extends Controller
         return Response::json($res);
     }
 
+
+
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
     }
+
+
 
     /**
      * Update the specified resource in storage.
@@ -336,6 +356,7 @@ class CalenderController extends Controller
     }
 
 
+
     /**
      * save days of tag color
      */
@@ -391,6 +412,8 @@ class CalenderController extends Controller
         }
         return;
     }
+
+
 
     /**
      * Remove the specified resource from storage.
