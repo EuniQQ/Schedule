@@ -225,12 +225,12 @@ $(document).ready(function () {
 
 
     function getCalender() {
+
         $.ajax({
             url: "/api/calender",
             method: "GET",
             dataType: "json",
             success: function (res) {
-                console.log(res);
                 createCalenderElements(res);
                 createDecorateImgs(res);
                 putInValues(res);
@@ -315,10 +315,10 @@ $(document).ready(function () {
 
             // middle layer : plan
             let isPlanExist = Object.keys(item).includes('plan');
-            if (isPlanExist == true && item.plan) {
+            if (isPlanExist == true && !!item.plan) {
                 let calPlan = document.createElement('li');
                 calPlan.className = 'calPlan';
-                calPlan.innerText = item.plan;
+                calPlan.textContent = !!item.plan_time ? item.plan_time + ' ' + item.plan : item.plan;
                 midLayer.appendChild(calPlan);
             }
             singleDay.appendChild(midLayer);
@@ -370,7 +370,6 @@ $(document).ready(function () {
             let headerImg = document.createElement('img');
             headerImg.setAttribute('src', res.style.header_img);
             headerImg.id = 'headerImg';
-            console.log(headerImg);
             monthSec.insertBefore(headerImg, iconSec);
         }
 
@@ -612,7 +611,8 @@ $(document).ready(function () {
                 },
                 success: function (res) {
                     alert(res.message);
-                    updateDailySchedule(date);
+                    // updateDailySchedule(date);
+                    window.location.reload();
                 },
                 error: function (err) {
                     console.log(err.responseJSON.message);

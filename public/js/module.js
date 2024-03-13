@@ -1,3 +1,4 @@
+// const { list } = require("postcss");
 
 /**
  * 取得apiToken
@@ -49,7 +50,7 @@ function previewSelect(e) {
 function makeYearListOpt(res) {
     Object.values(res.yearList).forEach(year => {
         let opt = document.createElement('option');
-        opt.innerHTML = year;
+        opt.textContent = year;
         yearSel.appendChild(opt);
     })
 }
@@ -72,4 +73,23 @@ function showErrMsgFromModal(err) {
         errGroup.appendChild(showErr);
     })
     modalBody.insertBefore(errGroup, modalBody.firstChild);
+}
+
+
+
+function getDay() {
+    const day = new Date();
+    const year = day.getFullYear();
+    // 月份從0開始，需加1。加前導0
+    const month = String(day.getMonth() + 1).padStart(2, '0');
+    const date = String(day.getDate()).padStart(2, '0');
+    const today = `${year}-${month}-${date}`;
+
+    let data = {
+        thisYear: year,
+        thisMonth: month,
+        thisDate: date,
+        today: today
+    }
+    return data;
 }

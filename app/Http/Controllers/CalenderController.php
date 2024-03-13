@@ -373,7 +373,7 @@ class CalenderController extends Controller
     {
         $request = $request->all();
         $schedule = Calender::find($id);
-        if ($request['userId'] == $schedule->user_id) {
+        if ($schedule->user_id == auth()->user()->id) {
             if (is_null($schedule)) {
                 abort(404, 'Not found');
             }
