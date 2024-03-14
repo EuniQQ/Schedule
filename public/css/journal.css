@@ -1,7 +1,7 @@
 body {
     background-color: rgb(233, 231, 213);
     height: 100vh;
-    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 .container {

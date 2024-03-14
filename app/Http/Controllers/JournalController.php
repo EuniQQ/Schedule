@@ -163,7 +163,9 @@ class JournalController extends Controller
     }
 
 
-
+    /**
+     * update journal
+     */
     public function update(Request $request, $id)
     {
         $request->all();
@@ -236,13 +238,17 @@ class JournalController extends Controller
     }
 
 
-
+    /**
+     * delete one piece of img of edit modal 
+     */
     public function deleteImg(Request $request, $id)
     {
         $_data = $request->post();
         $journalId = $_data['journalId'];
         $img = Journal_photo::find($id);
         if ($img) {
+            $path = $img->url;
+            $this->delImgFromFolder($path);
             $img->delete();
             $data = $this->getEditingData($journalId);
             return response::json($data);
@@ -252,17 +258,26 @@ class JournalController extends Controller
     }
 
 
-
+    /**
+     * delete journal
+     */
     public function destroy($id)
     {
 
         $journal = auth()->user()->journals->find($id);
         if ($journal) {
-            $journal->delete();
+            // delete journal photos & photo where's in folder
+            $journalPhotos = $journal->journal_photos;
+            foreach ($journalPhotos as $jourPhoto) {
+                $path = $jourPhoto->url;
+                $this->delImgFromFolder($path);
+                $jourPhoto->delete();
+            }
 
+            $journal->delete();
             return Response::json(['message' => '刪除成功']);
         } else {
-            abort("Not found !", 404);
+            abort(404, "Not found !");
         }
     }
 

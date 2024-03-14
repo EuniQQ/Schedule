@@ -130,23 +130,24 @@ $(document)
     .on("click", ".delMoImgBtn", function (e) {
         let imgId = e.target.getAttribute("data-id");
         let journalId = e.target.getAttribute("data-journalId");
-
-        $.ajax({
-            url: "/api/journal/singleImg/" + imgId,
-            type: "POST",
-            data: {
-                _method: "DELETE",
-                journalId: journalId
-            },
-            success: function (res) {
-                clearEditModalInp();
-                putValIntoEditModal(res);
-                getJournals();
-            },
-            error: function (err) {
-                console.log(err.responseJSON.message);
-            }
-        })
+        const yes = confirm('確定刪除圖片嗎?刪了就回不來了喔!');
+        if (yes) {
+            $.ajax({
+                url: "/api/journal/singleImg/" + imgId,
+                type: "POST",
+                data: {
+                    _method: "DELETE",
+                    journalId: journalId
+                },
+                success: function (res) {
+                    clearEditModalInp();
+                    putValIntoEditModal(res);
+                },
+                error: function (err) {
+                    console.log(err.responseJSON.message);
+                }
+            })
+        }
     })
 
 
