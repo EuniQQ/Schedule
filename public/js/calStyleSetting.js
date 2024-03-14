@@ -68,24 +68,6 @@ function getCookie(name) {
 
 
 /**
- * 上傳img同時預覽、可刪除
- */
-function previewSelect(event) {
-    const inputId = event.target.id;
-    const input = document.getElementById(inputId);
-    const file = input.files[0];
-    const imgSet = input.parentNode.nextElementSibling;
-    const imgPre = imgSet.querySelector('img');
-
-    if (file) {
-        imgPre.src = URL.createObjectURL(file);
-    } else {
-        imgPre.src = "";
-    }
-}
-
-
-/**
  * 監聽offcanvas表單元素的變更事件
  */
 var offcvsChgs = new FormData();
@@ -105,7 +87,13 @@ styleCanvas.addEventListener('change', function (e) {
 })
 
 
+
 $(document)
+    // 預覽選取照片
+    .on("change", ".imgInput", function (e) {
+        previewSelect(e);
+    })
+
     .on("click", "#offcanvasSmt", function (e) {
 
         if (!offcanvasId) {

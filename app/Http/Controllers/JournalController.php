@@ -29,7 +29,7 @@ class JournalController extends Controller
 
         $query = Journal::where('user_id', auth()->user()->id);
 
-        $dates = $query->orderBy('date')->pluck('date')->all();
+        $dates = $query->orderBy('date', 'desc')->pluck('date')->all();
         $yearList = [];
         foreach ($dates as $date) {
             $yearOpt = date('Y', strtotime($date));

@@ -424,7 +424,6 @@ $(document).ready(function () {
     }
 
 
-
     /**
      * 設定畫面視覺色
      * @param {*} res = get calender api res
@@ -439,7 +438,6 @@ $(document).ready(function () {
         styleElement.textContent = rule;
         document.head.appendChild(styleElement);
     }
-
 
 
     /**
@@ -462,6 +460,13 @@ $(document).ready(function () {
     })
 
 
+    /**
+     * 監聽modal sticker input(preview)
+     */
+    stickerInp.addEventListener('change',function(e){
+        previewSelect(e);
+    })
+
 
     /**
      * 點擊modal以外處，關閉modal
@@ -470,15 +475,6 @@ $(document).ready(function () {
         if (evt.target == addModal) {
             addModal.style.display = "none";
         }
-    }
-
-
-    /**
-     * 上傳sticker同時預覽
-     */
-    stickerInp.onchange = evt => {
-        const [file] = stickerInp.files
-        stickerPre.src = URL.createObjectURL(file);
     }
 
 
@@ -596,6 +592,7 @@ $(document).ready(function () {
                 })
             }
         })
+
 
 
         /**

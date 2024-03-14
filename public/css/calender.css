@@ -52,7 +52,7 @@
 }
 
 #mainImg {
-    margin-top:1rem;
+    margin-top: 1rem;
 }
 
 #headerImg {
@@ -395,22 +395,16 @@ input {
     margin: 0 auto;
 }
 
-.styleOffcanvas p {
-    padding-left: 2rem;
+.styleOffcanvas label {
     font-weight: bolder;
     font-size: smaller;
-    margin-right: 1rem;
 }
 
 .styleOffcanvas {
     display: flex;
     flex-direction: column;
     justify-content: center;
-}
-
-.colorSet {
-    display: flex;
-    align-items: center;
+    text-align: center;
 }
 
 #delCalColor,

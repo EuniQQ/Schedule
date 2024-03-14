@@ -103,45 +103,47 @@
                 </div>
                 <div class="offcanvas-body styleOffcanvas">
                     <!-- 主視覺 -->
-                    <div class="d-flex">
-                        <p>Main IMG :</p>
+                    <div>
+                        <label>Main IMG : &nbsp;</label>
                         <input id="mainImgInp" class="imgInput" type="file" accept="image/*" name="main_img" onchange="previewSelect(event)">
-                    </div>
-                    <div class="imgSet">
-                        <img id="mainImgPre" src="">
+                        <div class="imgSet">
+                            <img id="mainImgPre" src="">
+                        </div>
                     </div>
 
                     <!-- header img -->
-                    <div class="d-flex">
-                        <p>Header IMG :</p>
+                    <div>
+                        <label>Header IMG : &nbsp;</label>
                         <input id="headerImgInp" class="imgInput" type="file" accept="image/*" name="header_img" onchange="previewSelect(event)">
-                    </div>
-                    <div class="imgSet">
-                        <img id="headerImgPre" src="">
+                        <div class="imgSet">
+                            <img id="headerImgPre" src="">
+                        </div>
                     </div>
 
                     <!-- footer img -->
-                    <div class="d-flex ">
-                        <p>Footer IMG :</p>
+                    <div>
+                        <label>Footer IMG : &nbsp;</label>
                         <input id="footerImgInp" class="imgInput" type="file" accept="image/*" name="footer_img" onchange="previewSelect(event)">
-                    </div>
-                    <div class="imgSet">
-                        <img id="footerImgPre" src="">
+                        <div class="imgSet">
+                            <img id="footerImgPre" src="">
+                        </div>
                     </div>
 
+                    <!-- calender background -->
                     <div class="colorSet">
-                        <!-- calender background -->
-                        <p class="mx-2">Calender Color :</p>
+                        <label>Calender Color :&nbsp; </label>
                         <input id="calColorInp" type="color" value="" name="bg_color">
                         <span id="delCalColor">Delete</span>
                     </div>
+
+                    <!-- footer color -->
                     <div class="colorSet">
-                        <!-- footer color -->
-                        <p class="mx-2">Footer Color :</p>
+                        <label>Footer Color :&nbsp; </label>
                         <input id="ftColorInp" type="color" value="" name="footer_color">
                         <span id="delFtColor">Delete</span>
                     </div>
 
+                    <!-- buttons -->
                     <div class="d-index text-center mt-4">
                         <button id="resetStyleBtn" type="reset" class=" btn btn-secondary px-2 mx-1" data-id="">重置
                         </button>

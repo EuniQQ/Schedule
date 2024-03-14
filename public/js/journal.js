@@ -540,23 +540,3 @@ function clearEditModalInp() {
 
     hiddenInp.value = dateInp.value = contentInp.value = linkInp.value = '';
 }
-
-
-
-/**
- * 上傳img同時預覽、可刪除
- */
-function previewSelect(event) {
-    const inputId = event.target.id;
-    const input = document.getElementById(inputId);
-    const file = input.files[0];
-    const imgSet = input.parentNode.nextElementSibling;
-    const imgPre = imgSet.querySelector('img');
-
-    if (file) {
-        imgPre.src = URL.createObjectURL(file);
-    } else {
-        imgPre.src = "";
-    }
-}
-
