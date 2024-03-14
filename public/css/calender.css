@@ -263,12 +263,10 @@
     margin: 0 auto;
     z-index: 999;
     display: none;
-    /* transform: translate(70%, 50%); */
     position: relative;
     left: 35%;
-    top: 20%;
-    color: #b1afaf;
-
+    top: 25%;
+    color: #414141;
 }
 
 .singleDay:hover .plusIcon {
@@ -293,7 +291,7 @@
     background-color: #f8f7f4;
     margin: 10px auto;
     padding: 20px;
-    border: 1px solid #888;
+    border: 1px solid #888888;
     width: 30%;
 }
 
@@ -359,16 +357,15 @@ input {
     padding-top: .8rem;
     background-color: rgba(190, 61, 61, 1);
     text-align: center;
-}
-
-
-.footer a:hover {
     text-decoration: none;
-    font-size: larger;
-
 }
 
-.footer a {
+
+.footerAtag:hover {
+    color: gold;
+}
+
+.footerAtag {
     margin: 0 2rem 0 0;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bolder;

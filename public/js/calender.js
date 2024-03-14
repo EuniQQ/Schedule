@@ -420,6 +420,9 @@ $(document).ready(function () {
             let month = (i + 1) < 10 ? '0' + (i + 1) : (i + 1);
             let href = '/calender/' + res.year + '/' + month;
             tag.setAttribute('href', href);
+            if(tag.textContent == res.thisMonth){
+                tag.style.color = '#f3ef0a';
+            }
         });
     }
 

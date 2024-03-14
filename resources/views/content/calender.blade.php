@@ -44,7 +44,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addModalLabel"></h5>
-                        <span class="closeModal">&times;</span>
+                        <button type="button" class="closeModal btn-close"></button>
                     </div>
                     <div id="modalBody" class="modal-body">
                         <form id="modalForm">

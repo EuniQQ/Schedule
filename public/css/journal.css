@@ -307,6 +307,13 @@ footer div:active {
     align-items: center;
 }
 
+.editBtn:hover{
+    background: rgb(155, 134, 32);
+}
+
+.editBtn:active{
+    background: rgb(155, 77, 32);
+}
 
 .dailyText>.topic {
     color: rgb(143, 3, 3);
@@ -419,6 +426,11 @@ input {
     position: relative;
     top: -50px;
     z-index: 999;
+    color: rgb(223, 57, 57);
+}
+
+.delMoImgBtn:active {
+    color: rgb(173, 41, 41);
 }
 
 
@@ -431,6 +443,7 @@ input {
 .imgSet:hover img {
     opacity: 0.5;
 }
+
 /* edit modal END */
 
 
