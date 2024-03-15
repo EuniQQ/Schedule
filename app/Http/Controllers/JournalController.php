@@ -335,7 +335,7 @@ class JournalController extends Controller
         return [
             'required' => ':attribute為必填',
             'string' => ':attribute必須為文字',
-            'min:30' => ':attribute字數需大於30字',
+            'min' => ':attribute字數需大於30字',
             'date' => ':attribute必須為日期格式',
             'file' => ':attribute必須為檔案格式'
         ];

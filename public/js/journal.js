@@ -89,7 +89,6 @@ $(document)
                 showErrMsgFromModal(err);
             }
         })
-        changes = new FormData();
     })
 
 
@@ -121,10 +120,9 @@ $(document)
                 },
                 error: function (err) {
                     console.log(err.responseJSON.message);
-                    alert('更新失敗');
+                    showErrMsgFromModal(err);
                 }
             });
-            changes = new FormData();
         }
     })
 

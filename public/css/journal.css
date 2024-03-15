@@ -458,7 +458,7 @@ input {
     width: 30vw;
     height: fit-content;
     background-color: rgb(255, 255, 255);
-    box-shadow: 0px 12px 12px 5px #5a5a5a;
+    box-shadow: 0px 5px 10px 5px #5a5a5a;
 }
 
 /* 點擊放大的圖片 */
