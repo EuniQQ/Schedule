@@ -201,12 +201,12 @@ $(document)
                 document.body.appendChild(modal);
 
                 modal.onclick = function () {
-                    document.body.appendChild(modal);
+                    // 防止點擊 modal 時關閉 modal
+                    event.stopPropagation();
                 }
 
                 document.body.onclick = function (event) {
-                    // 防止點擊 modal 時關閉 modal
-                    event.stopPropagation();
+                    document.body.appendChild(modal);
                 }
 
                 modal.onclick = function () {
