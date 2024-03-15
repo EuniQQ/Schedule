@@ -307,11 +307,11 @@ footer div:active {
     align-items: center;
 }
 
-.editBtn:hover{
+.editBtn:hover {
     background: rgb(155, 134, 32);
 }
 
-.editBtn:active{
+.editBtn:active {
     background: rgb(155, 77, 32);
 }
 
@@ -357,9 +357,6 @@ footer div:active {
     .more {
         text-align: center;
         margin: 0 2px;
-        width: 20%;
-        position: relative;
-        height: 90%;
     }
 }
 
@@ -370,9 +367,6 @@ footer div:active {
     .more {
         flex: 0 0 18%;
         margin: 0 2px;
-        width: 20%;
-        position: relative;
-        height: 80%;
     }
 }
 
@@ -380,10 +374,14 @@ footer div:active {
 .photo {
     background-color: rgb(206, 206, 206);
     color: aliceblue;
-}
 
-.photo>img {
-    object-fit: contain;
+
+
+    overflow: hidden;
+    width: 20%;
+    position: relative;
+    /* 高度為寬度的80% */
+    padding-top: calc(20% * 0.8);
 }
 
 
@@ -458,7 +456,7 @@ input {
     width: 30vw;
     height: fit-content;
     background-color: rgb(255, 255, 255);
-    box-shadow: 0px 5px 10px 5px #5a5a5a;
+    box-shadow: 0px 3px 10px 3px #5a5a5a;
 }
 
 /* 點擊放大的圖片 */
@@ -473,6 +471,6 @@ input {
 /* 點擊放大圖片敘述 */
 .photoModalP {
     margin: 10px;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     font-weight: 700;
 }

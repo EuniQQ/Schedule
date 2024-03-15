@@ -290,7 +290,8 @@ class JournalController extends Controller
     {
         $photo = Journal_photo::find($id);
         $des = $photo->description;
-        return Response::json(['description' => $des]);
+        $src = $photo->url;
+        return Response::json(['description' => $des, 'src' => $src]);
     }
 
 

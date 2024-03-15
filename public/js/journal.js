@@ -180,17 +180,18 @@ $(document)
      * 點擊放大圖片
      */
     .on("click", ".photo", function (e) {
-        let imgId = e.target.dataId;
+        let imgId = e.target.getAttribute('data-id');
+        let intgerImgId = parseInt(imgId);
 
         $.ajax({
-            url: "/api/journal/photoModal/" + imgId,
+            url: "/api/journal/photoModal/" + intgerImgId,
             method: "GET",
             success: function (res) {
 
                 const modal = document.createElement('div');
                 modal.className = 'photoModal';
                 const img = document.createElement('img');
-                img.src = e.target.src;
+                img.src = res.src;
                 img.className = 'modal-content';
                 const p = document.createElement('p');
                 p.className = 'photoModalP';
@@ -203,8 +204,9 @@ $(document)
                     document.body.appendChild(modal);
                 }
 
-                document.body.onclick = function () {
-                    document.body.removeChild(modal);
+                document.body.onclick = function (event) {
+                    // 防止點擊 modal 時關閉 modal
+                    event.stopPropagation();
                 }
 
                 modal.onclick = function () {
@@ -429,13 +431,14 @@ function putInValues(res) {
             dailySet.appendChild(photos);
 
             item.photos.forEach(function (item, j) {
-                let img = document.createElement('img');
-                // img.dataId = "photo" + item.photo_id;
-                img.dataId = item.photo_id;
-                img.className = "photo";
-                img.src = item.url;
-
-                photos.appendChild(img);
+                let photo = document.createElement('div');
+                photo.setAttribute('data-id', item.photo_id);
+                photo.className = "photo";
+                // 使用模板字符串将 item.url 包装在 url() 中
+                photo.style.backgroundImage = `url(${item.url})`;
+                photo.style.backgroundSize = 'contain';
+                photo.style.backgroundRepeat = 'no-repeat';
+                photos.appendChild(photo);
             });
 
             let photoArrLength = item.photos.length;
