@@ -90,6 +90,7 @@
                         <label>照片描述 ：</label>
                         <input type="text" name="des1"><br>
 
+                        <label>照片2 :&nbsp;</label>
                         <input id="photo2" class="upload" type="file" name="photo2">
                         <div class="imgSet">
                             <img id="photo2Pre" class="photoPre">

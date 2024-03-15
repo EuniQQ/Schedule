@@ -71,6 +71,7 @@ $(document)
      * create journal AJAX
      */
     .on("click", "#saveAdd", function (e) {
+        removeErrMsg();
 
         $.ajax({
             url: "/api/journal",
@@ -99,6 +100,7 @@ $(document)
         const moDate = document.getElementById('moDate');
         const moTitle = document.getElementById('moTitle');
         const moContent = document.getElementById('moContent');
+        removeErrMsg();
 
         if (moDate.value == '' || moTitle.value == '' || moContent.value == '') {
             alert("日期、標題、內文為必填");
@@ -174,10 +176,12 @@ $(document)
     })
 
 
-
+    /**
+     * 點擊放大圖片
+     */
     .on("click", ".photo", function (e) {
         let imgId = e.target.dataId;
-        console.log(imgId)
+
         $.ajax({
             url: "/api/journal/photoModal/" + imgId,
             method: "GET",
@@ -241,27 +245,33 @@ $(document)
  */
 toggleSwitch.addEventListener("change", function (e) {
     if (e.target.checked) {
-
-        for (let i = 0; i < dailyTexts.length; i++) {
-            dailyTexts[i].style = "border-radius:40px 0 0 40px";
-        }
-        for (let j = 0; j < editInps.length; j++) {
-            editInps[j].style = "display:flex";
-        }
-        addBtn.style.display = "flex";
+        ShowEditBtns();
     } else {
-
-        for (let i = 0; i < dailyTexts.length; i++) {
-            dailyTexts[i].style = "border-radius:40px";
-        }
-        for (let j = 0; j < editInps.length; j++) {
-            editInps[j].style = "display:none";
-        }
-        addBtn.style.display = "none";
+        hideEditBtns();
     }
 })
 
 
+function ShowEditBtns() {
+    for (let i = 0; i < dailyTexts.length; i++) {
+        dailyTexts[i].style = "border-radius:40px 0 0 40px";
+    }
+    for (let j = 0; j < editInps.length; j++) {
+        editInps[j].style = "display:flex";
+    }
+    addBtn.style.display = "flex";
+
+}
+
+function hideEditBtns() {
+    for (let i = 0; i < dailyTexts.length; i++) {
+        dailyTexts[i].style = "border-radius:40px";
+    }
+    for (let j = 0; j < editInps.length; j++) {
+        editInps[j].style = "display:none";
+    }
+    addBtn.style.display = "none";
+}
 
 /**
  * 監聽modal表單元素的變更事件
@@ -349,6 +359,7 @@ function getJournals() {
             $("#month").text(res.month);
             makeYearListOpt(res);
             putInValues(res);
+            toggleSwitch.checked = false;
         },
         error: function (err) {
             console.log(err.responseJSON.message);
@@ -515,7 +526,7 @@ function putValIntoEditModal(res) {
  */
 function clearEditModalInp() {
     const textInps = document.querySelectorAll('input[type="text"]');
-    const uploadInps = document.querySelectorAll('input[type="upload"]');
+    const uploadInps = document.querySelectorAll('input[type="file"]');
     const imgPres = document.querySelectorAll(".imgSet img");
     const hiddenInp = document.querySelector('input[type="hidden"]');
     const dateInp = document.querySelector('input[type="date"]');

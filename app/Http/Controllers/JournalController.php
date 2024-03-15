@@ -131,8 +131,7 @@ class JournalController extends Controller
     protected function handleJournalImg($request, $journalId)
     {
         $_data = $request->post();
-
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             $name = 'photo' . $i;
 
             if ($request->hasFile($name)) {
@@ -146,8 +145,8 @@ class JournalController extends Controller
                 $jnPhoto->description = isset($_data[$desName]) ? $_data[$desName] : null;
                 $jnPhoto->save();
             }
-            return;
         }
+        return;
     }
 
 
@@ -209,15 +208,16 @@ class JournalController extends Controller
             return strpos($key, 'photo') === 0 || strpos($key, 'des') === 0;
         }, ARRAY_FILTER_USE_KEY);
 
-        for ($i = 1; $i <= 3; $i++) {
+        for ($i = 1; $i <= 4; $i++) {
             $photoKey = 'photo' . $i;
             $desKey = 'des' . $i;
             $type = 'journal';
             $file = $request->file($photoKey) ?? null;
+
             $argArr = ['journal_id' => $id, 'name' => $photoKey];
 
             if (!is_null($file) && !array_key_exists($desKey, $photoData)) {
-                Journal_photo::updateOrCreate(
+                $res = Journal_photo::updateOrCreate(
                     $argArr,
                     ['url' => $this->ImgProcessing($file, $type)]
                 );
@@ -229,7 +229,7 @@ class JournalController extends Controller
             } elseif (!is_null($file) && array_key_exists($desKey, $photoData)) {
                 Journal_photo::updateOrCreate(
                     $argArr,
-                    ['description' => $photoData[$desKey], 'url' => $this->ImgProcessing($file, $type), 'journal_id' => $id, 'name' => $photoKey]
+                    ['description' => $photoData[$desKey], 'url' => $this->ImgProcessing($file, $type)]
                 );
             }
         }
@@ -247,9 +247,9 @@ class JournalController extends Controller
         $journalId = $_data['journalId'];
         $img = Journal_photo::find($id);
         if ($img) {
-            $path = $img->url;
-            $this->delImgFromFolder($path);
             $img->delete();
+            $path = $img->getOriginal('url');
+            $this->delImgFromFolder($path);
             $data = $this->getEditingData($journalId);
             return response::json($data);
         } else {
@@ -268,10 +268,13 @@ class JournalController extends Controller
         if ($journal) {
             // delete journal photos & photo where's in folder
             $journalPhotos = $journal->journal_photos;
-            foreach ($journalPhotos as $jourPhoto) {
-                $path = $jourPhoto->url;
-                $this->delImgFromFolder($path);
-                $jourPhoto->delete();
+            if ($journalPhotos) {
+                foreach ($journalPhotos as $jourPhoto) {
+                    if ($jourPhoto->delete()) {
+                        $path = $jourPhoto->getOriginal('url');
+                        $this->delImgFromFolder($path);
+                    }
+                }
             }
 
             $journal->delete();

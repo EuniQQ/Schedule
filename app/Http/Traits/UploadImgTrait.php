@@ -10,7 +10,7 @@ trait UploadImgTrait
      */
     protected function ImgProcessing($file, $type)
     {
-        $imgName = time() . '.' . $file->getClientOriginalExtension();
+        $imgName = uniqid() . '.' . $file->getClientOriginalExtension();
         $file->move(
             public_path('storage/img/' . $type),
             $imgName
