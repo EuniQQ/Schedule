@@ -83,6 +83,7 @@ $(document)
                 $("#editModal").hide();
                 $(".modal-backdrop").remove();
                 getJournals();
+                $('body').css('overflow-x', 'auto');
             },
             error: function (err) {
                 showErrMsgFromModal(err);
@@ -116,6 +117,7 @@ $(document)
                     $("#editModal").hide();
                     $(".modal-backdrop").remove();
                     getJournals();
+                    $('body').css('overflow-x', 'auto');
                 },
                 error: function (err) {
                     console.log(err.responseJSON.message);
