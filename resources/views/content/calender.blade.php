@@ -72,7 +72,9 @@
                             <label>Tag Title :</label>
                             <input type="text" name="tag_title" id="tagTitle"><br>
                             <label>Tag Color :</label>
-                            <input type="color" name="tag_color" id="tagColor"><br>
+                            <input type="color" name="tag_color" id="tagColor">
+                            <input type="button" value="刪除" id="clearTagSec" class="btn 
+                            btn-outline-secondary btn btn-sm"><br>
                             <label>Sticker :</label>
                             <input type="file" id="stickerInp" name="sticker" accept="image/*">
                             <div class="stickerPreGroup">

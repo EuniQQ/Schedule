@@ -344,7 +344,7 @@ class CalenderController extends Controller
             $validated['mc'] = 0;
         };
 
-        $originalTagTo = $record->tag_to;
+        $originalTagTo = is_null($record->tag_to) ? $validated['date'] : $record->tag_to;
         $this->saveTagColors($validated, $originalTagTo);
         $res = $record->update($validated);
 
@@ -365,12 +365,12 @@ class CalenderController extends Controller
         $userId = auth()->user()->id;
         $formatOriTagto = carbon::parse($originalTagTo)->format('Ymd');
         $tagStart = $validated['date'];
-        $tagEnd = isset($validated['tag_to']) ? $validated['tag_to'] : null;
-        $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] : $tagStart;
-        $interval = carbon::parse($tagStart)->diffInDays($tagEnd) ?? null;
+        $tagEnd = is_null($validated['tag_to']) ? $validated['date'] : Carbon::parse($validated['tag_to'])->format("Ymd");
+        $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] : null;
+        $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
         $updateInterval = carbon::parse($formatOriTagto)->diffInDays($tagEnd, false) ?? null;
 
-        if ($formatOriTagto && $updateInterval < 0) {
+        if ($updateInterval < 0) {
             // 修改(天數減少)
             $this->createTagColors($interval, $tagStart, $tagColor);
             for ($i = 0; $i > $updateInterval; $i--) {
@@ -392,7 +392,7 @@ class CalenderController extends Controller
                 }
             }
         }
-        // 新增 or 修改(天數增加)
+        // 新增(天數增加) or 修改(原有幾天)
         $this->createTagColors($interval, $tagStart, $tagColor);
 
         return;

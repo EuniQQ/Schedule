@@ -420,7 +420,7 @@ $(document).ready(function () {
             let month = (i + 1) < 10 ? '0' + (i + 1) : (i + 1);
             let href = '/calender/' + res.year + '/' + month;
             tag.setAttribute('href', href);
-            if(tag.textContent == res.thisMonth){
+            if (tag.textContent == res.thisMonth) {
                 tag.style.color = '#f3ef0a';
             }
         });
@@ -466,7 +466,7 @@ $(document).ready(function () {
     /**
      * 監聽modal sticker input(preview)
      */
-    stickerInp.addEventListener('change',function(e){
+    stickerInp.addEventListener('change', function (e) {
         previewSelect(e);
     })
 
@@ -659,12 +659,18 @@ $(document).ready(function () {
             $("#planTime").val('');
         })
 
-        .on("click", "#clearStickerBtn", function (e) {
+        .on("click", "#clearStickerBtn", function () {
             $("#stickerPre").prop('src', '');
             stickerPreSrc = ''; // 全域變數用於upate api
         })
 
-        .on("click", "#modalReset", function (e) {
+        .on("click", "#clearTagSec", function () {
+            $("#tagTo").val('');
+            $("#tagTitle").val('');
+            $("#tagColor").val('');
+        })
+
+        .on("click", "#modalReset", function () {
             $("#stickerPre").prop('src', '');
         })
 
