@@ -405,7 +405,7 @@ $(document).ready(function () {
         footerImgPre.setAttribute('src', res.style.footer_img);
         offcanvasSmt.setAttribute('data-year', res.year);
         offcanvasSmt.setAttribute('data-month', res.month);
-        offcanvasSmt.setAttribute('data-userId', res.userId);
+        // offcanvasSmt.setAttribute('data-userId', res.userId);
         offcanvasSmt.setAttribute('data-id', res.style.id);
         resetStyleBtn.setAttribute('data-id', res.style.id);
         calColorInp.value = res.style.bg_color;
@@ -450,7 +450,7 @@ $(document).ready(function () {
     addModal.addEventListener('change', function (e) {
         const target = e.target;
         const date = dateInp.value;
-        changes.append('date', date);
+        // changes.append('date', date);
         if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
             if (target.type === 'file') {
                 changes.append(target.name, target.files[0]);
@@ -498,7 +498,7 @@ $(document).ready(function () {
                 modalTitle.innerText = "新增行程";
                 saveChgBtn.style.display = "none";
                 saveAddBtn.style.display = "block";
-
+                saveAddBtn.setAttribute('data-date', plusIconId);
             } else {
                 modalTitle.innerText = "修改行程";
                 getModalContent(calenderId);
@@ -516,6 +516,9 @@ $(document).ready(function () {
             if (errGroup !== null) {
                 errGroup.remove();
             }
+
+            const date = saveAddBtn.getAttribute('data-date');
+            changes.append('date', date);
 
             $.ajax({
                 url: "/api/calender",
@@ -623,14 +626,13 @@ $(document).ready(function () {
         .on("click", "#delModalSubmit", function (e) {
             const calenderId = e.target.getAttribute('data-id');
             const date = $("#addModal input[name='date']").val();
-            const userId = $("#addModal input[name='user_id']").val();
             addModal.style.display = "none";
+            
             $.ajax({
                 url: "/api/daylySchedule/" + calenderId,
                 type: "POST",
                 data: {
                     _method: "DELETE",
-                    userId: userId
                 },
                 success: function (res) {
                     alert(res.message);

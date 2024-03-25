@@ -18,8 +18,6 @@ use App\Http\Controllers\EventController;
 */
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/calender/weather/des', [CalenderController::class, 'getWeatherDes'])->name('calender.weatherDes');
-    Route::get('/calender/weather/type', [CalenderController::class, 'getWeatherType'])->name('calender.weatherType');
     Route::get('/calender/{year?}/{month?}', [CalenderController::class, 'index'])->name('calender.index');
     Route::get('/daylySchedule/{id}', [CalenderController::class, 'show']);
     Route::get('/journal/photoModal/{id}', [JournalController::class, 'getPhotoDes']);

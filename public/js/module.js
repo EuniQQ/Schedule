@@ -76,6 +76,14 @@ function showErrMsgFromModal(err) {
 }
 
 
+function removeErrMsg() {
+    let errGroup = document.getElementById('errGroup');
+    if (errGroup !== null) {
+        errGroup.remove();
+    }
+}
+
+
 
 function getDay() {
     const day = new Date();

@@ -19,8 +19,6 @@ var styleCanvas = document.getElementById("offcanvasRight");
 
 var offcanvasSmt = document.getElementById("offcanvasSmt");
 
-var offcanvasId = offcanvasSmt.getAttribute("data-id");
-
 // 月曆頁
 var mainImg = document.getElementById("mainImg");
 
@@ -95,11 +93,12 @@ $(document)
     })
 
     .on("click", "#offcanvasSmt", function (e) {
+        const offcanvasId = this.getAttribute('data-id');
 
         if (!offcanvasId) {
             sendCreatAjax();
         } else {
-            sendUpdateAjax();
+            sendUpdateAjax(offcanvasId);
         }
     })
 
@@ -146,7 +145,7 @@ $(document)
 function sendCreatAjax() {
     const year = offcanvasSmt.getAttribute("data-year");
     const month = offcanvasSmt.getAttribute("data-month");
-    const userId = offcanvasSmt.getAttribute("data-userId");
+    // const userId = offcanvasSmt.getAttribute("data-userId");
     const mainImg = mainImgInp.files[0];
     const headerImg = headerImgInp.files[0];
     const footerImg = footerImgInp.files[0];
@@ -159,7 +158,7 @@ function sendCreatAjax() {
     formData.append("footer_img", footerImg);
     formData.append("footer_color", ftColor);
     formData.append("bg_color", calColor);
-    formData.append("user_id", userId);
+    // formData.append("user_id", userId);
 
     $.ajax({
         url: "/api/calender/style/" + year + "/" + month,
@@ -180,7 +179,7 @@ function sendCreatAjax() {
 }
 
 
-function sendUpdateAjax() {
+function sendUpdateAjax(offcanvasId) {
 
     $.ajax({
         url: "/api/calender/style/" + offcanvasId,

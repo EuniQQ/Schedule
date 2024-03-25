@@ -13,7 +13,7 @@ use App\Models\Calender;
 use App\Models\Income;
 use App\Models\Expense;
 use App\Http\Traits\UploadImgTrait;
-
+use Exception;
 
 class CalenderController extends Controller
 {
@@ -221,7 +221,7 @@ class CalenderController extends Controller
 
 
     /**
-     * Show the form for creating a new resource.
+     * Creating a new resource.
      */
     public function create(Request $request)
     {
@@ -445,17 +445,24 @@ class CalenderController extends Controller
      */
     public function storeStyle(Request $request, $year, $month)
     {
-        $data = $request->all();
-        if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
-            $imgsUrl = $this->handleImg($request);
-            $data['main_img'] = $imgsUrl['main_img'] ?? "";
-            $data['header_img'] = $imgsUrl['header_img'] ?? "";
-            $data['footer_img'] = $imgsUrl['footer_img'] ?? "";
-        }
-        $data['month'] = $month;
-        $data['year'] = $year;
+        try {
+            $data = $request->all();
+            if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
+                $imgsUrl = $this->handleImg($request);
+                $data['main_img'] = $imgsUrl['main_img'] ?? "";
+                $data['header_img'] = $imgsUrl['header_img'] ?? "";
+                $data['footer_img'] = $imgsUrl['footer_img'] ?? "";
+            }
 
-        Style::create($data);
+            $data['month'] = $month;
+            $data['year'] = $year;
+            $data['user_id'] = auth()->user()->id;
+            Style::create($data);
+        } catch (Exception $e) {
+            return Response::json(['statusCode' => $e->getCode(), 'message' => $e->getMessage()]);
+        }
+
+        return Response::json(['statusCode' => 200, 'message' => '新增完成']);
     }
 
 
@@ -465,24 +472,32 @@ class CalenderController extends Controller
      */
     public function updateStyle(Request $request, $id)
     {
-        $data = $request->all();
+        try {
 
-        if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
-            $imgsUrl = $this->handleImg($request);
-            $data = array_merge($data, $imgsUrl);
-        } elseif (isset($data['bg_color']) && $data['bg_color'] == '#000000') {
-            $data['bg_color'] = null;
-        } elseif (isset($data['footer_color']) && $data['footer_color'] == '#000000') {
-            $data['footer_color'] = null;
+            $data = $request->all();
+
+            if ($request->hasAny(["main_img", "header_img", "footer_img"])) {
+                $imgsUrl = $this->handleImg($request);
+                $data = array_merge($data, $imgsUrl);
+            } elseif (isset($data['bg_color']) && $data['bg_color'] == '#000000') {
+                $data['bg_color'] = null;
+            } elseif (isset($data['footer_color']) && $data['footer_color'] == '#000000') {
+                $data['footer_color'] = null;
+            }
+
+            $res = Style::where('id', $id)->update($data);
+        } catch (Exception $e) {
+            return Response::json([
+                'statusCode' => $e->getCode(),
+                'message' => $e->getMessage()
+            ]);
         }
 
-        $res = Style::where('id', $id)->update($data);
-
-        // $newArr =  Style::find($id)->toArray();
-        // 將月份改為有前導0 str
-        // $newArr['month'] = str_pad($newArr['month'], 2, 0, STR_PAD_LEFT);
-
-        return Response::json(['update_access' => $res]);
+        if ($res > 0) {
+            return Response::json(['status' => 200, 'message' => 'success']);
+        } else {
+            abort(400, 'update failed');
+        }
     }
 
 
