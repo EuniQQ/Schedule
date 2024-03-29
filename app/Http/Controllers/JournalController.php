@@ -197,6 +197,10 @@ class JournalController extends Controller
             return strpos($key, "photo") !== 0 && strpos($key, "des") !== 0;
         }, ARRAY_FILTER_USE_KEY);
 
+        if (isset($validated['photo_link'])) {
+            $textData = $textData + ["photo_link" => $validated['photo_link']];
+        }
+
         if (!empty($textData)) {
             Journal::where('id', $id)
                 ->where('user_id', auth()->user()->id)

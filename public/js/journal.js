@@ -204,13 +204,12 @@ $(document)
                 modal.appendChild(p);
                 document.body.appendChild(modal);
 
-                modal.onclick = function () {
-                    // 防止點擊 modal 時關閉 modal
-                    event.stopPropagation();
-                }
-
                 document.body.onclick = function (event) {
                     document.body.appendChild(modal);
+                }
+
+                window.onclick = evt => {
+                    modal.remove();
                 }
 
                 modal.onclick = function () {
@@ -557,4 +556,6 @@ function clearEditModalInp() {
     })
 
     hiddenInp.value = dateInp.value = contentInp.value = linkInp.value = '';
+
+    changes = new FormData();
 }
