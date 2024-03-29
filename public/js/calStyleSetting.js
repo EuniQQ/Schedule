@@ -35,7 +35,7 @@ var oddCalElements = document.querySelectorAll(".singleDay:nth-child(odd)");
 $.ajaxSetup({
     headers: {
         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-        'Authorization': 'Bearer' + getApiToken()
+        'Authorization': 'Bearer ' + getApiToken()
     }
 });
 

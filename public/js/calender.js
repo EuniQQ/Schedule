@@ -50,7 +50,7 @@ $(document).ready(function () {
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
-            'Authorization': 'Bearer' + getApiToken()
+            'Authorization': 'Bearer ' + getApiToken()
         }
     });
 
@@ -627,7 +627,7 @@ $(document).ready(function () {
             const calenderId = e.target.getAttribute('data-id');
             const date = $("#addModal input[name='date']").val();
             addModal.style.display = "none";
-            
+
             $.ajax({
                 url: "/api/daylySchedule/" + calenderId,
                 type: "POST",
