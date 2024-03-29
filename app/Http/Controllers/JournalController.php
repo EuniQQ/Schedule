@@ -99,7 +99,7 @@ class JournalController extends Controller
             'des2' => 'string | nullable',
             'des3' => 'string | nullable',
             'des4' => 'string | nullable',
-            'link' => 'nullable'
+            'photo_link' => 'nullable'
         ];
 
 
@@ -116,7 +116,7 @@ class JournalController extends Controller
         $journal->date = $validated['date'];
         $journal->title = $validated['title'];
         $journal->content = $validated['content'];
-        $journal->photo_link = isset($validated['link']) ? $validated['link'] : null;
+        $journal->photo_link = isset($validated['photo_link']) ? $validated['photo_link'] : null;
         $journal->save();
 
         $journalId = $journal->id;
@@ -180,7 +180,7 @@ class JournalController extends Controller
             'des2' => 'string | nullable',
             'des3' => 'string | nullable',
             'des4' => 'string | nullable',
-            'link' => 'url | nullable'
+            'photo_link' => 'url | nullable'
         ];
 
         $_data = $request->post();

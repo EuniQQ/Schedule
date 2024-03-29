@@ -115,7 +115,7 @@
                         <input type="text" name="des4"><br>
 
                         <labe>照片集連結 :</label>
-                            <input type="url" name="link"><br>
+                            <input type="url" name="photo_link"><br>
                     </div>
                     <div class="modal-footer">
                         <button id="saveAdd" class="save btn btn-primary">Save</button>

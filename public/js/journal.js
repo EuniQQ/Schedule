@@ -84,6 +84,8 @@ $(document)
                 $(".modal-backdrop").remove();
                 getJournals();
                 $('body').css('overflow-x', 'auto');
+                clearEditModalInp();
+                changes = new FormData()
             },
             error: function (err) {
                 showErrMsgFromModal(err);
@@ -117,6 +119,8 @@ $(document)
                     $(".modal-backdrop").remove();
                     getJournals();
                     $('body').css('overflow-x', 'auto');
+                    clearEditModalInp();
+                    changes = new FormData()
                 },
                 error: function (err) {
                     console.log(err.responseJSON.message);
@@ -498,7 +502,7 @@ function putValIntoEditModal(res) {
     $("#modalBody input[name='id']").val(res[0].id);
     $("#modalBody input[name='date']").val(res[0].date);
     $("#modalBody input[name='title']").val(res[0].title);
-    $("#modalBody input[name='link']").val(res[0].photosLink);
+    $("#modalBody input[name='photo_link']").val(res[0].photosLink);
     $("#modalBody textarea[name='content']").val(res[0].content);
     $("#saveEdit").data('id', res[0].id);
     $("#del").data('id', res[0].id);
@@ -541,7 +545,7 @@ function clearEditModalInp() {
     });
 
     uploadInps.forEach(uploadInp => {
-        uploadInp = '';
+        uploadInp.value = '';
     });
 
     imgPres.forEach(img => {
