@@ -94,10 +94,12 @@ $(document)
 
     .on("click", "#offcanvasSmt", function (e) {
         const offcanvasId = this.getAttribute('data-id');
-
-        if (!offcanvasId) {
+        // 若不存在getAttribute會返回'null'字串
+        if (offcanvasId === 'null') {
+            console.log('yes');
             sendCreatAjax();
         } else {
+            console.log('no');
             sendUpdateAjax(offcanvasId);
         }
     })
