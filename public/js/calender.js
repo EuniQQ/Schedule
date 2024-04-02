@@ -530,6 +530,7 @@ $(document).ready(function () {
                     $("#addModal").hide();
                     $(".modal-backdrop").remove();
                     alert("新增成功");
+                    location.reload();
                     changes = new FormData();
                 },
                 error: function (err) {
@@ -590,6 +591,7 @@ $(document).ready(function () {
                         $("#addModal").hide();
                         $(".modal-backdrop").remove();
                         alert("更新成功");
+                        location.reload();
                         changes = new FormData();
                     },
                     error: function (err) {
@@ -636,7 +638,6 @@ $(document).ready(function () {
                 },
                 success: function (res) {
                     alert(res.message);
-                    // updateDailySchedule(date);
                     window.location.reload();
                 },
                 error: function (err) {

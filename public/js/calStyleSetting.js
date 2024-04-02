@@ -96,10 +96,8 @@ $(document)
         const offcanvasId = this.getAttribute('data-id');
         // 若不存在getAttribute會返回'null'字串
         if (offcanvasId === 'null') {
-            console.log('yes');
             sendCreatAjax();
         } else {
-            console.log('no');
             sendUpdateAjax(offcanvasId);
         }
     })
@@ -140,14 +138,12 @@ $(document)
     .on("click", "#delFtColor", function () {
         ftColorInp.value = "#000000";
         offcvsChgs.append("footer_color", "#000000");
-        console.log("footer_color" + " =" + "#000000");
     })
 
 
 function sendCreatAjax() {
     const year = offcanvasSmt.getAttribute("data-year");
     const month = offcanvasSmt.getAttribute("data-month");
-    // const userId = offcanvasSmt.getAttribute("data-userId");
     const mainImg = mainImgInp.files[0];
     const headerImg = headerImgInp.files[0];
     const footerImg = footerImgInp.files[0];
@@ -160,7 +156,6 @@ function sendCreatAjax() {
     formData.append("footer_img", footerImg);
     formData.append("footer_color", ftColor);
     formData.append("bg_color", calColor);
-    // formData.append("user_id", userId);
 
     $.ajax({
         url: "/api/calender/style/" + year + "/" + month,
