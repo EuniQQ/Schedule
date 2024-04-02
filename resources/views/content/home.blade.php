@@ -41,7 +41,7 @@
                 @include("icons.setting")
             </div>
 
-            <img src="{{ asset('storage/img/serprise.png') }}" alt="首頁插圖">
+            <img src="{{ asset('/images/serprise.png') }}" alt="首頁插圖">
         </div>
 
     </div>

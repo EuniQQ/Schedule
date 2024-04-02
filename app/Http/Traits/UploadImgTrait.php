@@ -12,11 +12,11 @@ trait UploadImgTrait
     {
         $imgName = uniqid() . '.' . $file->getClientOriginalExtension();
         $file->move(
-            public_path('storage/img/' . $type),
+            public_path('./images/' . $type),
             $imgName
         );
 
-        $imgUri = "/storage/img/" . $type . "/" . $imgName;
+        $imgUri = "./images/" . $type . "/" . $imgName;
         return $imgUri;
     }
 }

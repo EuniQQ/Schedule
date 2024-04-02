@@ -335,11 +335,11 @@ searchKey.addEventListener('keydown', function (e) {
  * 監聽空白頁圖示
  */
 mainImg.addEventListener('mouseover', function (e) {
-    e.target.src = "/storage/img/go.png";
+    e.target.src = "/images/go.png";
 })
 
 mainImg.addEventListener('mouseout', function (e) {
-    e.target.src = "/storage/img/howstoday.png";
+    e.target.src = "/images/howstoday.png";
 })
 
 

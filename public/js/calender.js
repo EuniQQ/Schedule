@@ -166,7 +166,7 @@ $(document).ready(function () {
                 let plusIcon = document.createElement('i');
                 plusIcon.id = item.fullDate;
                 plusIcon.classList.add('plusIcon', 'fa-solid', 'fa-circle-plus', 'fa-2xl');
-                plusIcon.setAttribute('src', '/storage/img/plus_icon.svg');
+                plusIcon.setAttribute('src', '/images/plus_icon.svg');
                 plusIcon.setAttribute('data-id', item.id);
                 midLayer.appendChild(plusIcon);
             }
@@ -277,7 +277,7 @@ $(document).ready(function () {
             isRainny: "heavy-rain.png"
         }
 
-        let res = "/storage/img/weather/" + weatherIcon[key];
+        let res = "/images/weather/" + weatherIcon[key];
         let type = "icon"
         showWeather(type, day, res);
     }
@@ -365,7 +365,7 @@ $(document).ready(function () {
         if (!!res.style.main_img) {
             mainImg.setAttribute('src', res.style.main_img);
         } else {
-            mainImg.setAttribute('src', '/storage/img/QQsticker.png');
+            mainImg.setAttribute('src', '/images/QQsticker.png');
         }
         sideBar.insertBefore(mainImg, sideBar.firstChild);
 
