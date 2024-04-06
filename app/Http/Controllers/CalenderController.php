@@ -368,32 +368,45 @@ class CalenderController extends Controller
         $tagEnd = is_null($validated['tag_to']) ? $validated['date'] : Carbon::parse($validated['tag_to'])->format("Ymd");
         $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] : null;
         $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
-        $updateInterval = carbon::parse($formatOriTagto)->diffInDays($tagEnd, false) ?? null;
 
-        if ($updateInterval < 0) {
-            // 修改(天數減少)
-            $this->createTagColors($interval, $tagStart, $tagColor);
-            for ($i = 0; $i > $updateInterval; $i--) {
-                $reverseDate = intval($formatOriTagto) + $i;
-                $reserseData = Calender::where('user_id', $userId)->where('date', $reverseDate)->first();
-                if (
-                    $reserseData->birthday_person == null &&
-                    $reserseData->plan == null &&
-                    $reserseData->plan_time == null &&
-                    $reserseData->tag_title == null &&
-                    $reserseData->tag_to == null &&
-                    $reserseData->sticker == null &&
-                    $reserseData->photos_link == null &&
-                    $reserseData->mc == 0
-                ) {
-                    $reserseData->delete();
-                } else {
-                    $reserseData->update([$reserseData->tag_color = null]);
+        if (!is_null($originalTagTo)) {
+            $updateInterval = carbon::parse($formatOriTagto)->diffInDays(
+                $tagEnd,
+                false
+            ) ?? null;
+
+            if ($updateInterval < 0) {
+                // 修改(天數減少)
+                $this->createTagColors($interval, $tagStart, $tagColor);
+                for ($i = 0; $i > $updateInterval; $i--) {
+                    $reverseDate = intval($formatOriTagto) + $i;
+                    $reserseData = Calender::where('user_id', $userId)->where(
+                        'date',
+                        $reverseDate
+                    )->first();
+                    if (
+                        $reserseData->birthday_person == null &&
+                        $reserseData->plan == null &&
+                        $reserseData->plan_time == null &&
+                        $reserseData->tag_title == null &&
+                        $reserseData->tag_to == null &&
+                        $reserseData->sticker == null &&
+                        $reserseData->photos_link == null &&
+                        $reserseData->mc == 0
+                    ) {
+                        $reserseData->delete();
+                    } else {
+                        $reserseData->update([$reserseData->tag_color = null]);
+                    }
                 }
+            } else {
+                // 修改(原有幾天)
+                $this->createTagColors($interval, $tagStart, $tagColor);
             }
+        } else {
+            // 新增(天數增加)
+            $this->createTagColors($interval, $tagStart, $tagColor);
         }
-        // 新增(天數增加) or 修改(原有幾天)
-        $this->createTagColors($interval, $tagStart, $tagColor);
 
         return;
     }
