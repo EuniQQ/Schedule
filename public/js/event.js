@@ -79,11 +79,11 @@ function getEvents() {
  */
 function putInValies(res) {
     let fragment = document.createDocumentFragment();
-
+    // 畫面分為左右兩欄
     for (let g = 1; g <= 2; g++) {
         let group = document.createElement('div');
         group.classList.add('group', 'col-lg-6', 'col-md-12', 'col-sm-12');
-
+        // 單月
         for (let i = 1; i <= 6; i++) {
             let monthGroup = document.createElement('div');
             monthGroup.className = 'monthGroup';
@@ -103,7 +103,7 @@ function putInValies(res) {
                 let text = document.createElement('div');
                 text.classList.add('text', 'col');
 
-                for (let k = 1; k <= 3; k++) {
+                for (let k = 0; k < 2; k++) {
                     // class
                     let tt = document.createElement('div');
                     tt.className = 'tt';
@@ -144,7 +144,7 @@ function setIdForTt(g, i, j, k,) {
     if (g == 1) {
         i = (i < 10) ? "0" + i : String(i);
     } else {
-        i = (i < 10) ? "0" + (i + 6) : String(i + 6);
+        i = (i < 4) ? "0" + (i + 6) : String(i + 6);
     }
     k = (j == 1) ? String(k) : String(k + 3);
     id = thisYear + i + k;

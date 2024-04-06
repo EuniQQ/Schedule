@@ -19,7 +19,12 @@ class EventController extends Controller
     {
 
         $userId = auth()->user()->id;
-        $records = Calender::where('user_id', $userId)->where('date', 'like', $year . '%')->whereNotNull('tag_title')->select('tag_title', 'date')->orderBy('date')->get();
+        $records = Calender::where('user_id', $userId)
+            ->where('date', 'like', $year . '%')
+            ->whereNotNull('tag_title')
+            ->select('tag_title', 'date')
+            ->orderBy('date')
+            ->get();
 
         $events = $records->transform(function ($record) {
             return [
@@ -39,7 +44,7 @@ class EventController extends Controller
                     $mergedEvents[$month][] = $content;
                 }
             } else {
-                $mergedEvents[$month] =  [$content];
+                $mergedEvents[$month] = [$content];
             }
         }
 
@@ -55,7 +60,6 @@ class EventController extends Controller
                 $mergedEvents[$val] = $mergedEvents[$val];
             }
         }
-
 
         $res = [
             'year' => $year,
