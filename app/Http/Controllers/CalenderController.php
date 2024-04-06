@@ -360,7 +360,7 @@ class CalenderController extends Controller
     /**
      * save days of tag color
      */
-    protected function saveTagColors($validated, $originalTagTo)
+    protected function saveTagColors($validated, $originalTagTo, $act = null)
     {
         $userId = auth()->user()->id;
         $formatOriTagto = carbon::parse($originalTagTo)->format('Ymd');
@@ -369,38 +369,21 @@ class CalenderController extends Controller
         $tagColor = isset($validated['tag_color']) ? $validated['tag_color'] : null;
         $interval = carbon::parse($tagStart)->diffInDays($tagEnd);
 
+        // 修改 or 刪除
         if (!is_null($originalTagTo)) {
-            $updateInterval = carbon::parse($formatOriTagto)->diffInDays(
-                $tagEnd,
-                false
-            ) ?? null;
 
-            if ($updateInterval < 0) {
+            $updateInterval = carbon::parse($formatOriTagto)->diffInDays($tagEnd, false) ?? null;
+
+            if ($act == 'del' && $updateInterval <= 0) {
+                // 刪除
+                $updateInterval = 0 - $interval;
+                $this->delTagColors($updateInterval, $formatOriTagto, $userId);
+            } elseif ($act == null && $updateInterval < 0) {
                 // 修改(天數減少)
                 $this->createTagColors($interval, $tagStart, $tagColor);
-                for ($i = 0; $i > $updateInterval; $i--) {
-                    $reverseDate = intval($formatOriTagto) + $i;
-                    $reserseData = Calender::where('user_id', $userId)->where(
-                        'date',
-                        $reverseDate
-                    )->first();
-                    if (
-                        $reserseData->birthday_person == null &&
-                        $reserseData->plan == null &&
-                        $reserseData->plan_time == null &&
-                        $reserseData->tag_title == null &&
-                        $reserseData->tag_to == null &&
-                        $reserseData->sticker == null &&
-                        $reserseData->photos_link == null &&
-                        $reserseData->mc == 0
-                    ) {
-                        $reserseData->delete();
-                    } else {
-                        $reserseData->update([$reserseData->tag_color = null]);
-                    }
-                }
+                $this->delTagColors($updateInterval, $formatOriTagto, $userId);
             } else {
-                // 修改(原有幾天)
+                // 修改(天數不便，變更其他資訊)
                 $this->createTagColors($interval, $tagStart, $tagColor);
             }
         } else {
@@ -412,6 +395,9 @@ class CalenderController extends Controller
     }
 
 
+    /**
+     * 建立連續幾天schedule tac color (不含當天)
+     */
     protected function createTagColors($interval, $tagStart, $tagColor)
     {
         if ($interval > 0 && $tagColor !== '#000000') {
@@ -426,6 +412,34 @@ class CalenderController extends Controller
         return;
     }
 
+
+    /**
+     * 刪除減少天數 schedule tac color (不含當天)
+     */
+    protected function delTagColors($updateInterval, $formatOriTagto, $userId)
+    {
+        for ($i = 0; $i > $updateInterval; $i--) {
+            $reverseDate = intval($formatOriTagto) + $i;
+            $reserseData = Calender::where('user_id', $userId)
+                ->where('date', $reverseDate)
+                ->first();
+
+            if (
+                $reserseData->birthday_person == null &&
+                $reserseData->plan == null &&
+                $reserseData->plan_time == null &&
+                $reserseData->tag_title == null &&
+                $reserseData->tag_to == null &&
+                $reserseData->sticker == null &&
+                $reserseData->photos_link == null &&
+                $reserseData->mc == 0
+            ) {
+                $reserseData->delete();
+            } else {
+                $reserseData->update([$reserseData->tag_color = null]);
+            }
+        }
+    }
 
 
     /**
@@ -445,6 +459,13 @@ class CalenderController extends Controller
                 $this->delImgFromFolder($path);
             }
             $message = $schedule->delete() == true ? "刪除成功" : "刪除失敗";
+
+            if ($message == "刪除成功") {
+                $originalTagTo = $schedule->tag_to;
+                $validated = $schedule->toArray();
+                $act = 'del';
+                $this->saveTagColors($validated, $originalTagTo, $act);
+            }
             return Response::json(['message' => $message]);
         } else {
             abort(403);

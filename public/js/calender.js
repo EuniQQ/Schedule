@@ -627,23 +627,23 @@ $(document).ready(function () {
          */
         .on("click", "#delModalSubmit", function (e) {
             const calenderId = e.target.getAttribute('data-id');
-            const date = $("#addModal input[name='date']").val();
-            addModal.style.display = "none";
-
-            $.ajax({
-                url: "/api/daylySchedule/" + calenderId,
-                type: "POST",
-                data: {
-                    _method: "DELETE",
-                },
-                success: function (res) {
-                    alert(res.message);
-                    window.location.reload();
-                },
-                error: function (err) {
-                    console.log(err.responseJSON.message);
-                }
-            })
+            e.preventDefault();
+            if (window.confirm('是否確定刪除此日程?')) {
+                $.ajax({
+                    url: "/api/daylySchedule/" + calenderId,
+                    type: "POST",
+                    data: {
+                        _method: "DELETE",
+                    },
+                    success: function (res) {
+                        alert(res.message);
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err.responseJSON.message);
+                    }
+                })
+            }
         })
 
         /**
