@@ -24,6 +24,10 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/register', function () {
+    return view('register');
+})->middleware(['auth', 'verified'])->name('register');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/calender/{year?}/{month?}', function () {
