@@ -1,4 +1,4 @@
-// const { list } = require("postcss");
+var errGroup = null;
 
 /**
  * 取得apiToken
@@ -64,7 +64,7 @@ function showErrMsgFromModal(err) {
     let errMessage = err.responseJSON.message;
     let messages = errMessage.split('\r');  // 將err照換行符分成多行
     const modalBody = document.getElementById('modalBody');
-    let errGroup = document.createElement('div');
+    errGroup = document.createElement('div');
     errGroup.id = 'errGroup';
     messages.forEach(message => {
         let showErr = document.createElement('div');
@@ -76,10 +76,13 @@ function showErrMsgFromModal(err) {
 }
 
 
+/**
+ * 清除驗證錯誤訊息
+ */
 function removeErrMsg() {
-    let errGroup = document.getElementById('errGroup');
     if (errGroup !== null) {
         errGroup.remove();
+        errGroup = null;
     }
 }
 

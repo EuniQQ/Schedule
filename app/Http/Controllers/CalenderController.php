@@ -254,7 +254,10 @@ class CalenderController extends Controller
             $validated['tag_color'] = null;
         }
 
-        Calender::create($validated);
+        Calender::updateOrCreate(
+            ['date' => $validated['date'], 'user_id' => auth()->user()->id],
+            $validated
+        );
 
         if (isset($validated['tag_title'])) {
             $originalTagTo = null;

@@ -494,6 +494,7 @@ $(document).ready(function () {
             $("#addModal input[name='id']").val(calenderId);
             $("#addModal input[name='tag_from']").val(formattedDate);
 
+            removeErrMsg();
             if (calenderId === '') {
                 modalTitle.innerText = "新增行程";
                 saveChgBtn.style.display = "none";
@@ -512,11 +513,6 @@ $(document).ready(function () {
 
 
         .on("click", "#addModalSubmit", function () {
-            let errGroup = document.getElementById('errGroup');
-            if (errGroup !== null) {
-                errGroup.remove();
-            }
-
             const date = saveAddBtn.getAttribute('data-date');
             changes.append('date', date);
 
@@ -542,11 +538,6 @@ $(document).ready(function () {
 
         .on("click", "#editModalSubmit", function (e) {
             let id = this.getAttribute('data-id');
-            let errGroup = document.getElementById('errGroup');
-            if (errGroup !== null) {
-                errGroup.remove();
-            }
-
             let date = $("#modalDateInp").val();
             let birthday_person = $("#bthdGuy").val();
             let mc = $("#addModal input[name='mc']:checked").val();
