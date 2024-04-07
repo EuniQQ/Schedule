@@ -13,7 +13,8 @@ class Journal_photo extends Model
     protected $fillable = [
         'journal_id',
         'url',
-        'dsecription',
+        'description',
+        'name'
     ];
 
     public function user(): BelongsTo
@@ -25,5 +26,4 @@ class Journal_photo extends Model
     {
         return $this->belongsTo(Journal_photo::class);
     }
-
 }

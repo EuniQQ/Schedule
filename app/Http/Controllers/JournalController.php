@@ -217,23 +217,26 @@ class JournalController extends Controller
             $desKey = 'des' . $i;
             $type = 'journal';
             $file = $request->file($photoKey) ?? null;
-
             $argArr = ['journal_id' => $id, 'name' => $photoKey];
 
-            if (!is_null($file) && !array_key_exists($desKey, $photoData)) {
-                $res = Journal_photo::updateOrCreate(
+            // 有圖無文
+            if (!is_null($file) && !array_key_exists($desKey, $validated)) {
+
+                Journal_photo::updateOrCreate(
                     $argArr,
                     ['url' => $this->ImgProcessing($file, $type)]
                 );
-            } elseif (is_null($file) && array_key_exists($desKey, $photoData)) {
+                // 無圖有文
+            } elseif (is_null($file) && array_key_exists($desKey, $validated)) {
                 Journal_photo::updateOrCreate(
                     $argArr,
-                    ['description' => $photoData[$desKey]]
+                    ['description' => $validated[$desKey]]
                 );
-            } elseif (!is_null($file) && array_key_exists($desKey, $photoData)) {
+                // 有圖有文
+            } elseif (!is_null($file) && array_key_exists($desKey, $validated)) {
                 Journal_photo::updateOrCreate(
                     $argArr,
-                    ['description' => $photoData[$desKey], 'url' => $this->ImgProcessing($file, $type)]
+                    ['description' => $validated[$desKey], 'url' => $this->ImgProcessing($file, $type)]
                 );
             }
         }
