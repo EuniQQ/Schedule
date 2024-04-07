@@ -21,6 +21,7 @@ var delBtn = document.getElementById("delModalSubmit");
 // header
 var searchYear = document.getElementById('yearSel');
 var searchMon = document.getElementById('searchMonth');
+var headerMonth = document.getElementById('headerMonth');
 // left side 
 var WesternYear = document.getElementById('calWesYear');
 var hebrewYear = document.getElementById('calHebrewYear');
@@ -420,8 +421,10 @@ $(document).ready(function () {
             let month = (i + 1) < 10 ? '0' + (i + 1) : (i + 1);
             let href = '/calender/' + res.year + '/' + month;
             tag.setAttribute('href', href);
-            if (tag.textContent == res.thisMonth) {
+            console.log(month, headerMonth.value);
+            if (month == headerMonth.textContent) {
                 tag.style.color = '#f3ef0a';
+                tag.style.textDecoration = 'underline';
             }
         });
     }
