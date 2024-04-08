@@ -28,7 +28,7 @@
         <div>·&nbsp;年度結餘</div>
         <div class="type"></div>
         <div>
-            @if(auth()->user()->id === 1 )
+            @if(Auth::check() && auth()->id === 1 )
             <a href="{{ route('profile.edit') }}" style="pointer-events: none">設&nbsp;&nbsp;定(暫不開放)</a>
             @else
             <a href="{{ route('profile.edit') }}">設&nbsp;&nbsp;定</a>
