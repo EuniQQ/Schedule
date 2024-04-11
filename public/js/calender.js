@@ -44,7 +44,6 @@ var iconSec = document.getElementById('iconSec');
 var monthSec = document.getElementById('monthSec');
 
 
-
 $(document).ready(function () {
 
 
@@ -92,8 +91,7 @@ $(document).ready(function () {
         let year = splittedUrl[4];
         let month = splittedUrl[5];
         let argYear = year ? year : thisYear;
-        let argMonth = month ? month : thisMonth;
-
+        let argMonth = month ? month : thisMonth; // 含前導0
         $.ajax({
             url: "/api/calender/" + argYear + '/' + argMonth,
             method: "GET",
@@ -109,6 +107,33 @@ $(document).ready(function () {
             }
         })
     }
+
+    
+    /**
+     * 新增、修改、刪除後更新月曆
+     */
+    function renewCalender() {
+        let currentUrl = window.location.href;
+        let thisYear = getDay().thisYear;
+        let thisMonth = getDay().thisMonth;
+        let splittedUrl = currentUrl.split('/');
+        let year = splittedUrl[4];
+        let month = splittedUrl[5];
+        let argYear = year ? year : thisYear;
+        let argMonth = month ? month : thisMonth;
+        $.ajax({
+            url: "/api/calender/" + argYear + '/' + argMonth,
+            method: "GET",
+            dataType: "json",
+            success: function (res) {
+                calMain.innerHTML = "";
+                createCalenderElements(res);
+            }, error: function (err) {
+                console.log(err.responseJSON.message);
+            }
+        })
+    }
+
 
 
     function createCalenderElements(res) {
@@ -421,7 +446,7 @@ $(document).ready(function () {
             let month = (i + 1) < 10 ? '0' + (i + 1) : (i + 1);
             let href = '/calender/' + res.year + '/' + month;
             tag.setAttribute('href', href);
-            console.log(month, headerMonth.value);
+
             if (month == headerMonth.textContent) {
                 tag.style.color = '#f3ef0a';
                 tag.style.textDecoration = 'underline';
@@ -529,7 +554,7 @@ $(document).ready(function () {
                     $("#addModal").hide();
                     $(".modal-backdrop").remove();
                     alert("新增成功");
-                    location.reload();
+                    renewCalender();
                     changes = new FormData();
                 },
                 error: function (err) {
@@ -585,7 +610,7 @@ $(document).ready(function () {
                         $("#addModal").hide();
                         $(".modal-backdrop").remove();
                         alert("更新成功");
-                        location.reload();
+                        renewCalender();
                         changes = new FormData();
                     },
                     error: function (err) {
@@ -630,8 +655,10 @@ $(document).ready(function () {
                         _method: "DELETE",
                     },
                     success: function (res) {
+                        $("#addModal").hide();
+                        $(".modal-backdrop").remove();
                         alert(res.message);
-                        window.location.reload();
+                        renewCalender();
                     },
                     error: function (err) {
                         console.log(err.responseJSON.message);
@@ -708,6 +735,7 @@ function updateDailySchedule(date) {
         }
     }
 }
+
 
 
 /**
