@@ -31,7 +31,7 @@ tr th:not(:last-child) {
     border-right: 1px solid rgb(250, 250, 250);
 }
 
-th {
+.npos th {
     background-color: rgb(226, 206, 115);
 }
 
@@ -61,16 +61,16 @@ tr:nth-child(even) {
     width: 25%;
 }
 
-.addBtn {
+#addBtn {
     background-color: rgba(132, 163, 11, 1);
 }
 
-.npoBtn {
+#npoBtn {
     background-color: rgba(189, 174, 96, 1);
 }
 
-.addBtn,
-.npoBtn {
+#addBtn,
+#npoBtn {
     color: azure;
     font-weight: 500;
     margin-right: 0.8rem;
@@ -87,4 +87,23 @@ tr:nth-child(even) {
     margin-top: 1rem;
     display: inline-block;
     align-items: center;
+}
+
+/* modal */
+.modal-footer {
+    background-color: rgba(231, 212, 212, 1);
+    text-align: center;
+}
+
+.modal-footer input {
+    background: rgba(231, 212, 212, 1);
+    border: 1px solid rgb(71, 71, 71);
+    border-radius: 5px;
+    padding: 0 5px;
+}
+
+.npoTable th,
+.npoTable td,
+.modal-footer label {
+    font-size: small;
 }
