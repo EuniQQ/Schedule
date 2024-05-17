@@ -23,7 +23,9 @@
         </div>
 
         <div class="type">記&nbsp;&nbsp;帳</div>
-        <div>·&nbsp;收入</div>
+        <div>
+            <a href="{{ route('income.index') }}">·&nbsp;收入</a>
+        </div>
         <div>·&nbsp;支出</div>
         <div>·&nbsp;年度結餘</div>
         <div class="type"></div>

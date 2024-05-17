@@ -19,7 +19,7 @@
     <div class="header d-flex">
         <div>
             @include("icons.menu")
-            <span id="yearTag" class="year"></span>
+            <span id="yearTag" class="capsuleTag"></span>
         </div>
 
         <div class="searchGroup">

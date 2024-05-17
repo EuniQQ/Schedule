@@ -1,0 +1,90 @@
+.container-flude {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    margin: 2rem;
+}
+
+.head {
+    margin-bottom: 1.5rem;
+}
+
+.icons {
+    float: right;
+    align-items: center;
+}
+
+tr {
+    width: 80%;
+    text-align: center;
+}
+
+th,
+td {
+    padding: 0.5rem 0;
+}
+
+tr td:not(:last-child),
+tr th:not(:last-child) {
+    border-right: 1px solid rgb(250, 250, 250);
+}
+
+th {
+    background-color: rgb(226, 206, 115);
+}
+
+
+tr:nth-child(even) {
+    background-color: rgba(244, 237, 200, 1);
+    padding-left: 0.5rem;
+}
+
+/* 欄寬 */
+.date,
+.reason,
+.payer,
+.donate,
+.dnDate,
+.remark {
+    width: 10%;
+}
+
+.amount,
+.bank,
+.donate {
+    width: 5%;
+}
+
+.dObj {
+    width: 25%;
+}
+
+.addBtn {
+    background-color: rgba(132, 163, 11, 1);
+}
+
+.npoBtn {
+    background-color: rgba(189, 174, 96, 1);
+}
+
+.addBtn,
+.npoBtn {
+    color: azure;
+    font-weight: 500;
+    margin-right: 0.8rem;
+    float: right;
+}
+
+.total {
+    color: rgb(218, 54, 48);
+    font-weight: 800;
+    font-size: larger;
+}
+
+.footer {
+    margin-top: 1rem;
+    display: inline-block;
+    align-items: center;
+}

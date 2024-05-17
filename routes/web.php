@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\IncomeController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,9 +39,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
     Route::get('/monthlyEvent/{year?}', [EventController::class, 'index'])->name('event.index');
 
+    Route::get('income/{year?}',[IncomeController::class,'index'])->name('income.index');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
 });
 
 require __DIR__ . '/auth.php';

@@ -4,3 +4,18 @@
     padding: 0;
     margin: 0;
 }
+
+.capsuleTag {
+    padding: 5px 20px;
+    width: 130px;
+    height: 40px;
+    background-color: rgba(189, 174, 96, 1);
+    font-size: 1.5rem;
+    text-align: center;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode',
+        'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: white;
+    border-radius: 25px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
