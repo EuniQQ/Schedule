@@ -38,6 +38,7 @@
                     <th scope="col" class="dnDate">十一日期</th>
                     <th scope="col" class="dObj">奉獻單位</th>
                     <th scope="col" class="remark">備&nbsp;註</th>
+                    <th scope="col" class="edit"></th>
                 </tr>
             </thead>
 
@@ -52,6 +53,7 @@
                     <td>2024-05-16</td>
                     <td>台北611</td>
                     <td>匯款</td>
+                    <td></td>
                 </tr>
 
                 <tr>
@@ -64,6 +66,7 @@
                     <td>-</td>
                     <td>-</td>
                     <td>現金</td>
+                    <td></td>
                 </tr>
             </tbody>
         </table>
@@ -117,58 +120,58 @@
                             </table>
                         </div>
 
-                        <div class="modal-footer px-2">
-                            <div class="mb-2">
-                                <label for="method">
-                                    <span class="text-danger">*</span><span>方式</span>
-                                </label>
-                                <select name="method" id="method">
-                                    <option value="card">刷卡</option>
-                                    <option value="remit">匯款</option>
-                                </select>
-                                &nbsp;&nbsp;
+                        <div class="modal-footer">
+                            <form action="{{ route('income.createNpo') }}" class="addNpo text-start" method="post">
+                                @csrf
+                                <div class="mb-2">
+                                    <label for="method">
+                                        <span class="text-danger">*</span><span>方式</span>
+                                    </label>
+                                    <select name="method" id="method">
+                                        <option value="remit">匯款</option>
+                                        <option value="card">刷卡</option>
+                                    </select>
+                                    &nbsp;&nbsp;
 
-                                <label for="name">
-                                    <span class="text-danger">*</span>
-                                    <span>名稱</span>
-                                </label>
-                                <input type="text" name="name">
-                                &nbsp;&nbsp;
+                                    <label for="name">
+                                        <span class="text-danger">*</span>
+                                        <span>名稱</span>
+                                    </label>
+                                    <input type="text" id="name" name="name">
+                                    &nbsp;&nbsp;
 
-                                <label for="acc">帳號</label>
-                                <input type="text" name="acc">
-                                &nbsp;&nbsp;
+                                    <label for="account">帳號</label>
+                                    <input type="text" id="account" name="account">
+                                    &nbsp;&nbsp;
 
-                                <label for="code">代碼</label>
-                                <input type="text" name="code" size="4">
-                                &nbsp;&nbsp;
-                            </div>
+                                    <label for="code">代碼</label>
+                                    <input type="text" id="code" name="code" size="4">
+                                    &nbsp;&nbsp;<br>
+                                </div>
 
-                            <div class="mb-2">
-                                <label for="bank">金融機構</label>
-                                <input type="text" name="bank" size="10">
-                                &nbsp;&nbsp;
+                                <div class="mb-2">
+                                    <label for="bank">金融機構</label>
+                                    <input type="text" id="bank" name="bank" size="10">
+                                    &nbsp;&nbsp;
 
-                                <label for="link">線上刷卡連結</label>
-                                <input type="url" name="link" size="30">
-                                &nbsp;&nbsp;
-                            </div>
+                                    <label for="pay_on_line">線上刷卡連結</label>
+                                    <input type="url" id="pay_on_line" name="pay_on_line" size="40">
+                                    &nbsp;&nbsp;<br>
+                                </div>
 
-                            <div class="mb-2">
-                                <label for="formLink">表單連結</label>
-                                <input type="url" name="formLink" size="30">
-                                &nbsp;&nbsp;
+                                <div class="mb-2">
+                                    <label for="form_link">表單連結</label>
+                                    <input type="url" id="form_link" name="form_link" size="40">
+                                    &nbsp;&nbsp;
 
-                                <label for="tel">電話</label>
-                                <input type="tel" name="tel">
-                                &nbsp;&nbsp;
-                            </div>
-                            <br>
+                                    <label for="tel">電話</label>
+                                    <input type="tel" id="tel" name="tel" size="17">
+                                    &nbsp;&nbsp;
 
-                            <div class="mb-3">
-                                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-warning btn-sm">送出</button>
-                            </div>
+                                    <button type="reset" class="btn btn-secondary btn-sm mx-2">清除</button>
+                                    <button type="submit" class="btn btn-warning btn-sm">送出</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

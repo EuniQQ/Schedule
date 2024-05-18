@@ -18,7 +18,8 @@ class Donate extends Model
         'pay_on_line',
         'bank',
         'form_link',
-        'tel'
+        'tel',
+        'code'
     ];
 
     public function user(): BelongsTo

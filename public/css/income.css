@@ -33,6 +33,7 @@ tr th:not(:last-child) {
 
 .npos th {
     background-color: rgb(226, 206, 115);
+    font-size: medium;
 }
 
 
@@ -53,12 +54,13 @@ tr:nth-child(even) {
 
 .amount,
 .bank,
-.donate {
+.donate,
+.edit {
     width: 5%;
 }
 
 .dObj {
-    width: 25%;
+    width: 20%;
 }
 
 #addBtn {
@@ -85,25 +87,28 @@ tr:nth-child(even) {
 
 .footer {
     margin-top: 1rem;
-    display: inline-block;
-    align-items: center;
 }
 
 /* modal */
 .modal-footer {
     background-color: rgba(231, 212, 212, 1);
-    text-align: center;
+}
+
+.modal-footer>.addNpo {
+    margin: 0 auto;
 }
 
 .modal-footer input {
     background: rgba(231, 212, 212, 1);
     border: 1px solid rgb(71, 71, 71);
     border-radius: 5px;
-    padding: 0 5px;
+    padding: 2px;
+
 }
 
 .npoTable th,
 .npoTable td,
-.modal-footer label {
+.modal-footer label,
+.modal-footer input {
     font-size: small;
 }

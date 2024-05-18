@@ -38,12 +38,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::get('/journal/{year?}/{month?}', [JournalController::class, 'index'])->name('journal');
     Route::get('/monthlyEvent/{year?}', [EventController::class, 'index'])->name('event.index');
-
-    Route::get('income/{year?}',[IncomeController::class,'index'])->name('income.index');
+    Route::get('income/{year?}', [IncomeController::class, 'index'])->name('income.index');
+    Route::post('/income/npo', [IncomeController::class, 'createNpo'])->name('income.createNpo');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
 });
 
 require __DIR__ . '/auth.php';
