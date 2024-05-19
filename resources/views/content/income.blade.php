@@ -80,7 +80,7 @@
                 NPO資訊
             </button>
 
-            <!-- Modal -->
+            <!-- NPO info Modal -->
             <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog  modal-lg">
                     <div class="modal-content">
@@ -96,6 +96,7 @@
                                         <th scope="col">方式</th>
                                         <th scope="col">教會/機構名稱</th>
                                         <th scope="col">帳號/刷卡連結</th>
+                                        <th scope="col">代碼</th>
                                         <th scope="col">金融機構</th>
                                         <th scope="col">填寫表單</th>
                                         <th scope="col"></th>
@@ -119,7 +120,7 @@
                         </div>
 
                         <div class="modal-footer">
-                            <form action="{{ route('income.createNpo') }}" class="addNpo text-start" method="post">
+                            <form id="editNpoForm" action="{{ route('income.createNpo') }}" class="addNpo text-start" method="post">
                                 @csrf
                                 <div class="mb-2">
                                     <label for="method">
