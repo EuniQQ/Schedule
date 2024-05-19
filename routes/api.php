@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\IncomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/journal/{year}/{month}', [JournalController::class, 'getJournal'])->name('journal.index');
     Route::get('/event/{year}', [EventController::class, 'getEvents'])
         ->name('event.index');
+    Route::get('/income/npoList', [IncomeController::class, 'getNpoList'])->name('income.npoList');
 
 
 

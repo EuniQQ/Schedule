@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use App\Models\Donate;
 
 class IncomeController extends Controller
 {
@@ -18,7 +20,7 @@ class IncomeController extends Controller
     public function createNpo(Request $request)
     {
         $content = $request->validate([
-            'method' => 'required',
+            'method' => 'required|integer',
             'name' => 'required',
             'account' => 'nullable|numeric',
             'code' => 'nullable|numeric',
@@ -30,6 +32,16 @@ class IncomeController extends Controller
 
         auth()->user()->donates()->create($content);
         return redirect()->route('income.index');
+    }
+
+    /**
+     * api-取得NPO組織資訊
+     */
+    public function getNpoList()
+    {
+        $userId = auth()->user()->id;
+        $res = Donate::where('user_id', $userId)->get();
+        return Response::json($res);
     }
 
 

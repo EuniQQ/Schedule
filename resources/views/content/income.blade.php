@@ -28,7 +28,7 @@
 
         <table>
             <thead>
-                <tr class="npos">
+                <tr class="donateRow">
                     <th scope="col" class="date">日&nbsp;期</th>
                     <th scope="col" class="reason">事&nbsp;由</th>
                     <th scope="col" class="payer">給付者</th>
@@ -86,10 +86,10 @@
                     <div class="modal-content">
                         <div class="modal-header">
                             <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close closeNpoModal" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <table class="table npoTable">
+                            <table id="npoTable" class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">#</th>
@@ -98,24 +98,22 @@
                                         <th scope="col">帳號/刷卡連結</th>
                                         <th scope="col">金融機構</th>
                                         <th scope="col">填寫表單</th>
-                                        <th scope="col">電話</th>
                                         <th scope="col"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td scope="row">1</td>
-                                        <td>匯款</td>
-                                        <td>社團法人基督教新竹靈糧堂</td>
-                                        <td>0061541-0184795</td>
-                                        <td>竹東二重埔郵局 700</td>
-                                        <td><a href="">網址</a></td>
-                                        <td>03-58266151</td>
-                                        <td>
-                                            <i class="fa-solid fa-pen mx-2"></i>
-                                            <i class="fa-solid fa-trash"></i>
-                                        </td>
-                                    </tr>
+                                <tbody id="npoTbody">
+                                    <!-- <tr> -->
+                                    <!-- <td scope="row">1</td> -->
+                                    <!-- <td>匯款</td> -->
+                                    <!-- <td>社團法人基督教新竹靈糧堂</td> -->
+                                    <!-- <td>0061541-0184795</td> -->
+                                    <!-- <td>竹東二重埔郵局 700</td> -->
+                                    <!-- <td><a href="">網址</a></td> -->
+                                    <!-- <td> -->
+                                    <!-- <i class="fa-solid fa-pen mx-2"></i> -->
+                                    <!-- <i class="fa-solid fa-trash"></i> -->
+                                    <!-- </td> -->
+                                    <!-- </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -128,8 +126,9 @@
                                         <span class="text-danger">*</span><span>方式</span>
                                     </label>
                                     <select name="method" id="method">
-                                        <option value="remit">匯款</option>
-                                        <option value="card">刷卡</option>
+                                        <option value=1>匯款</option>
+                                        <option value=2>刷卡</option>
+                                        <option value=3>其他</option>
                                     </select>
                                     &nbsp;&nbsp;
 
@@ -155,17 +154,13 @@
                                     &nbsp;&nbsp;
 
                                     <label for="pay_on_line">線上刷卡連結</label>
-                                    <input type="url" id="pay_on_line" name="pay_on_line" size="40">
+                                    <input type="url" id="pay_on_line" name="pay_on_line" size="50">
                                     &nbsp;&nbsp;<br>
                                 </div>
 
                                 <div class="mb-2">
                                     <label for="form_link">表單連結</label>
-                                    <input type="url" id="form_link" name="form_link" size="40">
-                                    &nbsp;&nbsp;
-
-                                    <label for="tel">電話</label>
-                                    <input type="tel" id="tel" name="tel" size="17">
+                                    <input type="url" id="form_link" name="form_link" size="50">
                                     &nbsp;&nbsp;
 
                                     <button type="reset" class="btn btn-secondary btn-sm mx-2">清除</button>
