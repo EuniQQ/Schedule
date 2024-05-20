@@ -19,7 +19,9 @@
             <span class="capsuleTag">2 0 2 4 ‧ INCOME</span>
             <span class="icons">
                 <select class="selYear">
-                    <option value="2023">2023</option>
+                    @foreach($yearList as $year)
+                    <option value=$year>{{$year}}</option>
+                    @endforeach
                 </select>
                 @include("icons.search")
                 @include("icons.menu")
@@ -43,48 +45,25 @@
             </thead>
 
             <tbody class="incomeTbody">
+                @foreach($records as $income)
                 <tr>
-                    <td>2024-05-19</td>
-                    <td>玩股票</td>
-                    <td>證券行</td>
-                    <td>$10000</td>
-                    <td>玉山</td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $income->date }}</td>
+                    <td>{{ $income->content }}</td>
+                    <td>{{ $income->payer }}</td>
+                    <td>{{ $income->amount }}</td>
+                    <td>{{ $income->bank }}</td>
+                    <td>{{ $income->tithe }}</td>
+                    <td>{{ $income->tithe_date }}</td>
+                    <td>{{ $income->tithe_obj }}</td>
+                    <td>{{ $income->notes }}</td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td>2024-05-16</td>
-                    <td>打工</td>
-                    <td>老闆板</td>
-                    <td>$1000</td>
-                    <td>玉山</td>
-                    <td>$100</td>
-                    <td>2024-05-16</td>
-                    <td>台北611</td>
-                    <td>匯款</td>
-                    <td></td>
-                </tr>
-                <tr>
-                    <td>2024-05-17</td>
-                    <td>接案</td>
-                    <td>阿寶</td>
-                    <td>$1500</td>
-                    <td>富邦</td>
-                    <td>$150</td>
-                    <td>-</td>
-                    <td>-</td>
-                    <td>現金</td>
-                    <td></td>
-                </tr>
+                @endforeach
             </tbody>
         </table>
 
         <div class="footer">
-            <hr>
-            <span class="total">Total：xxx</span>
+            <span class="total">Total：${{ $total }}</span>
 
             <!-- Button trigger modal -->
             <button type="button" id="npoBtn" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

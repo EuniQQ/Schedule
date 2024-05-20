@@ -5,12 +5,39 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
 use App\Models\Donate;
+use App\Models\Income;
+use Carbon\Carbon;
 
 class IncomeController extends Controller
 {
+    /**
+     * 載入收入頁
+     */
     public function index($year = '')
     {
-        return view('content.income');
+        if (empty($year)) {
+            $now = Carbon::now()->locale('zh-tw');
+            $year = $now->year;
+        }
+
+        $userId = auth()->user()->id;
+        $query = Income::where('user_id', $userId);
+        $yearList = $this->getRecordYears($query);
+        $incomeRecord = $query->where('date', 'like', $year . '%')
+            ->orderBy('date', 'asc')
+            ->get();
+
+        $total = $query->sum('amount');
+
+        $args = [
+            'records' => $incomeRecord,
+            'year' => $year,
+            'yearList' => array_unique($yearList),
+            'total' => $total
+        ];
+        // dd($args);
+
+        return view('content.income')->with($args);
     }
 
 
@@ -54,6 +81,7 @@ class IncomeController extends Controller
         auth()->user()->incomes()->create($content);
         return back();
     }
+
 
     /**
      * API-取得NPO資訊
