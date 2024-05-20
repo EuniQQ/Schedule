@@ -20,7 +20,7 @@ class Income extends Model
         'tithe',
         'tithe_date',
         'tithe_obj',
-        'note'
+        'notes'
     ];
 
     public function user(): BelongsTo

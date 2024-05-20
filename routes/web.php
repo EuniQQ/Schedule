@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/monthlyEvent/{year?}', [EventController::class, 'index'])->name('event.index');
     Route::get('income/{year?}', [IncomeController::class, 'index'])->name('income.index');
     Route::post('/income/npo', [IncomeController::class, 'createNpo'])->name('income.createNpo');
+    Route::post('/income', [IncomeController::class, 'createIncome'])->name('income.create');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

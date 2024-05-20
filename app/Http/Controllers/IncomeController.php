@@ -33,6 +33,28 @@ class IncomeController extends Controller
         return redirect()->route('income.index');
     }
 
+
+    /**
+     * 新增收入資訊
+     */
+    public function createIncome(Request $request)
+    {
+        $content = $request->validate([
+            'date' => 'required|date',
+            'content' => 'required|string',
+            'payer' => 'required|string',
+            'amount' => 'required|integer',
+            'bank' => 'required|string',
+            'tithe' => 'nullable|integer',
+            'tithe_date' => 'nullable|date',
+            'tithe_obj' => 'nullable|string',
+            'notes' => 'nullable|string'
+        ]);
+
+        auth()->user()->incomes()->create($content);
+        return back();
+    }
+
     /**
      * API-取得NPO資訊
      */

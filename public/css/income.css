@@ -24,6 +24,7 @@ tr {
 th,
 td {
     padding: 0.5rem 0;
+    font-size: smaller;
 }
 
 .donateRow>tr td:not(:last-child),
@@ -33,12 +34,12 @@ td {
 
 .donateRow>th {
     background-color: rgb(226, 206, 115);
-    font-size: medium;
+    font-size: smaller;
 }
 
 
-.donateRow>tr:nth-child(even) {
-    background-color: rgba(244, 237, 200, 1);
+.incomeTbody>tr:nth-child(even) {
+    background-color: rgb(243, 238, 218);
     padding-left: 0.5rem;
 }
 
@@ -63,7 +64,7 @@ td {
     width: 20%;
 }
 
-#addBtn {
+#addIncomeBtn {
     background-color: rgba(132, 163, 11, 1);
 }
 
@@ -71,7 +72,7 @@ td {
     background-color: rgba(189, 174, 96, 1);
 }
 
-#addBtn,
+#addIncomeBtn,
 #npoBtn {
     color: azure;
     font-weight: 500;
@@ -89,7 +90,7 @@ td {
     margin-top: 1rem;
 }
 
-/* modal */
+/* NPO modal */
 .modal-footer {
     background-color: rgba(231, 212, 212, 1);
 }
@@ -111,4 +112,17 @@ td {
 .modal-footer label,
 .modal-footer input {
     font-size: small;
+}
+
+/* INCOME Modal */
+#addIncomeModal .modal-body {
+    margin: 0 auto;
+}
+
+.formGroup {
+    text-align: left;
+}
+
+.formGroup span {
+    color: brown;
 }

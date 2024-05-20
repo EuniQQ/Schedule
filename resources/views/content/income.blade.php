@@ -33,8 +33,8 @@
                     <th scope="col" class="reason">事&nbsp;由</th>
                     <th scope="col" class="payer">給付者</th>
                     <th scope="col" class="amount">金&nbsp;額</th>
-                    <th scope="col" class="donate">十一金額</th>
                     <th scope="col" class="bank">銀&nbsp;行</th>
+                    <th scope="col" class="donate">十一金額</th>
                     <th scope="col" class="dnDate">十一日期</th>
                     <th scope="col" class="dObj">奉獻單位</th>
                     <th scope="col" class="remark">備&nbsp;註</th>
@@ -42,27 +42,38 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="incomeTbody">
+                <tr>
+                    <td>2024-05-19</td>
+                    <td>玩股票</td>
+                    <td>證券行</td>
+                    <td>$10000</td>
+                    <td>玉山</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
                 <tr>
                     <td>2024-05-16</td>
                     <td>打工</td>
                     <td>老闆板</td>
                     <td>$1000</td>
-                    <td>$100</td>
                     <td>玉山</td>
+                    <td>$100</td>
                     <td>2024-05-16</td>
                     <td>台北611</td>
                     <td>匯款</td>
                     <td></td>
                 </tr>
-
                 <tr>
                     <td>2024-05-17</td>
                     <td>接案</td>
                     <td>阿寶</td>
                     <td>$1500</td>
-                    <td>$150</td>
                     <td>富邦</td>
+                    <td>$150</td>
                     <td>-</td>
                     <td>-</td>
                     <td>現金</td>
@@ -72,16 +83,20 @@
         </table>
 
         <div class="footer">
+            <hr>
             <span class="total">Total：xxx</span>
-            <button id="addBtn" class="btn">新增</button>
 
             <!-- Button trigger modal -->
-            <button type="button" id="npoBtn" class="btn " data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            <button type="button" id="npoBtn" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 NPO資訊
             </button>
 
+            <button type="button" id="addIncomeBtn" class="btn" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
+                新增
+            </button>
+
             <!-- NPO info Modal -->
-            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div id="staticBackdrop" class="modal fade" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog  modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -172,12 +187,113 @@
                     </div>
                 </div>
             </div>
+            <!-- NPO info Modal END-->
+
+            <!-- Add Income Data Modal -->
+            <div id="addIncomeModal" class="modal fade ">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">新增收入</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('income.create') }}" method="POST" class="formGroup">
+                                @csrf
+                                <div class="my-3">
+                                    <label for="date"><span>*</span>日期：</label>
+                                    <input type="date" name="date" id="date" value="{{ old('date') }}">
+                                    @if($errors->has('date'))
+                                    <p class="text-danger">{{ $errors->first('date')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="content"><span>*</span>事由：</label>
+                                    <input type="text" name="content" id="content" value="{{ old('content') }}">
+                                    @if($errors->has('content'))
+                                    <p class="text-danger">{{ $errors->first('content')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="payer"><span>*</span>支付者：</label>
+                                    <input type="text" name="payer" id="payer" value="{{ old('payer') }}">
+                                    @if($errors->has('payer'))
+                                    <p class="text-danger">{{ $errors->first('payer')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="amount"><span>*</span>金額：</label>
+                                    <input type="number" name="amount" id="amount" value="{{ old('amount') }}">
+                                    @if($errors->has('amount'))
+                                    <p class="text-danger">{{ $errors->first('amount')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="bank"><span>*</span>銀行：</label>
+                                    <input type="text" name="bank" id="bank" value="{{ old('bank') }}">
+                                    @if($errors->has('bank'))
+                                    <p class="text-danger">{{ $errors->first('bank')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="tithe">十一金額：</label>
+                                    <input type="number" name="tithe" id="tithe" value="{{ old('tithe') }}">
+                                    @if($errors->has('tithe'))
+                                    <p class="text-danger">{{ $errors->first('tithe')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="tithe_date">十一日期：</label>
+                                    <input type="date" name="tithe_date" id="tithe_date" value="{{ old('tithe_date') }}">
+                                    @if($errors->has('tithe_date'))
+                                    <p class="text-danger">{{ $errors->first('tithe_date')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="tithe_obj">奉獻單位：</label>
+                                    <input type="text" name="tithe_obj" id="tithe_obj" value="{{ old('tithe_obj') }}">
+                                    @if($errors->has('tithe_obj'))
+                                    <p class="text-danger">{{ $errors->first('tithe_obj')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="my-3">
+                                    <label for="notes">備註：</label>
+                                    <input type="text" name="notes" id="notes" value="{{ old('notes') }}">
+                                    @if($errors->has('notes'))
+                                    <p class="text-danger">{{ $errors->first('notes')}}</p>
+                                    @endif
+                                </div>
+
+                                <div class="text-center">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-warning">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add Income Data Modal END-->
         </div>
     </div>
 </div>
 
-@endsection
-
 @section('endJs')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        @if($errors -> any())
+        var addIncomeModal = new bootstrap.Modal(document.getElementById('addIncomeModal'));
+        addIncomeModal.show();
+        @endif
+    });
+</script>
 <script src="/js/income.js"></script>
 @endsection
