@@ -47,6 +47,21 @@ class Controller extends BaseController
 
 
     /**
+     * 取得有紀錄的年份列表
+     */
+    protected function getRecordYears($query)
+    {
+        $dates = $query->orderBy('date', 'desc')->pluck('date')->all();
+        $yearList = [];
+        foreach ($dates as $date) {
+            $yearOpt = date('Y', strtotime($date));
+            $yearList[] = $yearOpt;
+        }
+        return $yearList;
+    }
+
+
+    /**
      * 從所在資料夾刪除圖片
      */
     protected function delImgFromFolder($path)
