@@ -16,6 +16,11 @@
     align-items: center;
 }
 
+.xIcon {
+    display: none;
+    color: #c55307;
+}
+
 tr {
     width: 80%;
     text-align: center;
@@ -49,7 +54,7 @@ td {
 .payer,
 .donate,
 .dnDate,
-.remark {
+.notes {
     width: 10%;
 }
 
@@ -57,12 +62,13 @@ td {
 .bank,
 .donate,
 .edit {
-    width: 5%;
+    width: 6%;
 }
 
 .dObj {
-    width: 20%;
+    width: 16%;
 }
+/* 欄寬 END*/
 
 #addIncomeBtn {
     background-color: rgba(132, 163, 11, 1);

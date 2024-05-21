@@ -16,14 +16,18 @@
     <div class="row main">
 
         <div class="head">
-            <span class="capsuleTag">2 0 2 4 ‧ INCOME</span>
-            <span class="icons">
-                <select class="selYear">
+            <span class="capsuleTag">{{ $thisYear }} ‧ INCOME</span>
+            <span class="icons d-flex">
+                @include("icons.switch")
+                <select id="yearSelect" class="selYear">
                     @foreach($yearList as $year)
-                    <option value=$year>{{$year}}</option>
+                    @if($year == $thisYear)
+                    <option value="{{ $year }}" selected>{{ $thisYear }}</option>
+                    @else
+                    <option value="{{ $year }}">{{ $year }}</option>
+                    @endif
                     @endforeach
                 </select>
-                @include("icons.search")
                 @include("icons.menu")
             </span>
         </div>
@@ -39,7 +43,7 @@
                     <th scope="col" class="donate">十一金額</th>
                     <th scope="col" class="dnDate">十一日期</th>
                     <th scope="col" class="dObj">奉獻單位</th>
-                    <th scope="col" class="remark">備&nbsp;註</th>
+                    <th scope="col" class="notes">備&nbsp;註</th>
                     <th scope="col" class="edit"></th>
                 </tr>
             </thead>
@@ -47,23 +51,25 @@
             <tbody class="incomeTbody">
                 @foreach($records as $income)
                 <tr>
-                    <td>{{ $income->date }}</td>
-                    <td>{{ $income->content }}</td>
-                    <td>{{ $income->payer }}</td>
-                    <td>{{ $income->amount }}</td>
-                    <td>{{ $income->bank }}</td>
-                    <td>{{ $income->tithe }}</td>
-                    <td>{{ $income->tithe_date }}</td>
-                    <td>{{ $income->tithe_obj }}</td>
-                    <td>{{ $income->notes }}</td>
-                    <td></td>
+                    <td data-id="{{ $income->id }}" data-name="date">{{ $income->date }}</td>
+                    <td data-id="{{ $income->id }}" data-name="content">{{ $income->content }}</td>
+                    <td data-id="{{ $income->id }}" data-name="payer">{{ $income->payer }}</td>
+                    <td data-id="{{ $income->id }}" data-name="amount">{{ $income->amount }}</td>
+                    <td data-id="{{ $income->id }}" data-name="bank">{{ $income->bank }}</td>
+                    <td data-id="{{ $income->id }}" data-name="tithe">{{ $income->tithe }}</td>
+                    <td data-id="{{ $income->id }}" data-name="tithe_date">{{ $income->tithe_date }}</td>
+                    <td data-id="{{ $income->id }}" data-name="tithe_obj">{{ $income->tithe_obj }}</td>
+                    <td data-id="{{ $income->id }}" data-name="notes">{{ $income->notes }}</td>
+                    <td>
+                        <i class="xIcon fa-regular fa-circle-xmark fa-xl" data-id="{{ $income->id }}"></i>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
         </table>
 
         <div class="footer">
-            <span class="total">Total：${{ $total }}</span>
+            <span id="total" class="total">Total：${{ $total }}</span>
 
             <!-- Button trigger modal -->
             <button type="button" id="npoBtn" class="btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">

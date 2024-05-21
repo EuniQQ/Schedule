@@ -1,6 +1,15 @@
 var addBtn = document.getElementById('addBtn');
+
 var npoBtn = document.getElementById('npoBtn');
+
 var npoTbody = document.getElementById('npoTbody');
+
+var toggleSwitch = document.getElementById('flexSwitchCheckDefault');
+
+var total = document.getElementById('total');
+
+var xIcons = document.getElementsByClassName('xIcon');
+
 
 $(document).ready(function () {
 
@@ -19,6 +28,9 @@ $(document).ready(function () {
         let apiToken = issetApiToken > 0 ? getCookie('api_token') : null;
         return apiToken
     }
+
+    dblclickToEdit();
+
 })
 
 $(document)
@@ -67,7 +79,7 @@ $(document)
 
 
     /**
-     * click trush icon to delete data
+     * click trush icon to DELETE NPO DATA
      */
     .on("click", ".fa-trash", function (e) {
         let trushId = e.target.getAttribute('data-id');
@@ -87,6 +99,118 @@ $(document)
         })
     })
 
+
+    .on("change", "#yearSelect", function (e) {
+        const selectedYear = e.target.value;
+        window.location.href = '/income/' + selectedYear;
+
+    })
+
+
+    /**
+     * 監聽edit mode是否開啟
+     */
+    .on("change", "#flexSwitchCheckDefault", function (e) {
+        if (e.target.checked) {
+            showXIcons();
+        } else {
+            hideXIcons();
+        }
+    })
+
+    .on("mouseover", ".xIcon", function (e) {
+        e.target.classList.add('fa-2xl');
+    })
+
+    .on("mouseleave", ".xIcon", function (e) {
+        e.target.classList.remove('fa-2xl');
+    })
+
+    .on("click", ".xIcon", function (e) {
+        if (window.confirm('是否確定刪除此紀錄？')) {
+            const id = e.target.getAttribute('data-id');
+            $.ajax({
+                url: "/api/income/" + id,
+                type: "POST",
+                data: {
+                    "_method": "DELETE"
+                },
+                success: function (res) {
+                    window.location.reload();
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            })
+        }
+    })
+
+function showXIcons() {
+    for (let i = 0; i < xIcons.length; i++) {
+        xIcons[i].style = "display:flex";
+    }
+}
+
+function hideXIcons() {
+    for (let i = 0; i < xIcons.length; i++) {
+        xIcons[i].style = "display:none";
+    }
+}
+
+
+/**
+* 雙擊td可直接編輯
+*/
+function dblclickToEdit() {
+    document.querySelectorAll('.incomeTbody td').forEach(td => {
+        td.addEventListener('dblclick', (e) => {
+
+            // 取得當前td內容
+            const originalContent = td.textContent;
+            const id = e.target.getAttribute('data-id');
+            const colName = e.target.getAttribute('data-name');
+
+            // 創建input
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.value = originalContent;
+
+            // 將input加到td中
+            td.textContent = '';
+            td.appendChild(input);
+
+            // 自動聚焦並選中內容
+            input.focus();
+            input.select();
+
+            input.addEventListener('keydown', (e) => {
+
+                if (e.key === 'Enter' && input.value !== originalContent) {
+                    $.ajax({
+                        url: "/api/income/" + id,
+                        type: "POST",
+                        data: {
+                            _method: "PATCH",
+                            name: colName,
+                            value: input.value
+                        },
+                        success: function (res) {
+                            total.textContent = 'Total：$' + res.total;
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            // iinput 失去焦點時，保存內容並恢復td
+            input.addEventListener('blur', () => {
+                td.textContent = input.value || originalContent;
+            });
+        })
+    })
+}
 
 /**
  * 建立npo資訊列表 in modal

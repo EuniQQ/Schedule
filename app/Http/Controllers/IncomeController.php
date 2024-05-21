@@ -31,11 +31,10 @@ class IncomeController extends Controller
 
         $args = [
             'records' => $incomeRecord,
-            'year' => $year,
+            'thisYear' => $year,
             'yearList' => array_unique($yearList),
             'total' => $total
         ];
-        // dd($args);
 
         return view('content.income')->with($args);
     }
@@ -80,6 +79,48 @@ class IncomeController extends Controller
 
         auth()->user()->incomes()->create($content);
         return back();
+    }
+
+
+    /**
+     * API-更新收入單格內容
+     */
+    public function update(Request $request, $id)
+    {
+        $_data = $request->all();
+        $colName = $_data['name'];
+        $newVal = $_data['value'];
+        $userId = auth()->user()->id;
+
+        $income = Income::find($id);
+        if ($income) {
+            $income->$colName = $newVal;
+            $income->save();
+
+            $year = substr($income->date, 0, 4);
+            $total = Income::where('user_id', $userId)
+                ->where('date', 'like', $year . '%')
+                ->sum('amount');
+
+            $res = [
+                'message' => '更新成功',
+                'total' => $total
+            ];
+            return Response::json($res);
+        } else {
+            abort(400, '找不到此紀錄');
+        }
+    }
+
+
+    /**
+     * API-刪除單筆INCOME
+     */
+    public function destroy($id)
+    {
+        $income = auth()->user()->incomes->find($id);
+        $income->delete();
+        return Response::json(['message' => '刪除成功']);
     }
 
 

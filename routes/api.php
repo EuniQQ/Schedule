@@ -37,13 +37,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/calender/style/{id}', [CalenderController::class, 'updateStyle'])->name('calender.styleUpdate');
     Route::post('/journal', [JournalController::class, 'create'])->name('journal.create');
     Route::post('/journal/{id}', [JournalController::class, 'update']);
-    Route::post('/income/npo/{id}',[IncomeController::class, 'updateNpo'])->name('income.updateNpo');
+    Route::post('/income/npo/{id}', [IncomeController::class, 'updateNpo'])->name('income.updateNpo');
 
+    Route::patch('/income/{id}', [IncomeController::class, 'update'])->name('income.update');
 
     Route::delete('/calender/style/{id}', [CalenderController::class, 'destroyStyle'])->name('calender.styleDelete');
     Route::delete('/daylySchedule/{id}', [CalenderController::class, 'destroy'])->name('calender.destroy');
     Route::delete('/journal/singleImg/{id}', [JournalController::class, 'deleteImg'])->name('journal.singleDel');
     Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
+    Route::delete('/income/{id}', [IncomeController::class, 'destroy'])->name('income.destroy');
     Route::delete('/income/npo/{id}', [IncomeController::class, 'destroyNpo'])->name('icome.npoDel');
 
     Route::get('/user', function (Request $request) {

@@ -34,23 +34,15 @@
 
             <!-- icons-->
             <div class="icons">
-                <div class="search d-flex">
-                    <!-- switch icon -->
-                    <div class="form-check form-switch m-1">
-                        <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-                        <label class="form-check-label switchLabel" for="flexSwitchCheckDefault">Edit Mode</label>
-                    </div>
-                </div>
+                @include("icons.switch")
                 @include("icons.searchKey")
                 <!-- select year -->
-                <select id="yearSel" class="m-1">
-                    <!-- <option value=""></option> -->
-                </select>
+                <select id="yearSel" class="m-1"></select>
                 @include("icons.searchMonth")
                 @include("icons.search")
                 @include("icons.menu")
-                <!-- icons END -->
             </div>
+            <!-- icons END -->
         </div>
 
         <!-- Edit Modal -->
