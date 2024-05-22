@@ -44,6 +44,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/income/npo', [IncomeController::class, 'createNpo'])->name('income.createNpo');
     Route::post('/income', [IncomeController::class, 'createIncome'])->name('income.create');
+    Route::post('/spending/cash', [SpendingController::class, 'createCash'])->name('cash.create');
+    Route::post('/spending/card', [SpendingController::class, 'createCard'])->name('card.create');
 
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
 

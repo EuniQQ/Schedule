@@ -17,9 +17,8 @@ class Expense extends Model
         'shop',
         'amount',
         'actual_pay',
-        'card',
-        'type',
-        'note'
+        'bank',
+        'notes'
     ];
 
     public function user(): BelongsTo

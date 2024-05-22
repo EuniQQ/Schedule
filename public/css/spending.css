@@ -29,6 +29,16 @@
     margin-right: 5%;
 }
 
+.capsuleTag {
+    background-color: rgba(187, 123, 123, 1) !important;
+}
+
+.addbtn {
+    background-color: rgba(187, 123, 123, 1);
+    color: aliceblue;
+    border: none;
+}
+
 th,
 td {
     padding: 0.5rem 0;
@@ -114,7 +124,7 @@ td {
 
 .card .amount,
 .card .refund,
-.card .actulCost,
+.card .actulPay,
 .card .bank,
 .card .notes {
     width: 10%;
@@ -124,6 +134,10 @@ td {
     width: 5%;
 }
 
-
-
 /* 刷卡區 END */
+
+
+/* MODAL 區 */
+/* .bgPink { */
+/* background-color: rgb(255, 249, 249); */
+/* } */
