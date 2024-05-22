@@ -26,7 +26,9 @@
         <div>
             <a href="{{ route('income.index') }}">·&nbsp;收入</a>
         </div>
-        <div>·&nbsp;支出</div>
+        <div>
+            <a href="{{ route('spending.index') }}">·&nbsp;支出</a>
+        </div>
         <div>·&nbsp;年度結餘</div>
         <div class="type"></div>
         <div>

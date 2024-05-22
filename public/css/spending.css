@@ -1,0 +1,129 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.header {
+    padding: 1rem 0;
+    width: 100%;
+    height: 80px;
+}
+
+.main {
+    width: 100%;
+    height: calc(100%-210px);
+    padding: 0;
+}
+
+.footer {
+    width: 100%;
+    height: 60px;
+    background-color: rgb(255, 255, 255);
+    position: fixed;
+    bottom: 0;
+}
+
+.footer>button {
+    float: right;
+    margin-right: 5%;
+}
+
+th,
+td {
+    padding: 0.5rem 0;
+}
+
+.cashFooter,
+.cardFooter {
+    position: fixed;
+    bottom: 60px;
+    background-color: rgba(245, 235, 183, 1);
+}
+
+.cashFooter {
+    width: 40%;
+    left: 0;
+}
+
+.cardFooter {
+    width: 60%;
+    right: 0;
+    margin-left: 1rem;
+}
+
+.tableTitle {
+    font-weight: 900;
+    letter-spacing: 5px;
+}
+
+/* 現金區 */
+.cash {
+    width: 40%;
+}
+
+.cash th,
+.cashTbody>tr:nth-child(even) {
+    background-color: rgba(244, 239, 239, 1);
+}
+
+.cash th:not(:first-child):not(:last-child),
+.cash td:not(:first-child):not(:last-child) {
+    border-right: 1px solid rgba(210, 166, 166, 1);
+}
+
+.cash .checkbox,
+.cash .weekDay {
+    width: 10%;
+}
+
+.cash .amount,
+.cash .date {
+    width: 25%;
+}
+
+.cash .item {
+    width: 35%;
+}
+
+/* 現金區END */
+
+
+/* 刷卡區 */
+.card {
+    width: 60%;
+    margin-left: 1rem;
+    border: none !important;
+}
+
+.card th,
+.cardTbody>tr:nth-child(even) {
+    background-color: rgba(237, 249, 248, 1);
+}
+
+.card th:not(:first-child):not(:last-child),
+.card td:not(:first-child):not(:last-child) {
+    border-right: 1px solid rgba(173, 203, 199, 1);
+}
+
+.card .date,
+.card .shop,
+.card .item {
+    width: 15%;
+}
+
+.card .amount,
+.card .refund,
+.card .actulCost,
+.card .bank,
+.card .notes {
+    width: 10%;
+}
+
+.card .weekday {
+    width: 5%;
+}
+
+
+
+/* 刷卡區 END */

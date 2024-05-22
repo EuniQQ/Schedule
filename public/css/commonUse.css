@@ -8,7 +8,7 @@
 /* 每頁膠囊標題tag */
 .capsuleTag {
     padding: 5px 20px;
-    width: 130px;
+    /* width: 130px; */
     height: 40px;
     background-color: rgba(189, 174, 96, 1);
     font-size: 1.5rem;
