@@ -32,18 +32,35 @@
                 </thead>
 
                 <tbody class="cashTbody">
+                    @foreach($args['cashData'] as $cash)
+                    <tr class="text-center">
+                        <td data-name="checkbox">
+                            <input class="cashChbox d-none" type="checkbox" data-id="{{ $cash->id }}">
+                        </td>
+                        <td data-id="{{ $cash->id }}" data-name="date">
+                            {{ $cash->date }}
+                        </td>
+                        <td data-id="{{ $cash->id }}" data-name="weekDay">
+                            {{ $cash->weekDay }}
+                        </td>
+                        <td data-id="{{ $cash->id }}" data-name="item">
+                            {{ $cash->item }}
+                        </td>
+                        <td data-id="{{ $cash->id }}" data-name="amount">
+                            {{ $cash->amount }}
+                        </td>
+                    </tr>
+                    @endforeach
+
                     <?php
-                    for ($i = 0; $i < 20; $i++) {
+                    for ($i = 0; $i < $args['blankCash']; $i++) {
                     ?>
                         <tr class="text-center">
-                            <td data-name="checkbox">
-                                <input class="cashChbox d-none" type="checkbox" data-id="">
-                            </td>
-                            <td data-id="" data-name="date"></td>
-                            <td data-id="" data-name="weekDay">
-                            </td>
-                            <td data-id="" data-name="item"></td>
-                            <td data-id="" data-name="amount"></td>
+                            <td data-name="checkbox"></td>
+                            <td data-name="date"></td>
+                            <td data-name="weekDay"></td>
+                            <td data-name="item"></td>
+                            <td data-name="amount"></td>
                         </tr>
                     <?php
                     }
@@ -71,23 +88,56 @@
                 </thead>
 
                 <tbody class="cardTbody">
+                    @foreach($args['cardData'] as $card)
+                    <tr class="text-center">
+                        <td data-name="checkbox">
+                            <input class="cardChbox d-none" type="checkbox" data-id="{{ $card->id}}">
+                        </td>
+                        <td data-name="date" data-id="{{ $card->id}}">
+                        {{ $card->date }}
+                        </td>
+                        <td data-name="weekDay" data-id="{{ $card->id}}">
+                        {{ $card->weekDay }}
+                        </td>
+                        <td data-name="shop" data-id="{{ $card->id}}">
+                        {{ $card->shop }}
+                        </td>
+                        <td data-name="item" data-id="{{ $card->id}}">
+                        {{ $card->item }}
+                        </td>
+                        <td data-name="amount" data-id="{{ $card->id}}">
+                        {{ $card->amount }}
+                        </td>
+                        <td data-name="refund" data-id="{{ $card->id}}">
+                        {{ $card->refund }}
+                        </td>
+                        <td data-name="actualPay" data-id="{{ $card->id}}">
+                        {{ $card->actualPay }}
+                        </td>
+                        <td data-name="bank" data-id="{{ $card->id}}">
+                        {{ $card->bank }}
+                        </td>
+                        <td data-name="notes" data-id="{{ $card->id}}">
+                        {{ $card->notes }}
+                        </td>
+                    </tr>
+                    @endforeach
                     <?php
-                    for ($i = 0; $i < 20; $i++) {
+                    for ($i = 0; $i < $args['blankCard']; $i++) {
                     ?>
                         <tr class="text-center">
                             <td data-name="checkbox">
-                                <input class="cardChbox d-none" type="checkbox" data-id="">
+                                <!-- <input class="cardChbox d-none" type="checkbox"> -->
                             </td>
-                            <td data-id="" data-name="date"></td>
-                            <td data-id="" data-name="weekDay">
-                            </td>
-                            <td data-id="" data-name="shop"></td>
-                            <td data-id="" data-name="item"></td>
-                            <td data-id="" data-name="amount"></td>
-                            <td data-id="" data-name="refund"></td>
-                            <td data-id="" data-name="actulPay"></td>
-                            <td data-id="" data-name="bank"></td>
-                            <td data-id="" data-name="notes"></td>
+                            <td data-name="date"></td>
+                            <td data-name="weekDay"></td>
+                            <td data-name="shop"></td>
+                            <td data-name="item"></td>
+                            <td data-name="amount"></td>
+                            <td data-name="refund"></td>
+                            <td data-name="actulPay"></td>
+                            <td data-name="bank"></td>
+                            <td data-name="notes"></td>
                         </tr>
                     <?php
                     }

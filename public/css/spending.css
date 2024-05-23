@@ -8,6 +8,8 @@
     padding: 1rem 0;
     width: 100%;
     height: 80px;
+    /* position: fixed; */
+    /* top: 0; */
 }
 
 .main {
@@ -42,6 +44,16 @@
 th,
 td {
     padding: 0.5rem 0;
+}
+
+tbody {
+    width: 100%;
+    overflow-y: auto;
+}
+
+tbody tr {
+    /* height: calc((100%-210px)/10); */
+    height: 30px;
 }
 
 .cashFooter,
@@ -138,6 +150,3 @@ td {
 
 
 /* MODAL 區 */
-/* .bgPink { */
-/* background-color: rgb(255, 249, 249); */
-/* } */
