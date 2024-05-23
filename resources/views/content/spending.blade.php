@@ -39,7 +39,7 @@
                     @foreach($args['cashData'] as $cash)
                     <tr class="text-center">
                         <td data-name="checkbox">
-                            <input class="cashChbox d-none" type="checkbox" data-id="{{ $cash->id }}">
+                            <input class="cashChbox d-none" type="checkbox" value="{{ $cash->id }}">
                         </td>
                         <td data-id="{{ $cash->id }}" data-name="date">
                             {{ $cash->date }}
@@ -71,6 +71,14 @@
                     ?>
                 </tbody>
             </table>
+            <div class="cashFooter py-2">
+                <button id="cashAddBtn" class="addbtn btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#addCashModal">新增
+                </button>
+                <button id="cashEditBtn" class="btn btn-secondary btn-sm">編輯</button>
+                <button id="cashDelBtn" class="btn btn-danger btn-sm d-none">刪除</button>
+                <button id="cashDoneBtn" class="btn btn-warning btn-sm d-none">完成</button>
+                <span id="cashTotal" class="total">&nbsp;Total：$ {{$args['cashSum']}}</span>
+            </div>
         </div>
 
         <div class="card">
@@ -95,7 +103,7 @@
                     @foreach($args['cardData'] as $card)
                     <tr class="text-center">
                         <td data-name="checkbox">
-                            <input class="cardChbox d-none" type="checkbox" data-id="{{ $card->id}}">
+                            <input class="cardChbox d-none" type="checkbox" value="{{ $card->id}}">
                         </td>
                         <td data-name="date" data-id="{{ $card->id}}">
                             {{ $card->date }}
@@ -146,34 +154,24 @@
                     ?>
                 </tbody>
             </table>
+            <div class="cardFooter py-2">
+                <button id="cardAddBtn" class="addbtn btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#addCardModal">新增
+                </button>
+                <button id="cardEditBtn" class="btn btn-secondary btn-sm">編輯</button>
+                <button id="cardDelBtn" class="btn btn-danger btn-sm d-none">刪除</button>
+                <button id="cardDoneBtn" class="btn btn-warning btn-sm d-none">完成</button>
+                <span id="cardTotal" class="total">&nbsp;Total：$ {{$args['cardSum'] }}</span>
+            </div>
         </div>
     </div>
 
-    <div class="row d-flex">
-        <div class="cashFooter py-2">
-            <button id="cashAddBtn" class="addbtn btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#addCashModal">新增
-            </button>
-            <button id="cashEditBtn" class="btn btn-secondary btn-sm">編輯</button>
-            <button id="cashDelBtn" class="btn btn-danger btn-sm d-none">刪除</button>
-            <button id="cashDoneBtn" class="btn btn-warning btn-sm d-none">完成</button>
-            <span id="cashTotal" class="total">&nbsp;Total：$ {{ $args['cashSum']}}</span>
-        </div>
-
-        <div class="cardFooter py-2">
-            <button id="cardAddBtn" class="addbtn btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#addCardModal">新增
-            </button>
-            <button id="cardEditBtn" class="btn btn-secondary btn-sm">編輯</button>
-            <button id="cardDelBtn" class="btn btn-danger btn-sm d-none">刪除</button>
-            <button id="cardDoneBtn" class="btn btn-warning btn-sm d-none">完成</button>
-            <span id="cardTotal" class="total">&nbsp;Total：$ {{$args['cardSum'] }}</span>
-        </div>
-    </div>
     <div class="footer py-2">
         <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
             查看其他日期
         </button>
     </div>
 </div>
+
 
 <!-- 新增 CASH Modal -->
 <div class="modal fade" id="addCashModal" tabindex="-1" aria-labelledby="addCashModalLabel" aria-hidden="true">

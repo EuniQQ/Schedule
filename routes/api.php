@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/journal/{id}', [JournalController::class, 'destroy'])->name('journal.destroy');
     Route::delete('/income/{id}', [IncomeController::class, 'destroy'])->name('income.destroy');
     Route::delete('/income/npo/{id}', [IncomeController::class, 'destroyNpo'])->name('icome.npoDel');
+    Route::delete('/spending', [SpendingController::class, 'destroy'])->name('spending.destroy');
 
     Route::get('/user', function (Request $request) {
         return $request->user();

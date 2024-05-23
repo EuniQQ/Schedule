@@ -55,6 +55,7 @@ class SpendingController extends Controller
         return $dataWithWeekDay;
     }
 
+    
     public function createCard(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -139,5 +140,23 @@ class SpendingController extends Controller
         } else {
             abort(404, '找不到此紀錄');
         }
+    }
+
+
+    /**
+     * API-刪除勾選的checkbox資料
+     */
+    public function destroy(Request $request)
+    {
+        $delIdArr = $request->ids;
+
+        if (is_array($delIdArr) && !empty($delIdArr)) {
+            auth()->user()->expenses()->whereIn('id', $delIdArr)->delete();
+            return Response::json(['message' => 'ok']);
+        } else {
+            abort(400, '刪除失敗');
+        }
+
+        return Response::json(['message' => 'ok']);
     }
 }

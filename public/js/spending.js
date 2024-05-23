@@ -8,6 +8,7 @@ var cardEditBtn = document.getElementById('cardEditBtn');
 var cardDelBtn = document.getElementById('cardDelBtn');
 var cardDoneBtn = document.getElementById('cardDoneBtn');
 
+
 $(document).ready(function () {
     $.ajaxSetup({
         headers: {
@@ -56,7 +57,44 @@ $(document)
         clearModalInput();
     })
 
+    .on('click', '#cashDelBtn', () => {
+        const cashChbxs = document.querySelectorAll('.cashTbody input[type=checkbox]:checked');
+        this.delChecked(cashChbxs);
+    })
 
+    .on('click', '#cardDelBtn', () => {
+        const cardChbxs = document.querySelectorAll('.cardTbody input[type=checkbox]:checked');
+        this.delChecked(cardChbxs);
+    })
+
+
+/**
+ * 刪除已勾選的CASH/CARD選項
+ * @param {*} checkboxes 已勾選之checkbox
+ */
+function delChecked(checkboxes) {
+    const checkedArr = [];
+
+
+    for (let i = 0; i < checkboxes.length; i++) {
+        checkedArr.push(checkboxes[i].value);
+    }
+
+    $.ajax({
+        url: '/api/spending',
+        method: 'POST',
+        data: {
+            _method: 'DELETE',
+            ids: checkedArr
+        },
+        success: (res) => {
+            window.location.reload();
+        },
+        error: (err) => {
+            alert(err);
+        }
+    })
+}
 
 function cashToogleBtns() {
     const cashChboxs = document.querySelectorAll('.cashChbox');
