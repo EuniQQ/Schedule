@@ -56,11 +56,11 @@
                     for ($i = 0; $i < $args['blankCash']; $i++) {
                     ?>
                         <tr class="text-center">
-                            <td data-name="checkbox"></td>
-                            <td data-name="date"></td>
-                            <td data-name="weekDay"></td>
-                            <td data-name="item"></td>
-                            <td data-name="amount"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     <?php
                     }
@@ -94,31 +94,31 @@
                             <input class="cardChbox d-none" type="checkbox" data-id="{{ $card->id}}">
                         </td>
                         <td data-name="date" data-id="{{ $card->id}}">
-                        {{ $card->date }}
+                            {{ $card->date }}
                         </td>
                         <td data-name="weekDay" data-id="{{ $card->id}}">
-                        {{ $card->weekDay }}
+                            {{ $card->weekDay }}
                         </td>
                         <td data-name="shop" data-id="{{ $card->id}}">
-                        {{ $card->shop }}
+                            {{ $card->shop }}
                         </td>
                         <td data-name="item" data-id="{{ $card->id}}">
-                        {{ $card->item }}
+                            {{ $card->item }}
                         </td>
                         <td data-name="amount" data-id="{{ $card->id}}">
-                        {{ $card->amount }}
+                            {{ $card->amount }}
                         </td>
                         <td data-name="refund" data-id="{{ $card->id}}">
-                        {{ $card->refund }}
+                            {{ $card->refund }}
                         </td>
-                        <td data-name="actualPay" data-id="{{ $card->id}}">
-                        {{ $card->actualPay }}
+                        <td data-name="actual_pay" data-id="{{ $card->id}}">
+                            {{ $card->actual_pay }}
                         </td>
                         <td data-name="bank" data-id="{{ $card->id}}">
-                        {{ $card->bank }}
+                            {{ $card->bank }}
                         </td>
                         <td data-name="notes" data-id="{{ $card->id}}">
-                        {{ $card->notes }}
+                            {{ $card->notes }}
                         </td>
                     </tr>
                     @endforeach
@@ -126,18 +126,16 @@
                     for ($i = 0; $i < $args['blankCard']; $i++) {
                     ?>
                         <tr class="text-center">
-                            <td data-name="checkbox">
-                                <!-- <input class="cardChbox d-none" type="checkbox"> -->
-                            </td>
-                            <td data-name="date"></td>
-                            <td data-name="weekDay"></td>
-                            <td data-name="shop"></td>
-                            <td data-name="item"></td>
-                            <td data-name="amount"></td>
-                            <td data-name="refund"></td>
-                            <td data-name="actulPay"></td>
-                            <td data-name="bank"></td>
-                            <td data-name="notes"></td>
+                            <td data-name="checkbox"></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
                         </tr>
                     <?php
                     }
@@ -154,7 +152,7 @@
             <button id="cashEditBtn" class="btn btn-secondary btn-sm">編輯</button>
             <button id="cashDelBtn" class="btn btn-danger btn-sm d-none">刪除</button>
             <button id="cashDoneBtn" class="btn btn-warning btn-sm d-none">完成</button>
-            <span id="cashTotal" class="total">Total：$1000</span>
+            <span id="cashTotal" class="total">&nbsp;Total：$ {{ $args['cashSum']}}</span>
         </div>
 
         <div class="cardFooter py-2">
@@ -163,7 +161,7 @@
             <button id="cardEditBtn" class="btn btn-secondary btn-sm">編輯</button>
             <button id="cardDelBtn" class="btn btn-danger btn-sm d-none">刪除</button>
             <button id="cardDoneBtn" class="btn btn-warning btn-sm d-none">完成</button>
-            <span id="cardTotal" class="total">Total：$1000</span>
+            <span id="cardTotal" class="total">&nbsp;Total：$ {{$args['cardSum'] }}</span>
         </div>
     </div>
     <div class="footer py-2">
@@ -330,4 +328,5 @@
     });
 </script>
 <script src="/js/spending.js"></script>
+
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Expense;
 use Carbon\Carbon;
@@ -93,5 +94,50 @@ class SpendingController extends Controller
         $validated = $validator->validated();
         auth()->user()->expenses()->create($validated);
         return redirect()->back();
+    }
+
+
+    /**
+     * API-更新(CASH/CARD)單格內容
+     */
+    public function update(Request $request, $id)
+    {
+        $_data = $request->all();
+        $colName = $_data['name'];
+        $newVal = $_data['value'];
+        $userId = auth()->user()->id;
+
+        $spending = Expense::find($id);
+        if ($spending) {
+            $spending->$colName = $newVal;
+            $spending->save();
+
+            if ($colName == 'amount' || $colName == 'actual_pay') {
+                $searchKey = substr($spending->date, 0, 7) . '%';
+                $query = Expense::where('user_id', $userId)
+                    ->where('date', 'like', $searchKey);
+
+                if (is_null($spending->bank)) {
+                    $totalId = 'cashTotal';
+                    $totalQuery = clone $query;
+                    $total = $totalQuery->whereNull('bank')->sum('amount');
+                } else {
+                    $totalId = 'cardTotal';
+                    $totalQuery = clone $query;
+                    $total = $totalQuery->whereNotNull('bank')->sum('actual_pay');
+                }
+
+                $res = [
+                    'total' => $total,
+                    'totalId' => $totalId
+                ];
+            } else {
+                $res = ['message' => 'ok'];
+            }
+
+            return Response::json($res);
+        } else {
+            abort(404, '找不到此紀錄');
+        }
     }
 }

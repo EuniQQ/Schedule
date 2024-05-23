@@ -6,6 +6,7 @@ use App\Http\Controllers\CalenderController;
 use App\Http\Controllers\JournalController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\IncomeController;
+use App\Http\Controllers\SpendingController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/income/npo/{id}', [IncomeController::class, 'updateNpo'])->name('income.updateNpo');
 
     Route::patch('/income/{id}', [IncomeController::class, 'update'])->name('income.update');
+    Route::patch('/spending/{id}', [SpendingController::class, 'update'])->name('spending.update');
 
     Route::delete('/calender/style/{id}', [CalenderController::class, 'destroyStyle'])->name('calender.styleDelete');
     Route::delete('/daylySchedule/{id}', [CalenderController::class, 'destroy'])->name('calender.destroy');
