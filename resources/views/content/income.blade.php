@@ -1,5 +1,9 @@
 @extends('layouts/layout')
 
+@section('links')
+<script src="/js/doubleClick.js"></script>
+@endsection
+
 @section('css')
 <link rel="stylesheet" href="{{asset('css/income.css')}}">
 <link rel="stylesheet" href="{{asset('css/commonUse.css')}}">

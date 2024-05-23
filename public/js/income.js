@@ -6,8 +6,6 @@ var npoTbody = document.getElementById('npoTbody');
 
 var toggleSwitch = document.getElementById('flexSwitchCheckDefault');
 
-var total = document.getElementById('total');
-
 var xIcons = document.getElementsByClassName('xIcon');
 
 
@@ -29,7 +27,11 @@ $(document).ready(function () {
         return apiToken
     }
 
-    dblclickToEdit();
+    /**
+     * 雙擊欄位建立input更新內容
+    */
+    const apiUrl = '/api/income/';
+    dblclickToEdit(apiUrl);
 
 })
 
@@ -157,60 +159,6 @@ function hideXIcons() {
     }
 }
 
-
-/**
-* 雙擊td可直接編輯
-*/
-function dblclickToEdit() {
-    document.querySelectorAll('.incomeTbody td').forEach(td => {
-        td.addEventListener('dblclick', (e) => {
-
-            // 取得當前td內容
-            const originalContent = td.textContent;
-            const id = e.target.getAttribute('data-id');
-            const colName = e.target.getAttribute('data-name');
-
-            // 創建input
-            const input = document.createElement('input');
-            input.type = 'text';
-            input.value = originalContent;
-
-            // 將input加到td中
-            td.textContent = '';
-            td.appendChild(input);
-
-            // 自動聚焦並選中內容
-            input.focus();
-            input.select();
-
-            input.addEventListener('keydown', (e) => {
-
-                if (e.key === 'Enter' && input.value !== originalContent) {
-                    $.ajax({
-                        url: "/api/income/" + id,
-                        type: "POST",
-                        data: {
-                            _method: "PATCH",
-                            name: colName,
-                            value: input.value
-                        },
-                        success: function (res) {
-                            total.textContent = 'Total：$' + res.total;
-                        },
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    });
-                }
-            });
-
-            // iinput 失去焦點時，保存內容並恢復td
-            input.addEventListener('blur', () => {
-                td.textContent = input.value || originalContent;
-            });
-        })
-    })
-}
 
 /**
  * 建立npo資訊列表 in modal
