@@ -53,7 +53,7 @@ class IncomeController extends Controller
             'bank' => 'nullable',
             'pay_on_line' => 'nullable|url',
             'form_link' => 'nullable|url',
-        ],);
+        ],$this->message());
 
         auth()->user()->donates()->create($content);
         return redirect()->route('income.index');

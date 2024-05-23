@@ -20,9 +20,14 @@ class SpendingController extends Controller
         $month = !empty($month) ? $month : $thisMonth;
         $searchKey = $year . '-' . $month . '%';
         $query = Expense::where('user_id', $userId);
-        $allData = $query->get();
-        $cashData = $allData->where('date', 'like', $searchKey)->whereNull('bank');
-        $cardData = $allData->where('date', 'like', $searchKey)->whereNotNull('bank');
+        $cashQuery = clone $query;
+        $cashData = $cashQuery->where('date', 'like', $searchKey)
+            ->whereNull('bank')
+            ->get();
+        $cardQuery = clone $query;
+        $cardData = $cardQuery->where('date', 'like', $searchKey)
+            ->whereNotNull('bank')
+            ->get();
         $cashDataWithWeekDay = $this->addWeekDayToCollection($cashData);
         $cardDataWithWeekDay = $this->addWeekDayToCollection($cardData);
         $yearList = $this->getRecordYears($query);
