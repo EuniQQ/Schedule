@@ -150,3 +150,24 @@ tbody tr {
 
 
 /* MODAL 區 */
+#otherDateModal .modal-body {
+    background-color: rgb(230, 230, 230);
+}
+
+#otherDateModal .cloBtn {
+    text-align: right;
+}
+
+#otherDateModal .title,
+#otherDateModal label {
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+#otherDateModal .main {
+    margin: 0 30px;
+}
+
+#otherDateModal select {
+    width: 120px;
+}

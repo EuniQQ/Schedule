@@ -68,6 +68,7 @@ $(document)
     })
 
 
+
 /**
  * 刪除已勾選的CASH/CARD選項
  * @param {*} checkboxes 已勾選之checkbox

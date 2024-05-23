@@ -19,13 +19,13 @@ class SpendingController extends Controller
         $year = !empty($year) ? $year : $thisYear;
         $month = !empty($month) ? $month : $thisMonth;
         $searchKey = $year . '-' . $month . '%';
-        $query = Expense::where('user_id', $userId)->where('date', 'like', $searchKey);
+        $query = Expense::where('user_id', $userId);
         $allData = $query->get();
-        $cashData = $allData->whereNull('bank');
-        $cardData = $allData->whereNotNull('bank');
+        $cashData = $allData->where('date', 'like', $searchKey)->whereNull('bank');
+        $cardData = $allData->where('date', 'like', $searchKey)->whereNotNull('bank');
         $cashDataWithWeekDay = $this->addWeekDayToCollection($cashData);
         $cardDataWithWeekDay = $this->addWeekDayToCollection($cardData);
-
+        $yearList = $this->getRecordYears($query);
 
         $args = [
             'year' => $year,
@@ -35,7 +35,8 @@ class SpendingController extends Controller
             'cashSum' => $cashData->sum('amount'),
             'cardSum' => $cardData->sum('actual_pay'),
             'blankCash' => 30 - ($cashData->count()),
-            'blankCard' => 30 - ($cardData->count())
+            'blankCard' => 30 - ($cardData->count()),
+            'yearList' => array_unique($yearList)
         ];
 
         return view('content.spending')->with('args', $args);
@@ -55,7 +56,8 @@ class SpendingController extends Controller
         return $dataWithWeekDay;
     }
 
-    
+
+
     public function createCard(Request $request)
     {
         $validator = Validator::make($request->all(), [

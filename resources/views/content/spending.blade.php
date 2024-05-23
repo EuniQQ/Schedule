@@ -166,9 +166,57 @@
     </div>
 
     <div class="footer py-2">
-        <button type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#addIncomeModal">
+        <button id="otherDateBtn" type="button" class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#otherDateModal">
             查看其他日期
         </button>
+    </div>
+</div>
+
+
+<!-- 選取其他日期 Modal -->
+<div id="otherDateModal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="cloBtn">
+                    <button type="button" class=" btn-close mb-4 " data-bs-dismiss="modal" aria-label="Close">
+                    </button>
+                </div>
+                <div class="main">
+                    <p class="title">
+                        欲 查 詢 支 出 明 細 年 月 份：
+                    </p>
+                    <label for="selY">年&nbsp;&nbsp;份：</label>
+                    <select name="selY" id="selY">
+                        @foreach($args['yearList'] as $year)
+                        <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
+                    </select><br>
+                    <label for="selM">月&nbsp;&nbsp;份：</label>
+                    <select name="selM" id="selM" class="my-2">
+                        <option value="01">01</option>
+                        <option value="02">02</option>
+                        <option value="03">03</option>
+                        <option value="04">04</option>
+                        <option value="05">05</option>
+                        <option value="06">06</option>
+                        <option value="07">07</option>
+                        <option value="08">08</option>
+                        <option value="09">09</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option value="12">12</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="button" class="my-3 btn btn-warning">Save</button>
+                </div>
+            </div>
+            <!-- <div class="modal-footer"> -->
+
+
+            <!-- </div> -->
+        </div>
     </div>
 </div>
 
@@ -219,7 +267,7 @@
         </div>
     </div>
 </div>
-<!-- 新增 CASH Modal END-->
+
 
 <!-- 新增 CARD Modal -->
 <div class="modal fade" id="addCardModal" tabindex="-1" aria-labelledby="addCardModalLabel" aria-hidden="true">
@@ -316,7 +364,7 @@
         </div>
     </div>
 </div>
-<!-- 新增Cash Modal END-->
+
 
 @section('endJs')
 <script>
