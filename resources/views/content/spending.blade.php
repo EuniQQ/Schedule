@@ -18,7 +18,7 @@
 <div class="container-fruid">
     <div class="header text-start d-flex">
         @include("icons.menu")
-        <div class="capsuleTag">2024 ‧ 05</div>
+        <div class="capsuleTag">{{ $args['year'] }} ‧ {{ $args['month'] }}</div>
     </div>
 
     <div class="main d-flex">
@@ -182,40 +182,39 @@
                     <button type="button" class=" btn-close mb-4 " data-bs-dismiss="modal" aria-label="Close">
                     </button>
                 </div>
-                <div class="main">
-                    <p class="title">
-                        欲 查 詢 支 出 明 細 年 月 份：
-                    </p>
-                    <label for="selY">年&nbsp;&nbsp;份：</label>
-                    <select name="selY" id="selY">
-                        @foreach($args['yearList'] as $year)
-                        <option value="{{ $year }}">{{ $year }}</option>
-                        @endforeach
-                    </select><br>
-                    <label for="selM">月&nbsp;&nbsp;份：</label>
-                    <select name="selM" id="selM" class="my-2">
-                        <option value="01">01</option>
-                        <option value="02">02</option>
-                        <option value="03">03</option>
-                        <option value="04">04</option>
-                        <option value="05">05</option>
-                        <option value="06">06</option>
-                        <option value="07">07</option>
-                        <option value="08">08</option>
-                        <option value="09">09</option>
-                        <option value="10">10</option>
-                        <option value="11">11</option>
-                        <option value="12">12</option>
-                    </select>
-                </div>
-                <div class="text-center">
-                    <button type="button" class="my-3 btn btn-warning">Save</button>
-                </div>
+                <form action="{{ route('spending.index') }}" method="get">
+                    @csrf
+                    <div class="main">
+                        <p class="title">
+                            欲 查 詢 支 出 明 細 年 月 份：
+                        </p>
+                        <label for="selY">年&nbsp;&nbsp;份：</label>
+                        <select name="selY" id="selY">
+                            @foreach($args['yearList'] as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                            @endforeach
+                        </select><br>
+                        <label for="selM">月&nbsp;&nbsp;份：</label>
+                        <select name="selM" id="selM" class="my-2">
+                            <option value="01">01</option>
+                            <option value="02">02</option>
+                            <option value="03">03</option>
+                            <option value="04">04</option>
+                            <option value="05">05</option>
+                            <option value="06">06</option>
+                            <option value="07">07</option>
+                            <option value="08">08</option>
+                            <option value="09">09</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="my-3 btn btn-warning">Search</button>
+                    </div>
+                </form>
             </div>
-            <!-- <div class="modal-footer"> -->
-
-
-            <!-- </div> -->
         </div>
     </div>
 </div>

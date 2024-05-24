@@ -10,14 +10,15 @@ use Carbon\Carbon;
 
 class SpendingController extends Controller
 {
-    public function index($year = '', $month = '')
+    public function index()
     {
+
         $userId = auth()->user()->id;
         $now = Carbon::now()->locale('zh-tw');
         $thisYear = $now->format('Y');
         $thisMonth = $now->format('m');
-        $year = !empty($year) ? $year : $thisYear;
-        $month = !empty($month) ? $month : $thisMonth;
+        $year = !empty($_GET['selY']) ? $_GET['selY'] : $thisYear;
+        $month = !empty($_GET['selM']) ? $_GET['selM'] : $thisMonth;
         $searchKey = $year . '-' . $month . '%';
         $query = Expense::where('user_id', $userId);
         $cashQuery = clone $query;
